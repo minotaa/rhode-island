@@ -1,6 +1,7 @@
-[gd_scene load_steps=40 format=3 uid="uid://crn3iyiryo5cr"]
+[gd_scene load_steps=41 format=3 uid="uid://crn3iyiryo5cr"]
 
 [ext_resource type="Texture2D" uid="uid://cnb4smo8mrprw" path="res://assets/tiles/tiles_all.png" id="1_0giq3"]
+[ext_resource type="Script" path="res://scripts/Player.gd" id="2_4f7fo"]
 [ext_resource type="Texture2D" uid="uid://bcu7h7fi3chfg" path="res://assets/walking sprites/char1_walk.png" id="2_kwh8b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkd7j"]
@@ -830,6 +831,7 @@ layer_1/tile_data = PackedInt32Array()
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(96, 1120)
 scale = Vector2(2, 2)
+script = ExtResource("2_4f7fo")
 
 [node name="Body" type="AnimatedSprite2D" parent="Player"]
 texture_filter = 1
@@ -842,3 +844,4 @@ position = Vector2(0, 16)
 shape = SubResource("RectangleShape2D_mhbvl")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+position_smoothing_enabled = true
