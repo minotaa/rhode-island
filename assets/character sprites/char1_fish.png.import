@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://syisnph67ef2"
-path="res://.godot/imported/char7_walk.png-994ff9a9167550c8657e785ba44304ec.ctex"
+uid="uid://b3tw7r1ft2pxt"
+path="res://.godot/imported/char1_fish.png-3d582b2f08b4ae90ba69e4b218229892.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/walking sprites/char7_walk.png"
-dest_files=["res://.godot/imported/char7_walk.png-994ff9a9167550c8657e785ba44304ec.ctex"]
+source_file="res://assets/character sprites/char1_fish.png"
+dest_files=["res://.godot/imported/char1_fish.png-3d582b2f08b4ae90ba69e4b218229892.ctex"]
 
 [params]
 
