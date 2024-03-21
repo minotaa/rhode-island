@@ -25,8 +25,7 @@ func _physics_process(delta):
 		$Body.play("char1_walk_left")
 	if round(velocity.x) == -1 and round(velocity.y) == 1:
 		$Body.play("char1_walk_left")	
-	print(round(velocity.x))
-	print(round(velocity.y))
+
 	velocity *= SPEED
 	if velocity.x == 0 and velocity.y == 0:
 		$Body.play("char1_idle")	
