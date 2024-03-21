@@ -17,12 +17,11 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=720
-window/size/viewport_height=1280
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/size/resizable=false
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
-window/handheld/orientation=1
 
 [editor_plugins]
 
@@ -51,6 +50,10 @@ right={
 
 pointing/emulate_touch_from_mouse=true
 pointing/emulate_mouse_from_touch=false
+
+[physics]
+
+2d/default_gravity_vector=Vector2(1, 2.08165e-12)
 
 [rendering]
 
