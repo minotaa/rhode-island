@@ -1,0 +1,215 @@
+[gd_scene load_steps=19 format=3 uid="uid://cmqbp2xl2jup3"]
+
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
+[ext_resource type="Script" path="res://scripts/TouchScreenButton.gd" id="2_lpp3g"]
+[ext_resource type="FontFile" uid="uid://cfor4htgcncag" path="res://assets/fonts/PeaberryMono.ttf" id="3_ttoiw"]
+[ext_resource type="Texture2D" uid="uid://dweeegoe5hn47" path="res://assets/tiles/inv_items.png" id="4_d5cbg"]
+[ext_resource type="Script" path="res://scripts/TouchScreenButton2.gd" id="5_2dgu2"]
+[ext_resource type="Texture2D" uid="uid://rgtcvu7rq60h" path="res://assets/tiles/cursorHand_grey.png" id="6_txnld"]
+[ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram (1).ttf" id="7_ak3u0"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f8oh1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d1q2g"]
+size = Vector2(180, 180)
+
+[sub_resource type="Theme" id="Theme_ppf5n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q2crv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v758a"]
+bg_color = Color(0.121569, 0.121569, 0.121569, 0.631373)
+border_blend = true
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_220be"]
+bg_color = Color(0.194349, 0.194349, 0.194349, 0.396078)
+border_blend = true
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6usd"]
+bg_color = Color(0.722554, 0.722555, 0.722554, 0.721569)
+border_blend = true
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_23u6v"]
+bg_color = Color(0, 0, 0, 0.6)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+shadow_color = Color(0, 0, 0, 0.713726)
+shadow_offset = Vector2(10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fx2m"]
+atlas = ExtResource("4_d5cbg")
+region = Rect2(2.08165e-12, 32, 16, 16)
+margin = Rect2(2, 2, 3, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2peym"]
+size = Vector2(132, 132)
+
+[sub_resource type="LabelSettings" id="LabelSettings_o1pwl"]
+font = ExtResource("7_ak3u0")
+font_size = 72
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="Main" type="Control" parent="."]
+auto_translate_mode = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Joystick" type="Control" parent="Main"]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -296.0
+offset_right = 32.0
+offset_bottom = -256.0
+grow_vertical = 0
+mouse_filter = 1
+
+[node name="Virtual Joystick" parent="Main/Joystick" instance=ExtResource("1_k3vkl")]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 0
+anchor_top = 0.0
+anchor_bottom = 0.0
+offset_top = 0.0
+offset_bottom = 300.0
+grow_vertical = 1
+mouse_filter = 1
+pressed_color = Color(0.745098, 0.745098, 0.745098, 0.580392)
+action_left = "left"
+action_right = "right"
+action_up = "up"
+action_down = "down"
+
+[node name="Buttons" type="Control" parent="Main"]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Buttons"]
+material = SubResource("CanvasItemMaterial_f8oh1")
+position = Vector2(-144, -96)
+shape = SubResource("RectangleShape2D_d1q2g")
+script = ExtResource("2_lpp3g")
+
+[node name="Fish Button" type="Button" parent="Main/Buttons/TouchScreenButton"]
+auto_translate_mode = 1
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -88.0
+offset_right = 88.0
+offset_bottom = 88.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ppf5n")
+theme_override_fonts/font = ExtResource("3_ttoiw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_q2crv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_v758a")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_220be")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s6usd")
+theme_override_styles/normal = SubResource("StyleBoxFlat_23u6v")
+action_mode = 0
+icon = SubResource("AtlasTexture_4fx2m")
+icon_alignment = 1
+expand_icon = true
+
+[node name="TouchScreenButton2" type="TouchScreenButton" parent="Main/Buttons"]
+position = Vector2(-104, -280)
+shape = SubResource("RectangleShape2D_2peym")
+script = ExtResource("5_2dgu2")
+
+[node name="Use Button" type="Button" parent="Main/Buttons/TouchScreenButton2"]
+auto_translate_mode = 1
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ppf5n")
+theme_override_constants/icon_max_width = 80
+theme_override_fonts/font = ExtResource("3_ttoiw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_q2crv")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_v758a")
+theme_override_styles/hover = SubResource("StyleBoxFlat_v758a")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_s6usd")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s6usd")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_23u6v")
+theme_override_styles/normal = SubResource("StyleBoxFlat_23u6v")
+action_mode = 0
+icon = ExtResource("6_txnld")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Time" type="Control" parent="Main"]
+auto_translate_mode = 1
+visible = false
+layout_mode = 1
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 56.0
+offset_bottom = 56.0
+
+[node name="Panel" type="Panel" parent="Main/Time"]
+auto_translate_mode = 1
+layout_mode = 0
+offset_right = 248.0
+offset_bottom = 64.0
+
+[node name="Label" type="Label" parent="Main/Time"]
+auto_translate_mode = 1
+texture_filter = 1
+layout_mode = 0
+offset_left = 16.0
+offset_right = 232.0
+offset_bottom = 57.0
+text = "12:00 AM"
+label_settings = SubResource("LabelSettings_o1pwl")
+
+[connection signal="pressed" from="Main/Buttons/TouchScreenButton" to="Main/Buttons/TouchScreenButton" method="_on_pressed"]
+[connection signal="released" from="Main/Buttons/TouchScreenButton" to="Main/Buttons/TouchScreenButton" method="_on_released"]
+[connection signal="pressed" from="Main/Buttons/TouchScreenButton2" to="Main/Buttons/TouchScreenButton2" method="_on_pressed"]
+[connection signal="released" from="Main/Buttons/TouchScreenButton2" to="Main/Buttons/TouchScreenButton2" method="_on_released"]

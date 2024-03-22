@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://by5pxtfwbhocv"]
+
+[ext_resource type="Texture2D" uid="uid://dweeegoe5hn47" path="res://assets/tiles/inv_items.png" id="1_4vo50"]
+[ext_resource type="Script" path="res://scripts/bobber.gd" id="1_o6set"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1eghx"]
+atlas = ExtResource("1_4vo50")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y5mup"]
+
+[node name="Bobber" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_o6set")
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 2.08165e-12, 2.08165e-12)
+width = 1.25
+default_color = Color(0, 0, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-2, 2)
+scale = Vector2(3.5, 3.5)
+texture = SubResource("AtlasTexture_1eghx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_y5mup")
