@@ -19,10 +19,7 @@ func _on_body_animation_finished():
 		if bobber != null:
 			bobber.queue_free()
 		bobber = bobber_object.instantiate()
-		if last_direction == "left" or last_direction == "right":
-			bobber.position = Vector2(position.x, position.y + randi_range(-50, 75))
-		elif last_direction == "up" or last_direction == "down":
-			bobber.position = Vector2(position.x + randi_range(-50, 75), position.y)
+		bobber.position = position
 		get_parent().add_child(bobber)
 		var mult = 100 + ($UI/FishProgressBar.value * 5.5)
 		bobber.apply_impulse(directions[last_direction] * mult) 
@@ -37,13 +34,12 @@ func _on_body_animation_finished():
 		if bobber != null:
 			bobber.sleeping = true
 			var tile_map = get_parent().get_node("TileMap") as TileMap
-			var data = tile_map.get_cell_tile_data(0, tile_map.local_to_map(bobber.position))
-			if data:
-				print(data.get_custom_data("fishable"))
+			var bobber_position = tile_map.to_local(bobber.global_position)
+			var data = tile_map.get_cell_tile_data(0, tile_map.local_to_map(bobber_position))
+			if data and data.get_custom_data("fishable") == true:
 				print("Yup, this is... something")
 			else:
-				print(false)
-				
+				print("Nothing here to note...")
 
 var directions = {
 	"left": Vector2.LEFT,
@@ -102,38 +98,42 @@ func _physics_process(delta):
 	else:
 		$Camera2D.global_position = lerp($Camera2D.global_position, global_position, 0.05)
 		$Camera2D.zoom = lerp($Camera2D.zoom, Vector2(1.2, 1.2), 0.05)
-
-	if round(velocity.x) == -1:
-		$Body.play("char1_walk_left")
-		last_direction = "left"
-		fishing = false
-	if round(velocity.x) == 1:
+	
+	if round(velocity.x) == 1 and round(velocity.y) == 1:
+		$Body.pause()
 		$Body.play("char1_walk_right")
 		last_direction = "right"
 		fishing = false
-	if round(velocity.y) == -1:
+	elif round(velocity.x) == 1 and round(velocity.y) == -1:
+		$Body.pause()
+		$Body.play("char1_walk_right")
+		last_direction = "right"
+		fishing = false
+	elif round(velocity.x) == -1 and round(velocity.y) == -1:
+		$Body.pause()
+		$Body.play("char1_walk_left")
+		last_direction = "left"
+		fishing = false
+	elif round(velocity.x) == -1 and round(velocity.y) == 1:
+		$Body.pause()
+		$Body.play("char1_walk_left")
+		last_direction = "left"	
+		fishing = false
+	elif round(velocity.x) == -1:
+		$Body.play("char1_walk_left")
+		last_direction = "left"
+		fishing = false
+	elif round(velocity.x) == 1:
+		$Body.play("char1_walk_right")
+		last_direction = "right"
+		fishing = false
+	elif round(velocity.y) == -1:
 		$Body.play("char1_walk_up")
 		last_direction = "up"
 		fishing = false
-	if round(velocity.y) == 1:
+	elif round(velocity.y) == 1:
 		$Body.play("char1_walk_down")
 		last_direction = "down"
-		fishing = false
-	if round(velocity.x) == 1 and round(velocity.y) == 1:
-		$Body.play("char1_walk_right")
-		last_direction = "right"
-		fishing = false
-	if round(velocity.x) == 1 and round(velocity.y) == -1:
-		$Body.play("char1_walk_right")
-		last_direction = "right"
-		fishing = false
-	if round(velocity.x) == -1 and round(velocity.y) == -1:
-		$Body.play("char1_walk_left")
-		last_direction = "left"
-		fishing = false
-	if round(velocity.x) == -1 and round(velocity.y) == 1:
-		$Body.play("char1_walk_left")
-		last_direction = "left"	
 		fishing = false
 
 	velocity *= SPEED
