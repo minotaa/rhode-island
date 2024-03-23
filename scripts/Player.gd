@@ -12,15 +12,20 @@ func use():
 var bobber_object = preload("res://scenes/bobber.tscn")
 var bobber: RigidBody2D
 var fishing = false
+
 func _on_body_animation_finished():
 	if $Body.animation.ends_with("fish_right") or $Body.animation.ends_with("fish_up") or $Body.animation.ends_with("fish_left") or $Body.animation.ends_with("fish_down"):
 		fishing = true
 		if bobber != null:
 			bobber.queue_free()
 		bobber = bobber_object.instantiate()
-		bobber.position = Vector2(position.x, position.y)
+		if last_direction == "left" or last_direction == "right":
+			bobber.position = Vector2(position.x, position.y + randi_range(-50, 75))
+		elif last_direction == "up" or last_direction == "down":
+			bobber.position = Vector2(position.x + randi_range(-50, 75), position.y)
 		get_parent().add_child(bobber)
-		bobber.apply_impulse(directions[last_direction] * 500)
+		var mult = 100 + ($UI/FishProgressBar.value * 5.5)
+		bobber.apply_impulse(directions[last_direction] * mult) 
 		await get_tree().create_timer(0.85).timeout
 		if bobber == null:
 			return
@@ -31,6 +36,14 @@ func _on_body_animation_finished():
 			return
 		if bobber != null:
 			bobber.sleeping = true
+			var tile_map = get_parent().get_node("TileMap") as TileMap
+			var data = tile_map.get_cell_tile_data(0, tile_map.local_to_map(bobber.position))
+			if data:
+				print(data.get_custom_data("fishable"))
+				print("Yup, this is... something")
+			else:
+				print(false)
+				
 
 var directions = {
 	"left": Vector2.LEFT,
@@ -39,6 +52,7 @@ var directions = {
 	"down": Vector2.DOWN
 }
 var last_direction = "down"
+var this_is_stupid_and_just_straight_up_bad_code = true
 
 func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
@@ -46,6 +60,26 @@ func _physics_process(delta):
 	velocity.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 	velocity.y = Input.get_action_strength("down") - Input.get_action_strength("up")  
 	velocity.normalized()
+	if Input.is_action_pressed("fish"):
+		if bobber != null:
+			fishing = false
+			bobber.queue_free()
+		if !$UI/FishProgressBar.visible:
+			$UI/FishProgressBar.visible = true
+			this_is_stupid_and_just_straight_up_bad_code = true
+			$UI/FishProgressBar.value = 0
+		if this_is_stupid_and_just_straight_up_bad_code:
+			$UI/FishProgressBar.value += 1
+			if $UI/FishProgressBar.value >= 100:
+				this_is_stupid_and_just_straight_up_bad_code = false
+		else:
+			$UI/FishProgressBar.value -= 1
+			if $UI/FishProgressBar.value <= 0:
+				this_is_stupid_and_just_straight_up_bad_code = true
+	if Input.is_action_just_released("fish"):
+		fish()
+		this_is_stupid_and_just_straight_up_bad_code = true
+		$UI/FishProgressBar.visible = false
 	if !fishing and bobber != null:
 		bobber.queue_free()
 		bobber = null
