@@ -16,7 +16,7 @@ var fishing = false
 var inventory = Inventory.new()
 
 func open_inventory() -> void:
-	pass
+	$UI/Main/Inventory.visible = !$UI/Main/Inventory.visible
 func fish() -> void:
 	fishing = false
 	$Body.play("char1_fish_" + last_direction)
@@ -49,15 +49,16 @@ func _on_body_animation_finished() -> void:
 			var data = tile_map.get_cell_tile_data(0, tile_map.local_to_map(bobber_position))
 			if data and data.get_custom_data("fishable") == true:
 				print("Yup, this is... something")
-				#Input.vibrate_handheld(500)
+				Input.vibrate_handheld(500)
 			else:
 				fishing = false
 func _physics_process(delta) -> void:
 	# Get the input direction and handle the movement/deceleration.
-	#var direction = Input.get_vector("left", "ui_right", "ui_up", "ui_down")
 	velocity.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 	velocity.y = Input.get_action_strength("down") - Input.get_action_strength("up")  
 	velocity.normalized()
+	if Input.is_action_just_pressed("open_inventory"):
+		open_inventory()
 	if Input.is_action_pressed("fish"):
 		if bobber != null:
 			fishing = false
