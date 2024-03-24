@@ -1,7 +1,7 @@
 extends TouchScreenButton
 
 func _on_pressed() -> void:
-	pass
+	Input.action_press("open_inventory")
 
 func _on_released() -> void:
-	pass
+	Input.action_release("open_inventory")
