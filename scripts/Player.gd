@@ -1,45 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 300.0
-
-func fish():
-	fishing = false
-	$Body.play("char1_fish_" + last_direction)
-	
-func use():
-	print("Hmm...")	
-
-var bobber_object = preload("res://scenes/bobber.tscn")
-var bobber: RigidBody2D
-var fishing = false
-
-func _on_body_animation_finished():
-	if $Body.animation.ends_with("fish_right") or $Body.animation.ends_with("fish_up") or $Body.animation.ends_with("fish_left") or $Body.animation.ends_with("fish_down"):
-		fishing = true
-		if bobber != null:
-			bobber.queue_free()
-		bobber = bobber_object.instantiate()
-		bobber.position = position
-		get_parent().add_child(bobber)
-		var mult = 100 + ($UI/FishProgressBar.value * 5.5)
-		bobber.apply_impulse(directions[last_direction] * mult) 
-		await get_tree().create_timer(0.85).timeout
-		if bobber == null:
-			return
-		if bobber != null:
-			bobber.apply_impulse(-directions[last_direction] * 250)
-		await get_tree().create_timer(0.25).timeout
-		if bobber == null:
-			return
-		if bobber != null:
-			bobber.sleeping = true
-			var tile_map = get_parent().get_node("TileMap") as TileMap
-			var bobber_position = tile_map.to_local(bobber.global_position)
-			var data = tile_map.get_cell_tile_data(0, tile_map.local_to_map(bobber_position))
-			if data and data.get_custom_data("fishable") == true:
-				print("Yup, this is... something")
-			else:
-				print("Nothing here to note...")
+const SPEED = 325.0
 
 var directions = {
 	"left": Vector2.LEFT,
@@ -49,8 +10,49 @@ var directions = {
 }
 var last_direction = "down"
 var this_is_stupid_and_just_straight_up_bad_code = true
+var bobber_object = preload("res://scenes/bobber.tscn")
+var bobber: RigidBody2D
+var fishing = false
+var inventory = Inventory.new()
 
-func _physics_process(delta):
+func open_inventory() -> void:
+	pass
+func fish() -> void:
+	fishing = false
+	$Body.play("char1_fish_" + last_direction)
+func use() -> void:
+	print("Hmm...")	
+func _on_body_animation_finished() -> void:
+	if $Body.animation.ends_with("fish_right") or $Body.animation.ends_with("fish_up") or $Body.animation.ends_with("fish_left") or $Body.animation.ends_with("fish_down"):
+		fishing = true
+		if bobber != null:
+			bobber.queue_free()
+		bobber = bobber_object.instantiate()
+		if last_direction == "left":
+			bobber.position = Vector2(global_position.x - 52, global_position.y + 38)
+		elif last_direction == "right":
+			bobber.position = Vector2(global_position.x + 52, global_position.y + 38)
+		elif last_direction == "up":
+			bobber.position = Vector2(global_position.x, global_position.y - 35.5)
+		elif last_direction == "down":
+			bobber.position = Vector2(global_position.x, global_position.y + 67)
+		get_parent().add_child(bobber)
+		var mult = 100 + ($UI/FishProgressBar.value * 5.5)
+		bobber.apply_impulse(directions[last_direction] * mult) 
+		await get_tree().create_timer(0.85).timeout
+		if bobber == null:
+			return
+		if bobber != null:
+			bobber.sleeping = true
+			var tile_map = get_parent().get_node("TileMap") as TileMap
+			var bobber_position = tile_map.to_local(bobber.global_position)
+			var data = tile_map.get_cell_tile_data(0, tile_map.local_to_map(bobber_position))
+			if data and data.get_custom_data("fishable") == true:
+				print("Yup, this is... something")
+				#Input.vibrate_handheld(500)
+			else:
+				fishing = false
+func _physics_process(delta) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	#var direction = Input.get_vector("left", "ui_right", "ui_up", "ui_down")
 	velocity.x = Input.get_action_strength("right") - Input.get_action_strength("left")
@@ -79,6 +81,7 @@ func _physics_process(delta):
 	if !fishing and bobber != null:
 		bobber.queue_free()
 		bobber = null
+		$Body.play("char1_idle_" + last_direction)
 	if bobber != null:
 		var line_point: Vector2 
 		if last_direction == "left":
@@ -142,3 +145,4 @@ func _physics_process(delta):
 			$Body.play("char1_idle_" + last_direction)	
 	
 	move_and_slide()
+	$"UI/Main/Inventory Button/TouchScreenButton/Button".text = str(inventory.size()) + "/" + str(inventory.max_capacity)
