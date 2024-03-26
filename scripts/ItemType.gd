@@ -1,5 +1,5 @@
 extends Object
-class_name Item
+class_name ItemType
 
 var name: String
 var id: int
@@ -7,4 +7,3 @@ var description: String
 var rarity: String
 var cost: float
 var sell_price: float
-var amount: int
