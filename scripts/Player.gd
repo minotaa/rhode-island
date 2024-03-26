@@ -11,17 +11,42 @@ var directions = {
 var last_direction = "down"
 var this_is_stupid_and_just_straight_up_bad_code = true
 var bobber_object = preload("res://scenes/bobber.tscn")
+var fish_object = preload("res://scenes/fish.tscn")
 var bobber: RigidBody2D
+var bobber_fish: RigidBody2D
 var fishing = false
 var inventory = Inventory.new()
+var items = Items.new()
 
 func open_inventory() -> void:
 	$UI/Main/Inventory.visible = !$UI/Main/Inventory.visible
+
 func fish() -> void:
 	fishing = false
 	$Body.play("char1_fish_" + last_direction)
+
+func _fishing_timer() -> void:
+	var odds = randi_range(100, 800)
+	var your_odds = 0
+	print("Fishing timer started...")
+	print("Odds: " + str(odds) + " | Your Odds: " + str(your_odds))
+	print(fishing)
+	while (fishing == true):
+		print("Odds: " + str(odds) + " | Your Odds: " + str(your_odds))
+		if your_odds >= odds:
+			Input.vibrate_handheld(500)
+			var fish = items.fish_roll()
+			bobber_fish = fish_object.instantiate()
+			bobber_fish.position = bobber.position
+			print("Found a fish!")
+			get_parent().add_child(bobber_fish)
+			return
+		await get_tree().create_timer(0.50).timeout
+		your_odds += randi_range(15, 25)
+
 func use() -> void:
 	print("Hmm...")	
+	
 func _on_body_animation_finished() -> void:
 	if $Body.animation.ends_with("fish_right") or $Body.animation.ends_with("fish_up") or $Body.animation.ends_with("fish_left") or $Body.animation.ends_with("fish_down"):
 		fishing = true
@@ -49,9 +74,10 @@ func _on_body_animation_finished() -> void:
 			var data = tile_map.get_cell_tile_data(0, tile_map.local_to_map(bobber_position))
 			if data and data.get_custom_data("fishable") == true:
 				print("Yup, this is... something")
-				Input.vibrate_handheld(500)
+				_fishing_timer()
 			else:
 				fishing = false
+
 func _physics_process(delta) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	velocity.x = Input.get_action_strength("right") - Input.get_action_strength("left")
