@@ -281,10 +281,10 @@ script = ExtResource("8_hrldg")
 
 [node name="Button" type="Button" parent="Main/Inventory Button/TouchScreenButton"]
 texture_filter = 1
-offset_left = -128.0
+offset_left = -112.0
 offset_top = -40.0
 offset_right = 128.0
-offset_bottom = 40.0
+offset_bottom = 48.0
 theme_override_fonts/font = ExtResource("7_ak3u0")
 theme_override_font_sizes/font_size = 79
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s8ee3")
