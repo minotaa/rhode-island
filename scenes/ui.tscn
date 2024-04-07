@@ -268,9 +268,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -368.0
+offset_left = -360.0
 offset_top = 8.0
-offset_right = -40.0
+offset_right = -32.0
 offset_bottom = 160.0
 grow_horizontal = 0
 
@@ -281,9 +281,9 @@ script = ExtResource("8_hrldg")
 
 [node name="Button" type="Button" parent="Main/Inventory Button/TouchScreenButton"]
 texture_filter = 1
-offset_left = -112.0
+offset_left = -120.0
 offset_top = -40.0
-offset_right = 128.0
+offset_right = 120.0
 offset_bottom = 48.0
 theme_override_fonts/font = ExtResource("7_ak3u0")
 theme_override_font_sizes/font_size = 79
@@ -332,6 +332,36 @@ offset_left = -224.0
 offset_top = -112.0
 offset_right = 224.0
 offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("7_ak3u0")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/background = SubResource("StyleBoxFlat_xgjoy")
+theme_override_styles/fill = SubResource("StyleBoxFlat_4egwi")
+show_percentage = false
+
+[node name="ReelProgress" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 416.0
+offset_top = 608.0
+offset_right = 456.0
+offset_bottom = 648.0
+
+[node name="ProgressBar" type="ProgressBar" parent="ReelProgress"]
+auto_translate_mode = 1
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 428.0
+offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("7_ak3u0")

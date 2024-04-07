@@ -13,7 +13,12 @@ func get_item(index: int) -> ItemType:
 func is_full() -> bool:
 	return list.size() >= max_capacity
 
-func add_item(item: ItemType) -> void:
+func add_item(item: ItemStack) -> void:
+	for items in list: # Checks for existing items.
+		if items.id == item.id:
+			var prev = list[list.find(items)]
+			prev.amount += item.amount
+			return
 	list.append(item)
 
 func remove_item(item: ItemType) -> void:
