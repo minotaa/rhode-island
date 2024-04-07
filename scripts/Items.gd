@@ -14,6 +14,12 @@ func fish_roll() -> Fish:
 		if randomValue < currentWeight:
 			return item
 	return null
+	
+func get_from_id(id: int) -> Fish:
+	for fish in fish_list:
+		if fish.id == id:
+			return fish
+	return null
 
 func _init():
 	var parrot_fish = Fish.new()

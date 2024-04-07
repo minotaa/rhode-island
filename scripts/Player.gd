@@ -14,6 +14,7 @@ var bobber_object = preload("res://scenes/bobber.tscn")
 var fish_object = preload("res://scenes/fish.tscn")
 var fishing = false
 var reeling = false
+var fish_on_line = false
 var bobber: RigidBody2D
 var bobber_fish: Area2D
 var inventory = Inventory.new()
@@ -35,15 +36,17 @@ func _fishing_timer() -> void:
 		if your_odds >= odds:
 			Input.vibrate_handheld(500)
 			var fish = items.fish_roll()
-			print(fish)
 			bobber_fish = fish_object.instantiate()
+			bobber_fish.set_type(fish.id)
 			bobber_fish.set_sprite(fish.atlas_region_x, fish.atlas_region_y, fish.atlas_region_w, fish.atlas_region_h)
 			bobber_fish.position = bobber.position
 			print("Found a fish!")
-			reeling = true
 			get_parent().add_child(bobber_fish)
+			bobber.set_emitting(true)
+			#$Lightbulb.visible = true
+			reeling = true
 			return
-		await get_tree().create_timer(0.50).timeout
+		await get_tree().create_timer(0.85).timeout
 		your_odds += randi_range(15, 25) + ($UI/FishProgressBar.value * 0.25)
 
 func get_rod_tip() -> Vector2:
@@ -66,6 +69,7 @@ func _on_body_animation_finished() -> void:
 			bobber.queue_free()
 		fishing = true
 		bobber = bobber_object.instantiate()
+		bobber.set_emitting(false)
 		bobber.position = get_rod_tip()
 		get_parent().add_child(bobber)
 		var mult = 100 + ($UI/FishProgressBar.value * 5.5)
@@ -81,6 +85,8 @@ func _on_body_animation_finished() -> void:
 			if data and data.get_custom_data("fishable") == true:
 				print("Yup, this is... something")
 				_fishing_timer()
+			else:
+				fishing = false
 
 func play_idle_animation() -> void:
 	$Body.play("char1_idle_" + last_direction)
@@ -171,10 +177,15 @@ func _physics_process(delta) -> void:
 			bobber_fish.global_position = bobber.global_position
 		else:
 			fishing = false
+			print(bobber_fish.type)
+			var item = ItemStack.new()
+			item.amount = 1
+			item.type = items.get_from_id(bobber_fish.type)
+			inventory.add_item(item)
 			bobber_fish.queue_free()
 			bobber_fish = null
-			
 			play_idle_animation()
+			
 
 	# While the bobber still exists, draw a line to it and the tip of the player's rod
 	if bobber != null: 
