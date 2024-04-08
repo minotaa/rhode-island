@@ -13,6 +13,7 @@ var this_is_stupid_and_just_straight_up_bad_code = true
 var bobber_object = preload("res://scenes/bobber.tscn")
 var inventory_item_object = preload("res://scenes/inventory_item.tscn")
 var fish_object = preload("res://scenes/fish.tscn")
+var item_log_object = preload("res://scenes/item_log_item.tscn")
 var fishing = false
 var reeling = false
 var fish_on_line = false
@@ -22,15 +23,7 @@ var inventory = Inventory.new()
 var items = Items.new()
 
 func open_inventory() -> void:
-	$UI/Main/Inventory.visible = !$UI/Main/Inventory.visible
-	if $UI/Main/Inventory.visible == true:
-		$UI/Main/Joystick.visible = false
-		$"UI/Main/Inventory Button".visible = false
-		$UI/Main/Buttons.visible = false
-	else:
-		$UI/Main/Joystick.visible = true
-		$UI/Main/Buttons.visible = true
-		$"UI/Main/Inventory Button".visible = true
+	#$"UI/Main/Inventory/TouchScreenButton/Close Button".text = str(inventory.list.size()) + "/" + str(inventory.max_capacity)
 	for children in $UI/Main/Inventory/GridContainer.get_children():
 		children.queue_free()
 	var count = 0
@@ -39,9 +32,20 @@ func open_inventory() -> void:
 		object.position = Vector2(0, count * 32)
 		if i.type is Fish:
 			object.set_sprite(i.type.atlas_region_x, i.type.atlas_region_y, i.type.atlas_region_w, i.type.atlas_region_h)
-		object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + ".................." + str(i.type.sell_price) + "g")
+		object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + ".................." + str(i.type.sell_price * i.amount) + "g")
 		count += 1
 		$UI/Main/Inventory/GridContainer.add_child(object)
+	$UI/Main/Inventory.visible = !$UI/Main/Inventory.visible
+	if $UI/Main/Inventory.visible == true:
+		$UI/Main/Joystick.visible = false
+		$"UI/Main/Inventory Button".visible = false
+		$UI/Main/Buttons.visible = false
+		$"UI/Main/Item Log".visible = false
+	else:
+		$UI/Main/Joystick.visible = true
+		$UI/Main/Buttons.visible = true
+		$"UI/Main/Inventory Button".visible = true
+		$"UI/Main/Item Log".visible = true
 		
 	
 func fish() -> void:
@@ -49,7 +53,7 @@ func fish() -> void:
 	$Body.play("char1_fish_" + last_direction)
 
 func _fishing_timer() -> void:
-	var odds = randi_range(100, 800)
+	var odds = randi_range(100, 1200)
 	var your_odds = 0
 	print("Fishing timer started...")
 	while (fishing == true):
@@ -204,6 +208,9 @@ func _physics_process(delta) -> void:
 			var item = ItemStack.new()
 			item.amount = 1
 			item.type = items.get_from_id(bobber_fish.type)
+			var item_log = item_log_object.instantiate()
+			item_log.set_item(item)
+			$"UI/Main/Item Log".add_child(item_log)
 			inventory.add_item(item)
 			bobber_fish.queue_free()
 			bobber_fish = null
