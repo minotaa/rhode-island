@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=30 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/TouchScreenButton.gd" id="2_lpp3g"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/TouchScreenButton2.gd" id="5_2dgu2"]
 [ext_resource type="Texture2D" uid="uid://rgtcvu7rq60h" path="res://assets/tiles/cursorHand_grey.png" id="6_txnld"]
 [ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram (1).ttf" id="7_ak3u0"]
+[ext_resource type="Script" path="res://scripts/touch_screen_button2.gd" id="8_dm5ih"]
 [ext_resource type="Script" path="res://scripts/touch_screen_button.gd" id="8_hrldg"]
 [ext_resource type="Texture2D" uid="uid://hkvhgy68mbwt" path="res://assets/other icons/Backpack.png" id="8_otfdw"]
 
@@ -64,8 +65,8 @@ size = Vector2(132, 132)
 font = ExtResource("7_ak3u0")
 font_size = 72
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dyjjo"]
-size = Vector2(284, 110)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_21cbf"]
+size = Vector2(115, 115)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s8ee3"]
 
@@ -101,6 +102,9 @@ expand_margin_left = 12.0
 expand_margin_top = 12.0
 expand_margin_right = 12.0
 expand_margin_bottom = 12.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dyjjo"]
+size = Vector2(284, 125)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xgjoy"]
 bg_color = Color(0.243137, 0.243137, 0.243137, 0.807843)
@@ -263,6 +267,62 @@ offset_bottom = 57.0
 text = "12:00 AM"
 label_settings = SubResource("LabelSettings_o1pwl")
 
+[node name="Inventory" type="Control" parent="Main"]
+visible = false
+layout_mode = 1
+anchor_left = 0.05
+anchor_top = 0.089
+anchor_right = 0.956
+anchor_bottom = 0.944
+offset_top = -0.0800018
+offset_right = 0.319946
+offset_bottom = 0.319946
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Main/Inventory"]
+layout_mode = 0
+offset_right = 1160.0
+offset_bottom = 616.0
+
+[node name="GridContainer" type="VBoxContainer" parent="Main/Inventory"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.055
+anchor_top = 0.104
+anchor_right = 0.938
+anchor_bottom = 0.935
+offset_left = 0.199997
+offset_top = -0.064003
+offset_right = -0.0800781
+offset_bottom = 0.039978
+theme_override_constants/separation = 64
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory"]
+position = Vector2(1096, 56)
+shape = SubResource("RectangleShape2D_21cbf")
+script = ExtResource("8_dm5ih")
+
+[node name="Button" type="Button" parent="Main/Inventory/TouchScreenButton"]
+texture_filter = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_s8ee3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dn5yn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dq7gx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jtexw")
+icon = ExtResource("8_otfdw")
+expand_icon = true
+
 [node name="Inventory Button" type="Control" parent="Main"]
 layout_mode = 1
 anchors_preset = 1
@@ -294,31 +354,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_jtexw")
 text = "30/30"
 icon = ExtResource("8_otfdw")
 expand_icon = true
-
-[node name="Inventory" type="Control" parent="Main"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="Panel" parent="Main/Inventory"]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 64.0
-offset_right = 1224.0
-offset_bottom = 680.0
-
-[node name="GridContainer" type="GridContainer" parent="Main/Inventory"]
-visible = false
-layout_mode = 0
-offset_left = 96.0
-offset_top = 96.0
-offset_right = 1184.0
-offset_bottom = 648.0
-columns = 6
 
 [node name="FishProgressBar" type="ProgressBar" parent="."]
 visible = false
@@ -374,5 +409,7 @@ show_percentage = false
 [connection signal="released" from="Main/Buttons/TouchScreenButton" to="Main/Buttons/TouchScreenButton" method="_on_released"]
 [connection signal="pressed" from="Main/Buttons/TouchScreenButton2" to="Main/Buttons/TouchScreenButton2" method="_on_pressed"]
 [connection signal="released" from="Main/Buttons/TouchScreenButton2" to="Main/Buttons/TouchScreenButton2" method="_on_released"]
+[connection signal="pressed" from="Main/Inventory/TouchScreenButton" to="Main/Inventory/TouchScreenButton" method="_on_pressed"]
+[connection signal="released" from="Main/Inventory/TouchScreenButton" to="Main/Inventory/TouchScreenButton" method="_on_released"]
 [connection signal="pressed" from="Main/Inventory Button/TouchScreenButton" to="Main/Inventory Button/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory Button/TouchScreenButton" to="Main/Inventory Button/TouchScreenButton" method="_on_released"]

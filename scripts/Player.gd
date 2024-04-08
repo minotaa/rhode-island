@@ -11,6 +11,7 @@ var directions = {
 var last_direction = "down"
 var this_is_stupid_and_just_straight_up_bad_code = true
 var bobber_object = preload("res://scenes/bobber.tscn")
+var inventory_item_object = preload("res://scenes/inventory_item.tscn")
 var fish_object = preload("res://scenes/fish.tscn")
 var fishing = false
 var reeling = false
@@ -22,7 +23,27 @@ var items = Items.new()
 
 func open_inventory() -> void:
 	$UI/Main/Inventory.visible = !$UI/Main/Inventory.visible
-
+	if $UI/Main/Inventory.visible == true:
+		$UI/Main/Joystick.visible = false
+		$"UI/Main/Inventory Button".visible = false
+		$UI/Main/Buttons.visible = false
+	else:
+		$UI/Main/Joystick.visible = true
+		$UI/Main/Buttons.visible = true
+		$"UI/Main/Inventory Button".visible = true
+	for children in $UI/Main/Inventory/GridContainer.get_children():
+		children.queue_free()
+	var count = 0
+	for i in inventory.list:
+		var object = inventory_item_object.instantiate()
+		object.position = Vector2(0, count * 32)
+		if i.type is Fish:
+			object.set_sprite(i.type.atlas_region_x, i.type.atlas_region_y, i.type.atlas_region_w, i.type.atlas_region_h)
+		object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + ".................." + str(i.type.sell_price) + "g")
+		count += 1
+		$UI/Main/Inventory/GridContainer.add_child(object)
+		
+	
 func fish() -> void:
 	reeling = false
 	$Body.play("char1_fish_" + last_direction)
@@ -32,6 +53,7 @@ func _fishing_timer() -> void:
 	var your_odds = 0
 	print("Fishing timer started...")
 	while (fishing == true):
+		bobber.set_emitting(false)
 		print("Odds: " + str(odds) + " | Your Odds: " + str(your_odds))
 		if your_odds >= odds:
 			Input.vibrate_handheld(500)
@@ -46,6 +68,8 @@ func _fishing_timer() -> void:
 			#$Lightbulb.visible = true
 			reeling = true
 			return
+		if randi_range(0, 10) <= 2:
+			bobber.set_emitting(true)
 		await get_tree().create_timer(0.85).timeout
 		your_odds += randi_range(15, 25) + ($UI/FishProgressBar.value * 0.25)
 
@@ -177,7 +201,6 @@ func _physics_process(delta) -> void:
 			bobber_fish.global_position = bobber.global_position
 		else:
 			fishing = false
-			print(bobber_fish.type)
 			var item = ItemStack.new()
 			item.amount = 1
 			item.type = items.get_from_id(bobber_fish.type)
