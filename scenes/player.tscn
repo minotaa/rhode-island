@@ -1,7 +1,8 @@
-[gd_scene load_steps=64 format=3 uid="uid://c6ks3rmomuq0v"]
+[gd_scene load_steps=65 format=3 uid="uid://c6ks3rmomuq0v"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_k6cpm"]
 [ext_resource type="PackedScene" uid="uid://cmqbp2xl2jup3" path="res://scenes/ui.tscn" id="2_j65o3"]
+[ext_resource type="Texture2D" uid="uid://gi3f74thelod" path="res://assets/character sprites/shadow.png" id="3_tpiwy"]
 [ext_resource type="Texture2D" uid="uid://bbgnt62w2u4co" path="res://assets/other icons/Lightbulb.png" id="5_c3dr2"]
 [ext_resource type="Texture2D" uid="uid://b3tw7r1ft2pxt" path="res://assets/character sprites/char1_fish.png" id="9_g3kkm"]
 [ext_resource type="Texture2D" uid="uid://bcu7h7fi3chfg" path="res://assets/character sprites/char1_walk.png" id="10_45w2g"]
@@ -470,6 +471,12 @@ scale = Vector2(1.5, 1.5)
 script = ExtResource("1_k6cpm")
 
 [node name="UI" parent="." instance=ExtResource("2_j65o3")]
+
+[node name="Shadow" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(2.08165e-12, 34)
+scale = Vector2(2.75, 2.75)
+texture = ExtResource("3_tpiwy")
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

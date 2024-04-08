@@ -73,3 +73,29 @@ func _init():
 	plaice.atlas_region_h = 16.0
 	fish_list.append(plaice)
 
+	var silver_eel = Fish.new()
+	silver_eel.name = "Silver Eel"
+	silver_eel.id = 4
+	silver_eel.description = "Slender, silvery fish known for its extensive migrations between freshwater and the ocean for spawning."
+	silver_eel.cost = 24.5
+	silver_eel.sell_price = 9.5
+	silver_eel.reel_weight = 45
+	silver_eel.reel_location = "beach"
+	silver_eel.atlas_region_x = 64.0
+	silver_eel.atlas_region_w = 16.0
+	silver_eel.atlas_region_h = 16.0
+	fish_list.append(silver_eel)
+	
+	var sea_horse = Fish.new()
+	sea_horse.name = "Sea Horse"
+	sea_horse.id = 5
+	sea_horse.description = "Unique fish with horse-like heads and curled tails, found in shallow waters worldwide."
+	sea_horse.cost = 50.0
+	sea_horse.sell_price = 20.0
+	sea_horse.reel_weight = 15
+	sea_horse.reel_location = "beach"
+	sea_horse.atlas_region_x = 72.0
+	sea_horse.atlas_region_w = 16.0
+	sea_horse.atlas_region_h = 16.0
+	
+	
