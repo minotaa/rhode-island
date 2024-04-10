@@ -5,3 +5,6 @@ func _on_timer_timeout() -> void:
 	
 func set_item(item: ItemStack) -> void:
 	$Label.text = "- " + "x" + str(item.amount) + " " + str(item.type.name)
+
+func set_nothing() -> void:
+	$Label.text = "- Your inventory is full."

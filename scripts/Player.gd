@@ -17,6 +17,7 @@ var item_log_object = preload("res://scenes/item_log_item.tscn")
 var fishing = false
 var reeling = false
 var fish_on_line = false
+var coins = 0.0
 var bobber: RigidBody2D
 var bobber_fish: Area2D
 var inventory = Inventory.new()
@@ -24,7 +25,7 @@ var items = Items.new()
 
 func open_inventory() -> void:
 	#$"UI/Main/Inventory/TouchScreenButton/Close Button".text = str(inventory.list.size()) + "/" + str(inventory.max_capacity)
-	for children in $UI/Main/Inventory/GridContainer.get_children():
+	for children in $UI/Main/Inventory/Panel/GridContainer.get_children():
 		children.queue_free()
 	var count = 0
 	for i in inventory.list:
@@ -34,18 +35,20 @@ func open_inventory() -> void:
 			object.set_sprite(i.type.atlas_region_x, i.type.atlas_region_y, i.type.atlas_region_w, i.type.atlas_region_h)
 		object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + ".................." + str(i.type.sell_price * i.amount) + "g")
 		count += 1
-		$UI/Main/Inventory/GridContainer.add_child(object)
+		$UI/Main/Inventory/Panel/GridContainer.add_child(object)
 	$UI/Main/Inventory.visible = !$UI/Main/Inventory.visible
 	if $UI/Main/Inventory.visible == true:
 		$UI/Main/Joystick.visible = false
 		$"UI/Main/Inventory Button".visible = false
 		$UI/Main/Buttons.visible = false
 		$"UI/Main/Item Log".visible = false
+		$UI/Main/Coins.visible = false
 	else:
 		$UI/Main/Joystick.visible = true
 		$UI/Main/Buttons.visible = true
 		$"UI/Main/Inventory Button".visible = true
 		$"UI/Main/Item Log".visible = true
+		$UI/Main/Coins.visible = true
 		
 	
 func fish() -> void:
@@ -185,11 +188,23 @@ func _process_input(delta) -> void:
 	
 	move_and_slide()
 
+func buck_fiddy(float_number: float) -> String:
+	var formatted_string = str(floor(float_number * 100) / 100) # Round down to two decimal points
+	if float(float_number) == int(float_number):
+		formatted_string += ".00"
+	else:
+		var decimal_part = float_number - int(float_number)
+		if abs(decimal_part * 100 - round(decimal_part * 100)) < 0.0001: # Check if decimal part rounds to 0
+			formatted_string += "0"
+	return formatted_string
+
 func _physics_process(delta) -> void:
 	# Process player input
 	_process_input(delta)
 	
-	# Update inventory count
+	# Update UI
+	var string = String()
+	$UI/Main/Coins/PanelContainer/HBoxContainer/Label.text = "$" + buck_fiddy(coins)
 	$"UI/Main/Inventory Button/TouchScreenButton/Button".text = str(inventory.size()) + "/" + str(inventory.max_capacity)
 	
 	if bobber != null and fishing == false:
@@ -209,13 +224,15 @@ func _physics_process(delta) -> void:
 			item.amount = 1
 			item.type = items.get_from_id(bobber_fish.type)
 			var item_log = item_log_object.instantiate()
-			item_log.set_item(item)
+			if inventory.size() >= 10:
+				item_log.set_nothing()
+			else:
+				item_log.set_item(item)
+				inventory.add_item(item)
 			$"UI/Main/Item Log".add_child(item_log)
-			inventory.add_item(item)
 			bobber_fish.queue_free()
 			bobber_fish = null
 			play_idle_animation()
-			
 
 	# While the bobber still exists, draw a line to it and the tip of the player's rod
 	if bobber != null: 
