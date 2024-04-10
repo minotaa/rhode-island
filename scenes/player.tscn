@@ -462,8 +462,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mhbvl"]
-size = Vector2(20, 40.5)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b2r0b"]
+radius = 7.33334
+height = 42.6667
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(96, 1120)
@@ -486,7 +487,7 @@ animation = &"char1_idle_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 21.3333)
-shape = SubResource("RectangleShape2D_mhbvl")
+shape = SubResource("CapsuleShape2D_b2r0b")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.2, 1.2)
