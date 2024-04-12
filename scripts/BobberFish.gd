@@ -6,15 +6,14 @@ var movement_time = 1
 var min_distance = 100
 var max_distance = 200
 
-var min_position = 20
-var max_position = 290
+var min_position = 140
+var max_position = -140
 
 func _ready():
 	plan_move()
 	
 func plan_move():
 	var target = randf_range(min_position, max_position)
-	
 	while (abs(self.position.y - target) < min_distance or abs(self.position.y - target) > max_distance):
 		target = randf_range(min_position, max_position)
 		

@@ -84,7 +84,7 @@ func _fishing_timer() -> void:
 			bobber.set_emitting(true)
 			#$Lightbulb.visible = true
 			reeling_back_fish = true
-			add_fish(10, 40, 8, 3)
+			add_fish(30, 80, 4, 2)
 			return
 		if randi_range(0, 10) <= 2:
 			bobber.set_emitting(true)
