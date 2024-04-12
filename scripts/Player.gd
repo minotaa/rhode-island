@@ -183,13 +183,13 @@ func _process_input(delta) -> void:
 			
 		# Adjust Value
 		if (len($"UI/Main/BobberProgress/Hook/Area2D".get_overlapping_areas()) > 0):
-			$UI/Main/BobberProgress/Progress.value += 155 * delta
+			$UI/Main/BobberProgress/Progress.value += 165 * delta
 			if ($UI/Main/BobberProgress/Progress.value >= 999):
 				reeling = true
 				reeling_back_fish = false
 				print("caught")
 		else:
-			$UI/Main/BobberProgress/Progress.value -= 55 * delta
+			$UI/Main/BobberProgress/Progress.value -= 85 * delta
 			if ($UI/Main/BobberProgress/Progress.value <= 0):
 				reeling = false
 				reeling_back_fish = false
