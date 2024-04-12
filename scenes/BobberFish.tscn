@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://b81vbtiub0nic"]
+
+[ext_resource type="Texture2D" uid="uid://brdl0olqaymk7" path="res://assets/other icons/Fish.png" id="1"]
+[ext_resource type="Script" path="res://scripts/BobberFish.gd" id="2"]
+
+[node name="Fish" type="Node2D"]
+script = ExtResource("2")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(0.0333195, 5.40162, 5.26929, 0.0812044, 0.0333195, -5.22232, -5.13509, 0.0305338)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
+texture_filter = 1
+texture = ExtResource("1")
+
+[node name="MoveTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="MoveTimer" to="." method="timeout"]

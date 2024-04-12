@@ -1,0 +1,133 @@
+[gd_scene load_steps=20 format=3 uid="uid://bf134fbql40wc"]
+
+[ext_resource type="Texture2D" uid="uid://bcu7h7fi3chfg" path="res://assets/character sprites/char1_walk.png" id="1_qj7h3"]
+[ext_resource type="Texture2D" uid="uid://bsv0pgrtl76y7" path="res://assets/character sprites/char5_walk.png" id="2_tg4pp"]
+[ext_resource type="Texture2D" uid="uid://cw0cwhkewx1jk" path="res://assets/character sprites/overalls_walk.png" id="3_bl4h6"]
+[ext_resource type="Texture2D" uid="uid://d4lb22sauq32x" path="res://assets/character sprites/pants_walk.png" id="4_f1alx"]
+[ext_resource type="Texture2D" uid="uid://dhklxdif8lkt3" path="res://assets/character sprites/shoes_walk.png" id="5_wbhe5"]
+[ext_resource type="Texture2D" uid="uid://c7tsandc2j53r" path="res://assets/character sprites/curly_walk.png" id="6_8j4pi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uff42"]
+atlas = ExtResource("1_qj7h3")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76446"]
+atlas = ExtResource("2_tg4pp")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uyc42"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uff42")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76446")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2pd6"]
+atlas = ExtResource("3_bl4h6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_suph3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2pd6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kma8p"]
+atlas = ExtResource("4_f1alx")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kte0a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kma8p")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_prbv7"]
+atlas = ExtResource("5_wbhe5")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mg1gf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prbv7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1iw0d"]
+atlas = ExtResource("6_8j4pi")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fhhtm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1iw0d")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tnb6t"]
+radius = 5.33333
+height = 21.3333
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7tt1k"]
+radius = 128.0
+
+[node name="NPC" type="CharacterBody2D"]
+
+[node name="Clothing" type="Node2D" parent="."]
+position = Vector2(0, 24)
+
+[node name="Base" type="AnimatedSprite2D" parent="Clothing"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_uyc42")
+
+[node name="Clothes" type="AnimatedSprite2D" parent="Clothing"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_suph3")
+
+[node name="Pants" type="AnimatedSprite2D" parent="Clothing"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_kte0a")
+
+[node name="Shoes?" type="AnimatedSprite2D" parent="Clothing"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_mg1gf")
+
+[node name="Hair" type="AnimatedSprite2D" parent="Clothing"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_fhhtm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 24)
+scale = Vector2(1.5, 1.5)
+shape = SubResource("CapsuleShape2D_tnb6t")
+
+[node name="Interact Range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact Range"]
+position = Vector2(0, 16)
+shape = SubResource("CircleShape2D_7tt1k")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=38 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/TouchScreenButton.gd" id="2_lpp3g"]
@@ -12,6 +12,10 @@
 [ext_resource type="Script" path="res://scripts/touch_screen_button.gd" id="8_hrldg"]
 [ext_resource type="Texture2D" uid="uid://hkvhgy68mbwt" path="res://assets/other icons/Backpack.png" id="8_otfdw"]
 [ext_resource type="Texture2D" uid="uid://i1wrfpokwkrv" path="res://assets/other icons/Coin2.png" id="11_y52ah"]
+[ext_resource type="Texture2D" uid="uid://0qwcp00oep1c" path="res://assets/other icons/Fishing-Column.png" id="13_jhfam"]
+[ext_resource type="Texture2D" uid="uid://bq8v5ythff5pk" path="res://assets/other icons/Progress-Empty.png" id="14_cdgpj"]
+[ext_resource type="Texture2D" uid="uid://bfu0lohs641p0" path="res://assets/other icons/Progress-Bar.png" id="15_83dsy"]
+[ext_resource type="Texture2D" uid="uid://bn032jb1ii5ru" path="res://assets/other icons/Hook.png" id="16_ggv0v"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f8oh1"]
 
@@ -111,6 +115,9 @@ font_size = 72
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21cbf"]
 size = Vector2(115, 115)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gbr1f"]
+size = Vector2(82, 34)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xgjoy"]
 bg_color = Color(0.243137, 0.243137, 0.243137, 0.807843)
@@ -326,9 +333,9 @@ anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -824.0
-offset_top = 16.0
+offset_top = 24.0
 offset_right = -328.0
-offset_bottom = 136.0
+offset_bottom = 128.0
 grow_horizontal = 0
 
 [node name="PanelContainer" type="PanelContainer" parent="Main/Coins"]
@@ -429,9 +436,64 @@ theme_override_constants/separation = 64
 [node name="InventoryItem" parent="Main/Inventory/Panel/GridContainer" instance=ExtResource("8_d0ynw")]
 layout_mode = 2
 
-[node name="FishProgressBar" type="ProgressBar" parent="."]
+[node name="BobberProgress" type="Control" parent="Main"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -120.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.15, 1.15)
+
+[node name="Progress" type="TextureProgressBar" parent="Main/BobberProgress"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 284.0
+offset_top = -56.0
+offset_right = 294.0
+offset_bottom = 229.0
+rotation = 1.5708
+scale = Vector2(2, 2)
+max_value = 1000.0
+fill_mode = 2
+texture_under = ExtResource("14_cdgpj")
+texture_progress = ExtResource("15_83dsy")
+
+[node name="FishingColumn" type="Sprite2D" parent="Main/BobberProgress"]
+texture_filter = 1
+position = Vector2(0, -8)
+rotation = 1.5708
+scale = Vector2(2, 2)
+texture = ExtResource("13_jhfam")
+
+[node name="Hook" type="Node2D" parent="Main/BobberProgress"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Main/BobberProgress/Hook"]
+texture_filter = 1
+position = Vector2(2.08165e-12, -8)
+rotation = 1.5708
+scale = Vector2(2, 2)
+texture = ExtResource("16_ggv0v")
+
+[node name="Area2D" type="Area2D" parent="Main/BobberProgress/Hook"]
+gravity_point_center = Vector2(-1, 2.08165e-12)
+gravity_direction = Vector2(-1, 2.08165e-12)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Main/BobberProgress/Hook/Area2D"]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_gbr1f")
+
+[node name="Fish" type="Node2D" parent="Main/BobberProgress/Hook"]
+
+[node name="FishProgressBar" type="ProgressBar" parent="Main"]
 visible = false
 texture_filter = 1
+layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
