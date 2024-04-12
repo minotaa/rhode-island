@@ -14,14 +14,22 @@ var bobber_object = preload("res://scenes/bobber.tscn")
 var inventory_item_object = preload("res://scenes/inventory_item.tscn")
 var fish_object = preload("res://scenes/fish.tscn")
 var item_log_object = preload("res://scenes/item_log_item.tscn")
+var hook_object = preload("res://scenes/BobberFish.tscn")
 var fishing = false
 var reeling = false
 var fish_on_line = false
+var reeling_back_fish = false
 var coins = 0.0
 var bobber: RigidBody2D
 var bobber_fish: Area2D
 var inventory = Inventory.new()
 var items = Items.new()
+
+var hookVelocity = 0;
+var hookAcceleration = .1;
+var hookDeceleration = .2
+var maxVelocity = 6.0;
+var bounce = .6
 
 func open_inventory() -> void:
 	#$"UI/Main/Inventory/TouchScreenButton/Close Button".text = str(inventory.list.size()) + "/" + str(inventory.max_capacity)
@@ -49,14 +57,16 @@ func open_inventory() -> void:
 		$"UI/Main/Inventory Button".visible = true
 		$"UI/Main/Item Log".visible = true
 		$UI/Main/Coins.visible = true
+
 		
 	
 func fish() -> void:
 	reeling = false
+	reeling_back_fish = false
 	$Body.play("char1_fish_" + last_direction)
 
 func _fishing_timer() -> void:
-	var odds = randi_range(100, 1200)
+	var odds = randi_range(100, 500)
 	var your_odds = 0
 	print("Fishing timer started...")
 	while (fishing == true):
@@ -73,12 +83,13 @@ func _fishing_timer() -> void:
 			get_parent().add_child(bobber_fish)
 			bobber.set_emitting(true)
 			#$Lightbulb.visible = true
-			reeling = true
+			reeling_back_fish = true
+			add_fish(10, 40, 8, 3)
 			return
 		if randi_range(0, 10) <= 2:
 			bobber.set_emitting(true)
 		await get_tree().create_timer(0.85).timeout
-		your_odds += randi_range(15, 25) + ($UI/FishProgressBar.value * 0.25)
+		your_odds += randi_range(15, 25) + ($UI/Main/FishProgressBar.value * 0.25)
 
 func get_rod_tip() -> Vector2:
 	if last_direction == "left":
@@ -98,12 +109,14 @@ func _on_body_animation_finished() -> void:
 	if $Body.animation.ends_with("fish_right") or $Body.animation.ends_with("fish_up") or $Body.animation.ends_with("fish_left") or $Body.animation.ends_with("fish_down"):
 		if bobber != null:
 			bobber.queue_free()
+		reeling_back_fish = false
 		fishing = true
+		reeling = false
 		bobber = bobber_object.instantiate()
 		bobber.set_emitting(false)
 		bobber.position = get_rod_tip()
 		get_parent().add_child(bobber)
-		var mult = 100 + ($UI/FishProgressBar.value * 5.5)
+		var mult = 100 + ($UI/Main/FishProgressBar.value * 5.5)
 		bobber.apply_impulse(directions[last_direction] * mult) 
 		await get_tree().create_timer(0.85).timeout
 		if bobber == null:
@@ -118,40 +131,98 @@ func _on_body_animation_finished() -> void:
 				_fishing_timer()
 			else:
 				fishing = false
+				play_idle_animation()
 
 func play_idle_animation() -> void:
 	$Body.play("char1_idle_" + last_direction)
-		
+
+func add_fish(min_d, max_d, move_speed, move_time):
+	var f = hook_object.instantiate()
+	f.position = Vector2(0, 0)
+	
+	f.min_distance = min_d
+	f.max_distance = max_d
+	f.movement_speed = move_speed
+	f.movement_time = move_time
+	
+	$UI/Main/BobberProgress/FishingColumn.add_child(f)
+	$UI/Main/BobberProgress/Progress.value = 200
 
 func _process_input(delta) -> void:
-	velocity.x = Input.get_action_strength("right") - Input.get_action_strength("left")
-	velocity.y = Input.get_action_strength("down") - Input.get_action_strength("up")  
+	if reeling_back_fish == false and reeling == false:
+		velocity.x = Input.get_action_strength("right") - Input.get_action_strength("left")
+		velocity.y = Input.get_action_strength("down") - Input.get_action_strength("up")  
 	velocity.normalized()
 
 	# Add this.
 	if Input.is_action_just_pressed("open_inventory"):
 		open_inventory()
 
+	if (Input.is_action_pressed("fish")):
+		if hookVelocity > -maxVelocity:
+			hookVelocity -= hookAcceleration
+	else:
+		if hookVelocity < maxVelocity:
+			hookVelocity += hookDeceleration
+
+	if (Input.is_action_pressed("fish")):
+		hookVelocity -= .5
+
+	var target = $"UI/Main/BobberProgress/Hook".position.x + hookVelocity
+	if (target >= 242):
+		hookVelocity *= -bounce
+	elif (target <= -242):
+		hookVelocity = 0
+		$UI/Main/BobberProgress/Hook.position.x = -242
+	else:
+		$UI/Main/BobberProgress/Hook.position.x = target
+
+	if reeling_back_fish == true:
+		$UI/Main/BobberProgress.visible = true
+
+			
+		# Adjust Value
+		if (len($"UI/Main/BobberProgress/Hook/Area2D".get_overlapping_areas()) > 0):
+			$UI/Main/BobberProgress/Progress.value += 155 * delta
+			if ($UI/Main/BobberProgress/Progress.value >= 999):
+				reeling = true
+				reeling_back_fish = false
+				print("caught")
+		else:
+			$UI/Main/BobberProgress/Progress.value -= 55 * delta
+			if ($UI/Main/BobberProgress/Progress.value <= 0):
+				reeling = false
+				reeling_back_fish = false
+				fishing = false
+				play_idle_animation()
+				print("nope")
+	else:
+		$UI/Main/BobberProgress.visible = false
+		for children in $UI/Main/BobberProgress/FishingColumn.get_children():
+			children.queue_free()
+		#if bobber_fish != null:
+		#	bobber_fish.queue_free()
+
 	# Charge up the fishing bar by holding down the FISH button.
-	if Input.is_action_pressed("fish"):
+	if Input.is_action_pressed("fish") and reeling_back_fish == false and reeling == false:
 		fishing = false
-		if !$UI/FishProgressBar.visible:
-			$UI/FishProgressBar.visible = true
+		if !$UI/Main/FishProgressBar.visible:
+			$UI/Main/FishProgressBar.visible = true
 			this_is_stupid_and_just_straight_up_bad_code = true
-			$UI/FishProgressBar.value = 0
+			$UI/Main/FishProgressBar.value = 0
 		if this_is_stupid_and_just_straight_up_bad_code:
-			$UI/FishProgressBar.value += 1
-			if $UI/FishProgressBar.value >= 100:
+			$UI/Main/FishProgressBar.value += 1
+			if $UI/Main/FishProgressBar.value >= 100:
 				this_is_stupid_and_just_straight_up_bad_code = false
 		else:
-			$UI/FishProgressBar.value -= 1
-			if $UI/FishProgressBar.value <= 0:
+			$UI/Main/FishProgressBar.value -= 1 
+			if $UI/Main/FishProgressBar.value <= 0:
 				this_is_stupid_and_just_straight_up_bad_code = true
 	# Actually fish when you release the button.
-	if Input.is_action_just_released("fish"):
+	if Input.is_action_just_released("fish") and reeling_back_fish == false and reeling == false:
 		fish()
 		this_is_stupid_and_just_straight_up_bad_code = true
-		$UI/FishProgressBar.visible = false
+		$UI/Main/FishProgressBar.visible = false
 	
 	if round(velocity.x) == 1 and round(velocity.y) == 1:
 		$Body.play("char1_walk_right")
@@ -198,6 +269,8 @@ func buck_fiddy(float_number: float) -> String:
 			formatted_string += "0"
 	return formatted_string
 
+var tween: Tween
+
 func _physics_process(delta) -> void:
 	# Process player input
 	_process_input(delta)
@@ -216,10 +289,19 @@ func _physics_process(delta) -> void:
 		
 	if reeling and bobber != null:
 		if round(bobber.global_position) != round(get_rod_tip()):
-			bobber.global_position = lerp(bobber.global_position, get_rod_tip(), 0.065)
+			if tween == null:
+				tween = create_tween()
+				
+				tween.tween_property(bobber, "global_position", get_rod_tip(), 2.5).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+				tween.play()
+			if !(tween as Tween).is_running():
+				tween = null
+			#bobber.global_position = lerp(bobber.global_position, get_rod_tip(), 0.065)
 			bobber_fish.global_position = bobber.global_position
 		else:
 			fishing = false
+			reeling = false
+			reeling_back_fish = false
 			var item = ItemStack.new()
 			item.amount = 1
 			item.type = items.get_from_id(bobber_fish.type)
