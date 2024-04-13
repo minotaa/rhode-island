@@ -10,9 +10,12 @@ config_version=5
 
 [application]
 
-config/name="Rhode Island"
+config/name="Beachside Tactics"
+config/version="1.0.0"
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
+boot_splash/show_image=false
+boot_splash/use_filter=false
 config/icon="res://icon.svg"
 
 [display]
