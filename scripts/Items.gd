@@ -1,5 +1,4 @@
-extends Object
-class_name Items
+extends Node
 
 var fish_list = []
 

@@ -19,7 +19,6 @@ func plan_move():
 		
 	move(Vector2(self.position.x, target))
 
-	
 func move(target):
 	var tween = create_tween()
 	
