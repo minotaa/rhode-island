@@ -365,7 +365,7 @@ expand_mode = 3
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 8
-text = "0"
+text = "Los Pollos Hermanos"
 label_settings = SubResource("LabelSettings_0jr5a")
 vertical_alignment = 1
 

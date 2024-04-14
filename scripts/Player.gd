@@ -8,6 +8,7 @@ var directions = {
 	"up": Vector2.UP,
 	"down": Vector2.DOWN
 }
+
 var last_direction = "down"
 var this_is_stupid_and_just_straight_up_bad_code = true
 var bobber_object = preload("res://scenes/bobber.tscn")
@@ -23,13 +24,15 @@ var coins = 0.0
 var bobber: RigidBody2D
 var bobber_fish: Area2D
 var inventory = Inventory.new()
-var items = Items.new()
 
 var hookVelocity = 0;
 var hookAcceleration = .1;
 var hookDeceleration = .2
 var maxVelocity = 6.0;
 var bounce = .6
+
+func _ready() -> void:
+	load_game()
 
 func open_inventory() -> void:
 	#$"UI/Main/Inventory/TouchScreenButton/Close Button".text = str(inventory.list.size()) + "/" + str(inventory.max_capacity)
@@ -58,7 +61,7 @@ func open_inventory() -> void:
 		$"UI/Main/Item Log".visible = true
 		$UI/Main/Coins.visible = true
 
-		
+
 	
 func fish() -> void:
 	reeling = false
@@ -74,7 +77,7 @@ func _fishing_timer() -> void:
 		print("Odds: " + str(odds) + " | Your Odds: " + str(your_odds))
 		if your_odds >= odds:
 			Input.vibrate_handheld(500)
-			var fish = items.fish_roll()
+			var fish = Items.fish_roll()
 			bobber_fish = fish_object.instantiate()
 			bobber_fish.set_type(fish.id)
 			bobber_fish.set_sprite(fish.atlas_region_x, fish.atlas_region_y, fish.atlas_region_w, fish.atlas_region_h)
@@ -147,6 +150,39 @@ func add_fish(min_d, max_d, move_speed, move_time):
 	
 	$UI/Main/BobberProgress/FishingColumn.add_child(f)
 	$UI/Main/BobberProgress/Progress.value = 200
+
+func get_game_data() -> Dictionary:
+	return {
+		"inventory": inventory.to_list(),
+		"inventory_max_capacity": inventory.max_capacity,
+		"coins": coins
+	}
+
+func save_game(_data: Dictionary):
+	var save_file = FileAccess.open("user://game.rtlbe", FileAccess.WRITE)
+	save_file.store_line(JSON.stringify(get_game_data()))
+	#for key in _data.keys():
+	#	save_file.store_line(JSON.stringify({key: _data[key]}))
+	print("Saved the game.")
+	
+func load_game():
+	if not FileAccess.file_exists("user://game.rtlbe"):
+		return
+	var save_file = FileAccess.open("user://game.rtlbe", FileAccess.READ)
+	while save_file.get_position() < save_file.get_length():
+		var json_string = save_file.get_line()
+		var json = JSON.new()
+		
+		var parse_result = json.parse(json_string)
+		if not parse_result == OK:
+			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+			continue
+		
+		var data = json.get_data()
+		inventory.set_list_from_save(data["inventory"])
+		coins = data["coins"]
+		inventory.max_capacity = data["inventory_max_capacity"] 
+	print("Loaded the game.")
 
 func _process_input(delta) -> void:
 	if reeling_back_fish == false and reeling == false:
@@ -277,7 +313,6 @@ func _physics_process(delta) -> void:
 	_process_input(delta)
 	
 	# Update UI
-	var string = String()
 	$UI/Main/Coins/PanelContainer/HBoxContainer/Label.text = "$" + buck_fiddy(coins)
 	$"UI/Main/Inventory Button/TouchScreenButton/Button".text = str(inventory.size()) + "/" + str(inventory.max_capacity)
 	
@@ -305,14 +340,15 @@ func _physics_process(delta) -> void:
 			reeling_back_fish = false
 			var item = ItemStack.new()
 			item.amount = 1
-			item.type = items.get_from_id(bobber_fish.type)
+			item.type = Items.get_from_id(bobber_fish.type)
 			var item_log = item_log_object.instantiate()
-			if inventory.size() >= 10:
-				item_log.set_nothing()
+			if inventory.is_full():
+				item_log.set_text("- Your inventory is full.")
 			else:
 				item_log.set_item(item)
 				inventory.add_item(item)
 			$"UI/Main/Item Log".add_child(item_log)
+			save_game(get_game_data())
 			bobber_fish.queue_free()
 			bobber_fish = null
 			play_idle_animation()
