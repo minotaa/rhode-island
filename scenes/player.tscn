@@ -1,9 +1,9 @@
-[gd_scene load_steps=65 format=3 uid="uid://c6ks3rmomuq0v"]
+[gd_scene load_steps=68 format=3 uid="uid://c6ks3rmomuq0v"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_k6cpm"]
 [ext_resource type="PackedScene" uid="uid://cmqbp2xl2jup3" path="res://scenes/ui.tscn" id="2_j65o3"]
 [ext_resource type="Texture2D" uid="uid://gi3f74thelod" path="res://assets/character sprites/shadow.png" id="3_tpiwy"]
-[ext_resource type="Texture2D" uid="uid://bbgnt62w2u4co" path="res://assets/other icons/Lightbulb.png" id="5_c3dr2"]
+[ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram.ttf" id="6_funtk"]
 [ext_resource type="Texture2D" uid="uid://b3tw7r1ft2pxt" path="res://assets/character sprites/char1_fish.png" id="9_g3kkm"]
 [ext_resource type="Texture2D" uid="uid://bcu7h7fi3chfg" path="res://assets/character sprites/char1_walk.png" id="10_45w2g"]
 
@@ -466,6 +466,24 @@ animations = [{
 radius = 7.33334
 height = 30.6666
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fd4om"]
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.658824)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+expand_margin_left = 12.0
+expand_margin_top = 2.0
+expand_margin_right = 12.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_bvkp3"]
+font = ExtResource("6_funtk")
+font_size = 32
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wpl1x"]
+radius = 128.0
+
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(96, 1120)
 scale = Vector2(1.5, 1.5)
@@ -492,12 +510,35 @@ shape = SubResource("CapsuleShape2D_b2r0b")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.2, 1.2)
 position_smoothing_enabled = true
+position_smoothing_speed = 2.5
 
-[node name="Lightbulb" type="Sprite2D" parent="."]
-visible = false
+[node name="Notifications" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 5.33333
+offset_right = 56.0
+offset_bottom = 45.3333
+
+[node name="Panel" type="PanelContainer" parent="Notifications"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = -48.0
+offset_right = 17.0
+offset_bottom = -8.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_fd4om")
+
+[node name="Label" type="Label" parent="Notifications/Panel"]
 texture_filter = 1
-position = Vector2(0, -53.3333)
-scale = Vector2(2, 2)
-texture = ExtResource("5_c3dr2")
+layout_mode = 2
+label_settings = SubResource("LabelSettings_bvkp3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 21.3333)
+shape = SubResource("CircleShape2D_wpl1x")
 
 [connection signal="animation_finished" from="Body" to="." method="_on_body_animation_finished"]

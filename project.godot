@@ -33,6 +33,10 @@ window/stretch/aspect="expand"
 
 enabled=PackedStringArray("res://addons/virtual_joystick/plugin.cfg")
 
+[global_group]
+
+shop="Area2D for a shop"
+
 [input]
 
 up={
@@ -78,7 +82,6 @@ open_inventory={
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true
-pointing/emulate_mouse_from_touch=false
 
 [layer_names]
 

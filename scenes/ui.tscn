@@ -1,21 +1,22 @@
-[gd_scene load_steps=38 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=45 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
-[ext_resource type="Script" path="res://scripts/TouchScreenButton.gd" id="2_lpp3g"]
+[ext_resource type="Script" path="res://scripts/buttons/TouchScreenButton.gd" id="2_lpp3g"]
 [ext_resource type="FontFile" uid="uid://cfor4htgcncag" path="res://assets/fonts/PeaberryMono.ttf" id="3_ttoiw"]
 [ext_resource type="Texture2D" uid="uid://dweeegoe5hn47" path="res://assets/tiles/inv_items.png" id="4_d5cbg"]
-[ext_resource type="Script" path="res://scripts/TouchScreenButton2.gd" id="5_2dgu2"]
-[ext_resource type="Texture2D" uid="uid://rgtcvu7rq60h" path="res://assets/tiles/cursorHand_grey.png" id="6_txnld"]
-[ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram (1).ttf" id="7_ak3u0"]
+[ext_resource type="Script" path="res://scripts/buttons/TouchScreenButton2.gd" id="5_2dgu2"]
+[ext_resource type="Texture2D" uid="uid://rgtcvu7rq60h" path="res://assets/other icons/cursorHand_grey.png" id="6_txnld"]
 [ext_resource type="PackedScene" uid="uid://dny5dpp5udtmc" path="res://scenes/inventory_item.tscn" id="8_d0ynw"]
-[ext_resource type="Script" path="res://scripts/touch_screen_button2.gd" id="8_dm5ih"]
-[ext_resource type="Script" path="res://scripts/touch_screen_button.gd" id="8_hrldg"]
+[ext_resource type="Script" path="res://scripts/buttons/touch_screen_button2.gd" id="8_dm5ih"]
+[ext_resource type="Script" path="res://scripts/buttons/touch_screen_button.gd" id="8_hrldg"]
 [ext_resource type="Texture2D" uid="uid://hkvhgy68mbwt" path="res://assets/other icons/Backpack.png" id="8_otfdw"]
 [ext_resource type="Texture2D" uid="uid://i1wrfpokwkrv" path="res://assets/other icons/Coin2.png" id="11_y52ah"]
 [ext_resource type="Texture2D" uid="uid://0qwcp00oep1c" path="res://assets/other icons/Fishing-Column.png" id="13_jhfam"]
 [ext_resource type="Texture2D" uid="uid://bq8v5ythff5pk" path="res://assets/other icons/Progress-Empty.png" id="14_cdgpj"]
 [ext_resource type="Texture2D" uid="uid://bfu0lohs641p0" path="res://assets/other icons/Progress-Bar.png" id="15_83dsy"]
 [ext_resource type="Texture2D" uid="uid://bn032jb1ii5ru" path="res://assets/other icons/Hook.png" id="16_ggv0v"]
+[ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram.ttf" id="17_g0huu"]
+[ext_resource type="Script" path="res://scripts/buttons/x_button.gd" id="18_q4fv6"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f8oh1"]
 
@@ -68,7 +69,7 @@ margin = Rect2(2, 2, 3, 2)
 size = Vector2(132, 132)
 
 [sub_resource type="LabelSettings" id="LabelSettings_o1pwl"]
-font = ExtResource("7_ak3u0")
+font = ExtResource("17_g0huu")
 font_size = 72
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dyjjo"]
@@ -110,7 +111,7 @@ expand_margin_right = 12.0
 expand_margin_bottom = 12.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_0jr5a"]
-font = ExtResource("7_ak3u0")
+font = ExtResource("17_g0huu")
 font_size = 72
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21cbf"]
@@ -132,6 +133,20 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_8axal"]
+font = ExtResource("17_g0huu")
+font_size = 100
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5esi8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_it2rl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nnw54"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sxdeh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cebw"]
 
 [node name="UI" type="CanvasLayer"]
 
@@ -302,7 +317,7 @@ offset_left = -120.0
 offset_top = -40.0
 offset_right = 120.0
 offset_bottom = 48.0
-theme_override_fonts/font = ExtResource("7_ak3u0")
+theme_override_fonts/font = ExtResource("17_g0huu")
 theme_override_font_sizes/font_size = 79
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s8ee3")
 theme_override_styles/hover = SubResource("StyleBoxFlat_dn5yn")
@@ -412,7 +427,7 @@ offset_bottom = 36.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 12
-theme_override_fonts/font = ExtResource("7_ak3u0")
+theme_override_fonts/font = ExtResource("17_g0huu")
 theme_override_font_sizes/font_size = 64
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s8ee3")
 theme_override_styles/hover = SubResource("StyleBoxFlat_dn5yn")
@@ -427,10 +442,10 @@ anchor_left = 0.05
 anchor_top = 0.089
 anchor_right = 0.944
 anchor_bottom = 0.844
-offset_left = -21.6
-offset_top = -15.892
-offset_right = -21.9201
-offset_bottom = -15.492
+offset_left = -29.6
+offset_top = 24.108
+offset_right = -29.9201
+offset_bottom = 24.508
 theme_override_constants/separation = 64
 
 [node name="InventoryItem" parent="Main/Inventory/Panel/GridContainer" instance=ExtResource("8_d0ynw")]
@@ -505,11 +520,55 @@ offset_right = 224.0
 offset_bottom = -48.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_fonts/font = ExtResource("7_ak3u0")
+theme_override_fonts/font = ExtResource("17_g0huu")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/background = SubResource("StyleBoxFlat_xgjoy")
 theme_override_styles/fill = SubResource("StyleBoxFlat_4egwi")
 show_percentage = false
+
+[node name="Shop" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="Shop"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 1256.0
+offset_bottom = 652.0
+
+[node name="Label" type="Label" parent="Shop/Panel"]
+texture_filter = 1
+layout_mode = 2
+offset_top = 16.0
+offset_right = 1232.0
+offset_bottom = 96.0
+text = "Shop"
+label_settings = SubResource("LabelSettings_8axal")
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Shop/Panel"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -72.0
+offset_bottom = 72.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 84
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5esi8")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_it2rl")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_nnw54")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_sxdeh")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5cebw")
+text = "X
+"
+script = ExtResource("18_q4fv6")
 
 [connection signal="pressed" from="Main/Buttons/TouchScreenButton" to="Main/Buttons/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Buttons/TouchScreenButton" to="Main/Buttons/TouchScreenButton" method="_on_released"]
@@ -519,3 +578,6 @@ show_percentage = false
 [connection signal="released" from="Main/Inventory Button/TouchScreenButton" to="Main/Inventory Button/TouchScreenButton" method="_on_released"]
 [connection signal="pressed" from="Main/Inventory/Panel/TouchScreenButton" to="Main/Inventory/Panel/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory/Panel/TouchScreenButton" to="Main/Inventory/Panel/TouchScreenButton" method="_on_released"]
+[connection signal="button_down" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_button_down"]
+[connection signal="button_up" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_button_up"]
+[connection signal="pressed" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_pressed"]

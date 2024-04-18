@@ -105,8 +105,20 @@ func get_rod_tip() -> Vector2:
 		return Vector2(global_position.x, global_position.y + 67)
 	return global_position
 
+
+
 func use() -> void:
 	print("Hmm...")	
+	if len($Area2D.get_overlapping_areas()) > 0:
+		for area in $Area2D.get_overlapping_areas():
+			if area.is_in_group("shop"):
+				if $UI/Shop.visible == true:
+					$UI/Main.visible = true 
+					$UI/Shop.visible = false
+				else:
+					$UI/Main.visible = false
+					$UI/Shop.visible = true
+				
 	
 func _on_body_animation_finished() -> void:
 	if $Body.animation.ends_with("fish_right") or $Body.animation.ends_with("fish_up") or $Body.animation.ends_with("fish_left") or $Body.animation.ends_with("fish_down"):
@@ -190,9 +202,14 @@ func _process_input(delta) -> void:
 		velocity.y = Input.get_action_strength("down") - Input.get_action_strength("up")  
 	velocity.normalized()
 
+	if $UI/Shop.visible == true:
+		velocity = Vector2(0.0, 0.0)
 	# Add this.
 	if Input.is_action_just_pressed("open_inventory"):
 		open_inventory()
+	
+	if Input.is_action_just_pressed("use"):
+		use()
 
 	if (Input.is_action_pressed("fish")):
 		if hookVelocity > -maxVelocity:
@@ -311,6 +328,13 @@ var tween: Tween
 func _physics_process(delta) -> void:
 	# Process player input
 	_process_input(delta)
+	$Notifications.visible = false
+	if len($Area2D.get_overlapping_areas()) > 0:
+		for area in $Area2D.get_overlapping_areas():
+			if area.is_in_group("shop"):
+				$Notifications.visible = true
+				$Notifications/Panel/Label.text = "Shop"
+	
 	
 	# Update UI
 	$UI/Main/Coins/PanelContainer/HBoxContainer/Label.text = "$" + buck_fiddy(coins)
