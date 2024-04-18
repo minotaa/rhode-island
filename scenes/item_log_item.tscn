@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c2dc8n2i1iuft"]
 
 [ext_resource type="Script" path="res://scripts/item_log_item.gd" id="1_o0gou"]
-[ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram (1).ttf" id="2_d376x"]
+[ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram.ttf" id="2_d376x"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_rmet0"]
 font = ExtResource("2_d376x")
