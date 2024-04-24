@@ -118,6 +118,29 @@ func use() -> void:
 				else:
 					$UI/Main.visible = false
 					$UI/Shop.visible = true
+			if area.is_in_group("sell"):
+				if $UI/Sell.visible == true:
+					$UI/Main.visible = true 
+					$UI/Sell.visible = false
+				else:
+					$UI/Main.visible = false
+					$UI/Sell.visible = true
+				for children in $UI/Sell/Panel/ScrollContainer/VBoxContainer.get_children():
+					children.queue_free()
+				var count = 0
+				var total: float
+				for item in inventory.list:
+					total += item.type.sell_price
+				$UI/Sell/Panel/Sell.text = "Sell" + "\t" + ".................." + "$" + buck_fiddy(total)
+				for i in inventory.list:
+					var object = inventory_item_object.instantiate()
+					object.position = Vector2(0, count * 32)
+					object.scale = Vector2(2.2, 2.2)
+					if i.type is Fish:
+						object.set_sprite(i.type.atlas_region_x, i.type.atlas_region_y, i.type.atlas_region_w, i.type.atlas_region_h)
+					object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + ".................." + str(i.type.sell_price * i.amount) + "g")
+					count += 1
+					$UI/Sell/Panel/ScrollContainer/VBoxContainer.add_child(object)
 				
 	
 func _on_body_animation_finished() -> void:
@@ -202,7 +225,7 @@ func _process_input(delta) -> void:
 		velocity.y = Input.get_action_strength("down") - Input.get_action_strength("up")  
 	velocity.normalized()
 
-	if $UI/Shop.visible == true:
+	if $UI/Shop.visible == true or $UI/Sell.visible == true:
 		velocity = Vector2(0.0, 0.0)
 	# Add this.
 	if Input.is_action_just_pressed("open_inventory"):
@@ -334,6 +357,9 @@ func _physics_process(delta) -> void:
 			if area.is_in_group("shop"):
 				$Notifications.visible = true
 				$Notifications/Panel/Label.text = "Shop"
+			if area.is_in_group("sell"):
+				$Notifications.visible = true
+				$Notifications/Panel/Label.text = "Sell Inventory"
 	
 	
 	# Update UI

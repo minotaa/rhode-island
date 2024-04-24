@@ -36,6 +36,7 @@ enabled=PackedStringArray("res://addons/virtual_joystick/plugin.cfg")
 [global_group]
 
 shop="Area2D for a shop"
+sell=""
 
 [input]
 
