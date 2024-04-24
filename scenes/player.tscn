@@ -482,9 +482,10 @@ font = ExtResource("6_funtk")
 font_size = 32
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wpl1x"]
-radius = 128.0
+radius = 84.0
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 4095
 position = Vector2(96, 1120)
 scale = Vector2(1.5, 1.5)
 script = ExtResource("1_k6cpm")
@@ -513,6 +514,7 @@ position_smoothing_enabled = true
 position_smoothing_speed = 2.5
 
 [node name="Notifications" type="Control" parent="."]
+z_index = 4096
 layout_mode = 3
 anchors_preset = 0
 offset_left = 16.0
