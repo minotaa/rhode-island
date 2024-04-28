@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=51 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/buttons/TouchScreenButton.gd" id="2_lpp3g"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bfu0lohs641p0" path="res://assets/other icons/Progress-Bar.png" id="15_83dsy"]
 [ext_resource type="Texture2D" uid="uid://bn032jb1ii5ru" path="res://assets/other icons/Hook.png" id="16_ggv0v"]
 [ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram.ttf" id="17_g0huu"]
+[ext_resource type="Script" path="res://scripts/buttons/sell.gd" id="18_0qopr"]
 [ext_resource type="Script" path="res://scripts/buttons/x_button.gd" id="18_q4fv6"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f8oh1"]
@@ -117,6 +118,14 @@ font_size = 72
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21cbf"]
 size = Vector2(115, 115)
 
+[sub_resource type="LabelSettings" id="LabelSettings_a8nlh"]
+font = ExtResource("17_g0huu")
+font_size = 72
+outline_size = 16
+outline_color = Color(0.18359, 0.18359, 0.18359, 1)
+shadow_size = 2
+shadow_color = Color(0.051971, 0.051971, 0.051971, 0)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gbr1f"]
 size = Vector2(82, 34)
 
@@ -136,7 +145,7 @@ corner_radius_bottom_left = 16
 
 [sub_resource type="LabelSettings" id="LabelSettings_8axal"]
 font = ExtResource("17_g0huu")
-font_size = 100
+font_size = 84
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5esi8"]
 
@@ -148,14 +157,6 @@ font_size = 100
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cebw"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_a8nlh"]
-font = ExtResource("17_g0huu")
-font_size = 72
-outline_size = 16
-outline_color = Color(0.18359, 0.18359, 0.18359, 1)
-shadow_size = 2
-shadow_color = Color(0.051971, 0.051971, 0.051971, 0)
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2gthc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mcnxq"]
@@ -166,7 +167,6 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 expand_margin_left = 12.0
 expand_margin_right = 12.0
-shadow_size = 1
 shadow_offset = Vector2(1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ug1g5"]
@@ -177,7 +177,6 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 expand_margin_left = 12.0
 expand_margin_right = 12.0
-shadow_size = 1
 shadow_offset = Vector2(1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8f1d4"]
@@ -188,7 +187,6 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 expand_margin_left = 12.0
 expand_margin_right = 12.0
-shadow_size = 1
 shadow_offset = Vector2(1, 1)
 
 [node name="UI" type="CanvasLayer"]
@@ -479,20 +477,33 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_jtexw")
 icon = ExtResource("8_otfdw")
 expand_icon = true
 
-[node name="GridContainer" type="VBoxContainer" parent="Main/Inventory/Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Main/Inventory/Panel"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 136.0
+offset_right = 1200.0
+offset_bottom = 600.0
+
+[node name="GridContainer" type="VBoxContainer" parent="Main/Inventory/Panel/ScrollContainer"]
 layout_mode = 2
-anchor_left = 0.05
-anchor_top = 0.089
-anchor_right = 0.944
-anchor_bottom = 0.844
-offset_left = -29.6
-offset_top = 24.108
-offset_right = -29.9201
-offset_bottom = 24.508
 theme_override_constants/separation = 64
 
-[node name="InventoryItem" parent="Main/Inventory/Panel/GridContainer" instance=ExtResource("8_d0ynw")]
+[node name="InventoryItem" parent="Main/Inventory/Panel/ScrollContainer/GridContainer" instance=ExtResource("8_d0ynw")]
 layout_mode = 2
+
+[node name="Title" type="Label" parent="Main/Inventory/Panel"]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_top = 24.0
+offset_right = 123.0
+offset_bottom = 81.0
+grow_horizontal = 2
+text = "Inventory"
+label_settings = SubResource("LabelSettings_a8nlh")
 
 [node name="BobberProgress" type="Control" parent="Main"]
 visible = false
@@ -644,37 +655,50 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Title" type="Label" parent="Sell/Panel"]
-layout_mode = 0
-offset_left = 56.0
-offset_top = 26.0
-offset_right = 434.0
-offset_bottom = 83.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -192.0
+offset_top = 34.0
+offset_right = 186.0
+offset_bottom = 91.0
+grow_horizontal = 2
 text = "Sell Inventory"
 label_settings = SubResource("LabelSettings_a8nlh")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Sell/Panel"]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 114.0
-offset_right = 1192.0
-offset_bottom = 498.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -192.0
+offset_right = 576.0
+offset_bottom = 192.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Sell/Panel/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
 theme_override_constants/separation = 72
 
 [node name="Sell" type="Button" parent="Sell/Panel"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -576.0
-offset_top = -98.0
-offset_right = -32.0
-offset_bottom = -18.0
-grow_horizontal = 0
+offset_left = -296.0
+offset_top = -106.0
+offset_right = 304.0
+offset_bottom = -26.0
+grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("17_g0huu")
 theme_override_font_sizes/font_size = 48
@@ -683,6 +707,28 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_mcnxq")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ug1g5")
 theme_override_styles/normal = SubResource("StyleBoxFlat_8f1d4")
 text = "Sell"
+script = ExtResource("18_0qopr")
+
+[node name="Button" type="Button" parent="Sell/Panel"]
+auto_translate_mode = 1
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -72.0
+offset_bottom = 72.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 84
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5esi8")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_it2rl")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_nnw54")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_sxdeh")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5cebw")
+text = "X
+"
+script = ExtResource("18_q4fv6")
 
 [connection signal="pressed" from="Main/Buttons/TouchScreenButton" to="Main/Buttons/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Buttons/TouchScreenButton" to="Main/Buttons/TouchScreenButton" method="_on_released"]
@@ -695,3 +741,6 @@ text = "Sell"
 [connection signal="button_down" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_button_down"]
 [connection signal="button_up" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_button_up"]
 [connection signal="pressed" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_pressed"]
+[connection signal="button_down" from="Sell/Panel/Button" to="Sell/Panel/Button" method="_on_button_down"]
+[connection signal="button_up" from="Sell/Panel/Button" to="Sell/Panel/Button" method="_on_button_up"]
+[connection signal="pressed" from="Sell/Panel/Button" to="Sell/Panel/Button" method="_on_pressed"]

@@ -36,7 +36,7 @@ func _ready() -> void:
 
 func open_inventory() -> void:
 	#$"UI/Main/Inventory/TouchScreenButton/Close Button".text = str(inventory.list.size()) + "/" + str(inventory.max_capacity)
-	for children in $UI/Main/Inventory/Panel/GridContainer.get_children():
+	for children in $UI/Main/Inventory/Panel/ScrollContainer/GridContainer.get_children():
 		children.queue_free()
 	var count = 0
 	for i in inventory.list:
@@ -44,9 +44,9 @@ func open_inventory() -> void:
 		object.position = Vector2(0, count * 32)
 		if i.type is Fish:
 			object.set_sprite(i.type.atlas_region_x, i.type.atlas_region_y, i.type.atlas_region_w, i.type.atlas_region_h)
-		object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + ".................." + str(i.type.sell_price * i.amount) + "g")
+		object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + ".................." + "$" + buck_fiddy(i.type.sell_price * i.amount))
 		count += 1
-		$UI/Main/Inventory/Panel/GridContainer.add_child(object)
+		$UI/Main/Inventory/Panel/ScrollContainer/GridContainer.add_child(object)
 	$UI/Main/Inventory.visible = !$UI/Main/Inventory.visible
 	if $UI/Main/Inventory.visible == true:
 		$UI/Main/Joystick.visible = false
@@ -130,7 +130,7 @@ func use() -> void:
 				var count = 0
 				var total: float
 				for item in inventory.list:
-					total += item.type.sell_price
+					total += item.type.sell_price * item.amount
 				$UI/Sell/Panel/Sell.text = "Sell" + "\t" + ".................." + "$" + buck_fiddy(total)
 				for i in inventory.list:
 					var object = inventory_item_object.instantiate()
@@ -138,7 +138,7 @@ func use() -> void:
 					object.scale = Vector2(2.2, 2.2)
 					if i.type is Fish:
 						object.set_sprite(i.type.atlas_region_x, i.type.atlas_region_y, i.type.atlas_region_w, i.type.atlas_region_h)
-					object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + ".................." + str(i.type.sell_price * i.amount) + "g")
+					object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + ".................." + "$" + buck_fiddy(i.type.sell_price * i.amount))
 					count += 1
 					$UI/Sell/Panel/ScrollContainer/VBoxContainer.add_child(object)
 				
