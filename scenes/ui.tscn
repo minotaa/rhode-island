@@ -377,11 +377,14 @@ offset_top = 24.0
 offset_right = 24.0
 offset_bottom = 23.76
 
-[node name="Container" type="VBoxContainer" parent="Main/Item Log"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Main/Item Log"]
 layout_mode = 0
-offset_right = 384.0
-offset_bottom = 192.0
-theme_override_constants/separation = 32
+offset_right = 576.0
+offset_bottom = 400.0
+
+[node name="Container" type="VBoxContainer" parent="Main/Item Log/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 52
 
 [node name="Coins" type="Control" parent="Main"]
 layout_mode = 1
