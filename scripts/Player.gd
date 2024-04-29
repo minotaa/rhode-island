@@ -204,8 +204,8 @@ func save_game(_data: Dictionary, reason: String):
 		item_log.set_text("- Saved the game. " + "(" + reason + ")")
 	else:
 		item_log.set_text("- Saved the game.")
-	$"UI/Main/Item Log".add_child(item_log)
-	print("Saved the game.")
+	$"UI/Main/Item Log/ScrollContainer/Container".add_child(item_log)
+	print("Saved the game. " + "(" + reason + ")")
 	
 func load_game():
 	if not FileAccess.file_exists("user://game.rtlbe"):
@@ -227,7 +227,7 @@ func load_game():
 	print("Loaded the game.")
 	var item_log = item_log_object.instantiate()
 	item_log.set_text("- Loaded the game.")
-	$"UI/Main/Item Log".add_child(item_log)
+	$"UI/Main/Item Log/ScrollContainer/Container".add_child(item_log)
 
 
 
@@ -411,7 +411,7 @@ func _physics_process(delta) -> void:
 				item_log.set_item(item)
 				Inventory.add_item(item)
 				print("Added item to inventory.")
-			$"UI/Main/Item Log".add_child(item_log)
+			$"UI/Main/Item Log/ScrollContainer/Container".add_child(item_log)
 			save_game(get_game_data(), "actio")
 			bobber_fish.queue_free()
 			bobber_fish = null
