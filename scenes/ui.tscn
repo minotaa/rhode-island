@@ -741,6 +741,7 @@ script = ExtResource("18_q4fv6")
 [connection signal="button_down" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_button_down"]
 [connection signal="button_up" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_button_up"]
 [connection signal="pressed" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_pressed"]
+[connection signal="pressed" from="Sell/Panel/Sell" to="Sell/Panel/Sell" method="_on_pressed"]
 [connection signal="button_down" from="Sell/Panel/Button" to="Sell/Panel/Button" method="_on_button_down"]
 [connection signal="button_up" from="Sell/Panel/Button" to="Sell/Panel/Button" method="_on_button_up"]
 [connection signal="pressed" from="Sell/Panel/Button" to="Sell/Panel/Button" method="_on_pressed"]
