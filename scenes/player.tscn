@@ -543,4 +543,9 @@ vertical_alignment = 1
 position = Vector2(0, 21.3333)
 shape = SubResource("CircleShape2D_wpl1x")
 
+[node name="SaveTimer" type="Timer" parent="."]
+wait_time = 30.0
+autostart = true
+
 [connection signal="animation_finished" from="Body" to="." method="_on_body_animation_finished"]
+[connection signal="timeout" from="SaveTimer" to="." method="_on_save_timer_timeout"]

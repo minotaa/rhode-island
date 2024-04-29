@@ -1,8 +1,16 @@
-extends Object
-class_name Inventory
+extends Node
+#class_name Inventory
 
 var list = []
 var max_capacity = 10
+
+func sell_items() -> void:
+	var total = 0.0
+	for i in list:
+		total += i.type.sell_price * i.amount
+	list = []
+	Coins.balance += total
+
 
 func size() -> int:
 	var size = 0

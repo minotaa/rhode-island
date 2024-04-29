@@ -20,10 +20,9 @@ var fishing = false
 var reeling = false
 var fish_on_line = false
 var reeling_back_fish = false
-var coins = 0.0
 var bobber: RigidBody2D
 var bobber_fish: Area2D
-var inventory = Inventory.new()
+#var inventory = Inventory.new()
 
 var hookVelocity = 0;
 var hookAcceleration = .1;
@@ -39,12 +38,12 @@ func open_inventory() -> void:
 	for children in $UI/Main/Inventory/Panel/ScrollContainer/GridContainer.get_children():
 		children.queue_free()
 	var count = 0
-	for i in inventory.list:
+	for i in Inventory.list:
 		var object = inventory_item_object.instantiate()
 		object.position = Vector2(0, count * 32)
 		if i.type is Fish:
 			object.set_sprite(i.type.atlas_region_x, i.type.atlas_region_y, i.type.atlas_region_w, i.type.atlas_region_h)
-		object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + ".................." + "$" + buck_fiddy(i.type.sell_price * i.amount))
+		object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + "...................." + "$" + buck_fiddy(i.type.sell_price * i.amount))
 		count += 1
 		$UI/Main/Inventory/Panel/ScrollContainer/GridContainer.add_child(object)
 	$UI/Main/Inventory.visible = !$UI/Main/Inventory.visible
@@ -129,16 +128,16 @@ func use() -> void:
 					children.queue_free()
 				var count = 0
 				var total: float
-				for item in inventory.list:
+				for item in Inventory.list:
 					total += item.type.sell_price * item.amount
-				$UI/Sell/Panel/Sell.text = "Sell" + "\t" + ".................." + "$" + buck_fiddy(total)
-				for i in inventory.list:
+				$UI/Sell/Panel/Sell.text = "Sell" + "\t" + "...................." + "$" + buck_fiddy(total)
+				for i in Inventory.list:
 					var object = inventory_item_object.instantiate()
 					object.position = Vector2(0, count * 32)
 					object.scale = Vector2(2.2, 2.2)
 					if i.type is Fish:
 						object.set_sprite(i.type.atlas_region_x, i.type.atlas_region_y, i.type.atlas_region_w, i.type.atlas_region_h)
-					object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + ".................." + "$" + buck_fiddy(i.type.sell_price * i.amount))
+					object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + "...................." + "$" + buck_fiddy(i.type.sell_price * i.amount))
 					count += 1
 					$UI/Sell/Panel/ScrollContainer/VBoxContainer.add_child(object)
 				
@@ -171,6 +170,8 @@ func _on_body_animation_finished() -> void:
 				fishing = false
 				play_idle_animation()
 
+
+
 func play_idle_animation() -> void:
 	$Body.play("char1_idle_" + last_direction)
 
@@ -188,16 +189,22 @@ func add_fish(min_d, max_d, move_speed, move_time):
 
 func get_game_data() -> Dictionary:
 	return {
-		"inventory": inventory.to_list(),
-		"inventory_max_capacity": inventory.max_capacity,
-		"coins": coins
+		"inventory": Inventory.to_list(),
+		"inventory_max_capacity": Inventory.max_capacity,
+		"coins": Coins.balance
 	}
 
-func save_game(_data: Dictionary):
+func save_game(_data: Dictionary, reason: String):
 	var save_file = FileAccess.open("user://game.rtlbe", FileAccess.WRITE)
 	save_file.store_line(JSON.stringify(get_game_data()))
 	#for key in _data.keys():
 	#	save_file.store_line(JSON.stringify({key: _data[key]}))
+	var item_log = item_log_object.instantiate()
+	if reason != "action":
+		item_log.set_text("- Saved the game. " + "(" + reason + ")")
+	else:
+		item_log.set_text("- Saved the game.")
+	$"UI/Main/Item Log".add_child(item_log)
 	print("Saved the game.")
 	
 func load_game():
@@ -214,10 +221,15 @@ func load_game():
 			continue
 		
 		var data = json.get_data()
-		inventory.set_list_from_save(data["inventory"])
-		coins = data["coins"]
-		inventory.max_capacity = data["inventory_max_capacity"] 
+		Inventory.set_list_from_save(data["inventory"])
+		Coins.balance = data["coins"]
+		Inventory.max_capacity = data["inventory_max_capacity"] 
 	print("Loaded the game.")
+	var item_log = item_log_object.instantiate()
+	item_log.set_text("- Loaded the game.")
+	$"UI/Main/Item Log".add_child(item_log)
+
+
 
 func _process_input(delta) -> void:
 	if reeling_back_fish == false and reeling == false:
@@ -264,7 +276,7 @@ func _process_input(delta) -> void:
 			if ($UI/Main/BobberProgress/Progress.value >= 999):
 				reeling = true
 				reeling_back_fish = false
-				print("caught")
+				print("Caught the fish.")
 		else:
 			$UI/Main/BobberProgress/Progress.value -= 85 * delta
 			if ($UI/Main/BobberProgress/Progress.value <= 0):
@@ -272,7 +284,7 @@ func _process_input(delta) -> void:
 				reeling_back_fish = false
 				fishing = false
 				play_idle_animation()
-				print("nope")
+				print("Lost the fish.")
 	else:
 		$UI/Main/BobberProgress.visible = false
 		for children in $UI/Main/BobberProgress/FishingColumn.get_children():
@@ -363,8 +375,8 @@ func _physics_process(delta) -> void:
 	
 	
 	# Update UI
-	$UI/Main/Coins/PanelContainer/HBoxContainer/Label.text = "$" + buck_fiddy(coins)
-	$"UI/Main/Inventory Button/TouchScreenButton/Button".text = str(inventory.size()) + "/" + str(inventory.max_capacity)
+	$UI/Main/Coins/PanelContainer/HBoxContainer/Label.text = "$" + buck_fiddy(Coins.balance)
+	$"UI/Main/Inventory Button/TouchScreenButton/Button".text = str(Inventory.size()) + "/" + str(Inventory.max_capacity)
 	
 	if bobber != null and fishing == false:
 		bobber.queue_free()
@@ -392,13 +404,15 @@ func _physics_process(delta) -> void:
 			item.amount = 1
 			item.type = Items.get_from_id(bobber_fish.type)
 			var item_log = item_log_object.instantiate()
-			if inventory.is_full():
+			if Inventory.is_full():
 				item_log.set_text("- Your inventory is full.")
+				print("Inventory is too full to add item.")
 			else:
 				item_log.set_item(item)
-				inventory.add_item(item)
+				Inventory.add_item(item)
+				print("Added item to inventory.")
 			$"UI/Main/Item Log".add_child(item_log)
-			save_game(get_game_data())
+			save_game(get_game_data(), "actio")
 			bobber_fish.queue_free()
 			bobber_fish = null
 			play_idle_animation()
@@ -416,3 +430,5 @@ func _physics_process(delta) -> void:
 		$Camera2D.global_position = lerp($Camera2D.global_position, global_position, 0.05)
 		$Camera2D.zoom = lerp($Camera2D.zoom, Vector2(1.2, 1.2), 0.05)
 
+func _on_save_timer_timeout() -> void:
+	save_game(get_game_data(), "auto")
