@@ -191,7 +191,9 @@ func get_game_data() -> Dictionary:
 	return {
 		"inventory": Inventory.to_list(),
 		"inventory_max_capacity": Inventory.max_capacity,
-		"coins": Coins.balance
+		"coins": Coins.balance,
+		"pos_x": position.x,
+		"pos_y": position.y
 	}
 
 func save_game(_data: Dictionary, reason: String):
@@ -202,8 +204,8 @@ func save_game(_data: Dictionary, reason: String):
 	var item_log = item_log_object.instantiate()
 	if reason != "action":
 		item_log.set_text("- Saved the game. " + "(" + reason + ")")
-	else:
-		item_log.set_text("- Saved the game.")
+	#else:
+	#	item_log.set_text("- Saved the game.")
 	$"UI/Main/Item Log/ScrollContainer/Container".add_child(item_log)
 	print("Saved the game. " + "(" + reason + ")")
 	
@@ -224,6 +226,10 @@ func load_game():
 		Inventory.set_list_from_save(data["inventory"])
 		Coins.balance = data["coins"]
 		Inventory.max_capacity = data["inventory_max_capacity"] 
+		if data["pos_x"] != null:
+			position.x = data["pos_x"]
+		if data["pos_y"] != null:
+			position.y = data["pos_y"]
 	print("Loaded the game.")
 	var item_log = item_log_object.instantiate()
 	item_log.set_text("- Loaded the game.")
@@ -412,7 +418,7 @@ func _physics_process(delta) -> void:
 				Inventory.add_item(item)
 				print("Added item to inventory.")
 			$"UI/Main/Item Log/ScrollContainer/Container".add_child(item_log)
-			save_game(get_game_data(), "actio")
+			save_game(get_game_data(), "action")
 			bobber_fish.queue_free()
 			bobber_fish = null
 			play_idle_animation()

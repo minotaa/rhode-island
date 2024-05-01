@@ -5764,8 +5764,3 @@ shape = SubResource("RectangleShape2D_g3fjv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sell"]
 position = Vector2(1440, 1560)
 shape = SubResource("RectangleShape2D_hxmmc")
-
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
-energy = 0.05
-shadow_filter = 1
-shadow_filter_smooth = 1.0

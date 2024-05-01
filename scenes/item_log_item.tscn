@@ -20,9 +20,8 @@ texture_filter = 1
 layout_mode = 0
 offset_left = 24.0
 offset_top = 8.0
-offset_right = 267.0
-offset_bottom = 65.0
-text = "- x1 Plaice"
+offset_right = 944.0
+offset_bottom = 125.0
 label_settings = SubResource("LabelSettings_rmet0")
 
 [node name="Timer" type="Timer" parent="."]
