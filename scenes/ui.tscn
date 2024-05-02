@@ -430,6 +430,7 @@ vertical_alignment = 1
 
 [node name="Inventory" type="Control" parent="Main"]
 visible = false
+custom_minimum_size = Vector2(2.08165e-12, 128)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -481,6 +482,7 @@ icon = ExtResource("8_otfdw")
 expand_icon = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Main/Inventory/Panel"]
+custom_minimum_size = Vector2(2.08165e-12, 128)
 layout_mode = 0
 offset_left = 48.0
 offset_top = 136.0
@@ -488,10 +490,14 @@ offset_right = 1200.0
 offset_bottom = 600.0
 
 [node name="GridContainer" type="VBoxContainer" parent="Main/Inventory/Panel/ScrollContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 128)
 layout_mode = 2
-theme_override_constants/separation = 64
+theme_override_constants/separation = 76
 
 [node name="InventoryItem" parent="Main/Inventory/Panel/ScrollContainer/GridContainer" instance=ExtResource("8_d0ynw")]
+layout_mode = 2
+
+[node name="InventoryItem2" parent="Main/Inventory/Panel/ScrollContainer/GridContainer" instance=ExtResource("8_d0ynw")]
 layout_mode = 2
 
 [node name="Title" type="Label" parent="Main/Inventory/Panel"]
@@ -686,9 +692,9 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Sell/Panel/ScrollContainer"]
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 72
+theme_override_constants/separation = 80
 
 [node name="Sell" type="Button" parent="Sell/Panel"]
 layout_mode = 1

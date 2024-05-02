@@ -332,7 +332,7 @@ func _init():
 	bonefish.sell_price = 35.0
 	bonefish.reel_location = "beach"
 	bonefish.reel_weight = 55
-	bonefish.atlas_region_x = 72.0
+	bonefish.atlas_region_x = 80.0
 	bonefish.atlas_region_y = 32.0
 	fish_list.append(bonefish)
 
@@ -356,3 +356,6 @@ func _init():
 	black_drum.sell_price = 45.0
 	black_drum.reel_location = "beach"
 	black_drum.reel_weight = 25
+	black_drum.atlas_region_x = 112.0
+	black_drum.atlas_region_y = 32.0
+	fish_list.append(black_drum)
