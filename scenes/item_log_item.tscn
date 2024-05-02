@@ -23,6 +23,7 @@ offset_top = 8.0
 offset_right = 944.0
 offset_bottom = 125.0
 label_settings = SubResource("LabelSettings_rmet0")
+autowrap_mode = 3
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.25

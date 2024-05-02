@@ -37,15 +37,19 @@ func open_inventory() -> void:
 	#$"UI/Main/Inventory/TouchScreenButton/Close Button".text = str(inventory.list.size()) + "/" + str(inventory.max_capacity)
 	for children in $UI/Main/Inventory/Panel/ScrollContainer/GridContainer.get_children():
 		children.queue_free()
+	#print(Inventory.max_capacity)
+	$"UI/Main/Inventory/Panel/ScrollContainer/GridContainer"
 	var count = 0
 	for i in Inventory.list:
+		count += 1
+		#print(count)
+		#print(str(i.amount) + " " + i.type.name)
 		var object = inventory_item_object.instantiate()
-		object.position = Vector2(0, count * 32)
 		if i.type is Fish:
 			object.set_sprite(i.type.atlas_region_x, i.type.atlas_region_y, i.type.atlas_region_w, i.type.atlas_region_h)
 		object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + "...................." + "$" + buck_fiddy(i.type.sell_price * i.amount))
-		count += 1
 		$UI/Main/Inventory/Panel/ScrollContainer/GridContainer.add_child(object)
+	$UI/Main/Inventory/Panel/ScrollContainer/GridContainer.custom_minimum_size = Vector2(1000, count * 80)
 	$UI/Main/Inventory.visible = !$UI/Main/Inventory.visible
 	if $UI/Main/Inventory.visible == true:
 		$UI/Main/Joystick.visible = false
@@ -124,6 +128,7 @@ func use() -> void:
 				else:
 					$UI/Main.visible = false
 					$UI/Sell.visible = true
+	
 				for children in $UI/Sell/Panel/ScrollContainer/VBoxContainer.get_children():
 					children.queue_free()
 				var count = 0
@@ -131,16 +136,18 @@ func use() -> void:
 				for item in Inventory.list:
 					total += item.type.sell_price * item.amount
 				$UI/Sell/Panel/Sell.text = "Sell" + "\t" + "...................." + "$" + buck_fiddy(total)
+				#print(Inventory.max_capacity)
+				#print(Items.fish_list.size())
 				for i in Inventory.list:
+					#print(str(i.amount) + " " + i.type.name)
 					var object = inventory_item_object.instantiate()
-					object.position = Vector2(0, count * 32)
 					object.scale = Vector2(2.2, 2.2)
 					if i.type is Fish:
 						object.set_sprite(i.type.atlas_region_x, i.type.atlas_region_y, i.type.atlas_region_w, i.type.atlas_region_h)
-					object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + "...................." + "$" + buck_fiddy(i.type.sell_price * i.amount))
+					object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + "......................\t" + "$" + buck_fiddy(i.type.sell_price * i.amount))
 					count += 1
 					$UI/Sell/Panel/ScrollContainer/VBoxContainer.add_child(object)
-				
+				$UI/Sell/Panel/ScrollContainer/VBoxContainer.custom_minimum_size = Vector2(1000, count * 80)
 	
 func _on_body_animation_finished() -> void:
 	if $Body.animation.ends_with("fish_right") or $Body.animation.ends_with("fish_up") or $Body.animation.ends_with("fish_left") or $Body.animation.ends_with("fish_down"):
