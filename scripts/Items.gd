@@ -213,7 +213,7 @@ func _init():
 	bream.sell_price = 12.50
 	bream.reel_weight = 40
 	bream.reel_location = "beach"
-	bream.atlas_region_x = 72.0
+	bream.atlas_region_x = 80.0
 	bream.atlas_region_y = 16.0
 	fish_list.append(bream)
 	

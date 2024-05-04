@@ -35,10 +35,10 @@ func _ready() -> void:
 
 func open_inventory() -> void:
 	#$"UI/Main/Inventory/TouchScreenButton/Close Button".text = str(inventory.list.size()) + "/" + str(inventory.max_capacity)
-	for children in $UI/Main/Inventory/Panel/ScrollContainer/GridContainer.get_children():
+	for children in $"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer".get_children():
 		children.queue_free()
 	#print(Inventory.max_capacity)
-	$"UI/Main/Inventory/Panel/ScrollContainer/GridContainer"
+	$"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer"
 	var count = 0
 	for i in Inventory.list:
 		count += 1
@@ -48,8 +48,8 @@ func open_inventory() -> void:
 		if i.type is Fish:
 			object.set_sprite(i.type.atlas_region_x, i.type.atlas_region_y, i.type.atlas_region_w, i.type.atlas_region_h)
 		object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + "...................." + "$" + buck_fiddy(i.type.sell_price * i.amount))
-		$UI/Main/Inventory/Panel/ScrollContainer/GridContainer.add_child(object)
-	$UI/Main/Inventory/Panel/ScrollContainer/GridContainer.custom_minimum_size = Vector2(1000, count * 80)
+		$"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer".add_child(object)
+	$"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer".custom_minimum_size = Vector2(1000, count * 80)
 	$UI/Main/Inventory.visible = !$UI/Main/Inventory.visible
 	if $UI/Main/Inventory.visible == true:
 		$UI/Main/Joystick.visible = false
@@ -362,13 +362,11 @@ func _process_input(delta) -> void:
 	move_and_slide()
 
 func buck_fiddy(float_number: float) -> String:
-	var formatted_string = str(floor(float_number * 100) / 100) # Round down to two decimal points
-	if float(float_number) == int(float_number):
-		formatted_string += ".00"
-	else:
-		var decimal_part = float_number - int(float_number)
-		if abs(decimal_part * 100 - round(decimal_part * 100)) < 0.0001: # Check if decimal part rounds to 0
-			formatted_string += "0"
+	var rounded_value = round(float_number * 100) / 100.0
+
+	# Convert to string with fixed-point notation
+	var formatted_string = "%.2f" % [rounded_value]
+
 	return formatted_string
 
 var tween: Tween
