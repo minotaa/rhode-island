@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=56 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/buttons/TouchScreenButton.gd" id="2_lpp3g"]
@@ -114,6 +114,30 @@ expand_margin_bottom = 12.0
 [sub_resource type="LabelSettings" id="LabelSettings_0jr5a"]
 font = ExtResource("17_g0huu")
 font_size = 72
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7078t"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.143069, 0.128853, 0.114626, 0.745098)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1s4r"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_djtna"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.0117647, 0.0117647, 0.0117647, 0.792157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gfyfq"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 0.658824)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rkivi"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.141176, 0.141176, 0.141176, 0.635294)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21cbf"]
 size = Vector2(115, 115)
@@ -438,26 +462,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="Main/Inventory"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -616.0
-offset_top = -336.0
-offset_right = 616.0
-offset_bottom = 292.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="TabContainer" type="TabContainer" parent="Main/Inventory"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 1256.0
+offset_bottom = 656.0
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 54
+theme_override_styles/tab_focus = SubResource("StyleBoxFlat_7078t")
+theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_a1s4r")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_djtna")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_gfyfq")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_rkivi")
+tab_alignment = 1
+current_tab = 0
 
-[node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory/Panel"]
-position = Vector2(1168, 64)
+[node name="Your Bag" type="Panel" parent="Main/Inventory/TabContainer"]
+layout_mode = 2
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory/TabContainer/Your Bag"]
+position = Vector2(1168, 305)
 shape = SubResource("RectangleShape2D_21cbf")
 script = ExtResource("8_dm5ih")
 
-[node name="Close Button" type="Button" parent="Main/Inventory/Panel/TouchScreenButton"]
+[node name="Close Button" type="Button" parent="Main/Inventory/TabContainer/Your Bag/TouchScreenButton"]
 auto_translate_mode = 1
 texture_filter = 1
 anchors_preset = 8
@@ -481,27 +510,33 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_jtexw")
 icon = ExtResource("8_otfdw")
 expand_icon = true
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Main/Inventory/Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Main/Inventory/TabContainer/Your Bag"]
 custom_minimum_size = Vector2(2.08165e-12, 128)
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_left = 48.0
-offset_top = 136.0
-offset_right = 1200.0
-offset_bottom = 600.0
+offset_top = -255.5
+offset_right = 1096.0
+offset_bottom = 264.5
+grow_vertical = 2
 
-[node name="GridContainer" type="VBoxContainer" parent="Main/Inventory/Panel/ScrollContainer"]
+[node name="GridContainer" type="VBoxContainer" parent="Main/Inventory/TabContainer/Your Bag/ScrollContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 128)
 layout_mode = 2
 theme_override_constants/separation = 76
 
-[node name="InventoryItem" parent="Main/Inventory/Panel/ScrollContainer/GridContainer" instance=ExtResource("8_d0ynw")]
+[node name="InventoryItem" parent="Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer" instance=ExtResource("8_d0ynw")]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="InventoryItem2" parent="Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer" instance=ExtResource("8_d0ynw")]
 layout_mode = 2
 
-[node name="InventoryItem2" parent="Main/Inventory/Panel/ScrollContainer/GridContainer" instance=ExtResource("8_d0ynw")]
-layout_mode = 2
-
-[node name="Title" type="Label" parent="Main/Inventory/Panel"]
+[node name="Title" type="Label" parent="Main/Inventory/TabContainer/Your Bag"]
 auto_translate_mode = 1
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -513,6 +548,10 @@ offset_bottom = 81.0
 grow_horizontal = 2
 text = "Inventory"
 label_settings = SubResource("LabelSettings_a8nlh")
+
+[node name="Fishing Rod" type="Panel" parent="Main/Inventory/TabContainer"]
+visible = false
+layout_mode = 2
 
 [node name="BobberProgress" type="Control" parent="Main"]
 visible = false
@@ -745,8 +784,8 @@ script = ExtResource("18_q4fv6")
 [connection signal="released" from="Main/Buttons/TouchScreenButton2" to="Main/Buttons/TouchScreenButton2" method="_on_released"]
 [connection signal="pressed" from="Main/Inventory Button/TouchScreenButton" to="Main/Inventory Button/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory Button/TouchScreenButton" to="Main/Inventory Button/TouchScreenButton" method="_on_released"]
-[connection signal="pressed" from="Main/Inventory/Panel/TouchScreenButton" to="Main/Inventory/Panel/TouchScreenButton" method="_on_pressed"]
-[connection signal="released" from="Main/Inventory/Panel/TouchScreenButton" to="Main/Inventory/Panel/TouchScreenButton" method="_on_released"]
+[connection signal="pressed" from="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" to="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" method="_on_pressed"]
+[connection signal="released" from="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" to="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" method="_on_released"]
 [connection signal="button_down" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_button_down"]
 [connection signal="button_up" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_button_up"]
 [connection signal="pressed" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_pressed"]
