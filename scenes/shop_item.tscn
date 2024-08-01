@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbacbq6j3kvfp"]
+[gd_scene load_steps=10 format=3 uid="uid://cbacbq6j3kvfp"]
 
 [ext_resource type="Texture2D" uid="uid://bbgnt62w2u4co" path="res://assets/other icons/Lightbulb.png" id="1_btu60"]
 [ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram.ttf" id="2_ckuno"]
@@ -10,10 +10,6 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
-
-[sub_resource type="LabelSettings" id="LabelSettings_i4y8i"]
-font = ExtResource("2_ckuno")
-font_size = 48
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jwo04"]
 
@@ -38,62 +34,45 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[node name="Panel" type="Panel"]
+[sub_resource type="LabelSettings" id="LabelSettings_i4y8i"]
+font = ExtResource("2_ckuno")
+font_size = 52
+
+[sub_resource type="LabelSettings" id="LabelSettings_2fw6s"]
+font = ExtResource("2_ckuno")
+font_size = 28
+
+[node name="Shop Item" type="Control"]
+custom_minimum_size = Vector2(352, 456)
+layout_mode = 3
+anchor_right = 0.275
+anchor_bottom = 0.633
+offset_bottom = 0.239988
+
+[node name="Panel" type="Panel" parent="."]
 auto_translate_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -128.0
-offset_bottom = -656.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 1
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 344.0
+offset_bottom = 448.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ci8br")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Button" type="Button" parent="Panel"]
 auto_translate_mode = 1
 texture_filter = 1
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 16.0
-offset_top = -24.0
-offset_right = 64.0
-offset_bottom = 24.0
-grow_vertical = 2
-texture = ExtResource("1_btu60")
-
-[node name="Name" type="Label" parent="."]
-auto_translate_mode = 1
-texture_filter = 1
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 80.0
-offset_top = -19.0
-offset_right = 888.0
-offset_bottom = 19.0
-grow_vertical = 2
-text = "Plaice"
-label_settings = SubResource("LabelSettings_i4y8i")
-autowrap_mode = 2
-
-[node name="Button" type="Button" parent="."]
-auto_translate_mode = 1
-texture_filter = 1
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -249.0
-offset_top = -24.0
-offset_right = -24.0
-offset_bottom = 24.0
-grow_horizontal = 0
-grow_vertical = 2
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -144.0
+offset_top = -80.0
+offset_right = 144.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_fonts/font = ExtResource("2_ckuno")
 theme_override_font_sizes/font_size = 52
 theme_override_styles/focus = SubResource("StyleBoxEmpty_jwo04")
@@ -101,3 +80,56 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_twoqf")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_53j1a")
 theme_override_styles/normal = SubResource("StyleBoxFlat_rtyeg")
 text = "Buy $"
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+auto_translate_mode = 1
+texture_filter = 1
+layout_mode = 1
+offset_left = 112.0
+offset_top = 24.0
+offset_right = 232.0
+offset_bottom = 144.0
+texture = ExtResource("1_btu60")
+
+[node name="Name" type="Label" parent="Panel"]
+auto_translate_mode = 1
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -104.0
+offset_top = 176.0
+offset_right = 112.0
+offset_bottom = 224.0
+grow_horizontal = 2
+text = "Plaice"
+label_settings = SubResource("LabelSettings_i4y8i")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -152.0
+offset_top = 12.0
+offset_right = 152.0
+offset_bottom = 124.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="Description" type="Label" parent="Panel/ScrollContainer"]
+auto_translate_mode = 1
+texture_filter = 1
+custom_minimum_size = Vector2(308, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "This is a test description for a non-existent item, so, yeah, hi, hello, hope you're having a nice time."
+label_settings = SubResource("LabelSettings_2fw6s")
+horizontal_alignment = 1
+autowrap_mode = 2
