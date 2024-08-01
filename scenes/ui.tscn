@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://dweeegoe5hn47" path="res://assets/tiles/inv_items.png" id="4_d5cbg"]
 [ext_resource type="Script" path="res://scripts/buttons/TouchScreenButton2.gd" id="5_2dgu2"]
 [ext_resource type="Texture2D" uid="uid://rgtcvu7rq60h" path="res://assets/other icons/cursorHand_grey.png" id="6_txnld"]
-[ext_resource type="PackedScene" uid="uid://dny5dpp5udtmc" path="res://scenes/inventory_item.tscn" id="8_d0ynw"]
 [ext_resource type="Script" path="res://scripts/buttons/touch_screen_button2.gd" id="8_dm5ih"]
 [ext_resource type="Script" path="res://scripts/buttons/touch_screen_button.gd" id="8_hrldg"]
 [ext_resource type="Texture2D" uid="uid://hkvhgy68mbwt" path="res://assets/other icons/Backpack.png" id="8_otfdw"]
@@ -117,7 +116,7 @@ font = ExtResource("17_g0huu")
 font_size = 72
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7078t"]
-content_margin_left = 16.0
+content_margin_left = 20.0
 content_margin_right = 16.0
 bg_color = Color(0.143069, 0.128853, 0.114626, 0.745098)
 
@@ -150,6 +149,10 @@ outline_size = 16
 outline_color = Color(0.18359, 0.18359, 0.18359, 1)
 shadow_size = 2
 shadow_color = Color(0.051971, 0.051971, 0.051971, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_c5ifu"]
+font = ExtResource("17_g0huu")
+font_size = 84
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gbr1f"]
 size = Vector2(82, 34)
@@ -389,7 +392,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_s8ee3")
 theme_override_styles/hover = SubResource("StyleBoxFlat_dn5yn")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_dq7gx")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jtexw")
-text = "30/30"
+text = "women fear me fish love me"
 icon = ExtResource("8_otfdw")
 expand_icon = true
 
@@ -535,13 +538,6 @@ custom_minimum_size = Vector2(2.08165e-12, 128)
 layout_mode = 2
 theme_override_constants/separation = 76
 
-[node name="InventoryItem" parent="Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer" instance=ExtResource("8_d0ynw")]
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="InventoryItem2" parent="Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer" instance=ExtResource("8_d0ynw")]
-layout_mode = 2
-
 [node name="Title" type="Label" parent="Main/Inventory/TabContainer/Your Bag"]
 auto_translate_mode = 1
 visible = false
@@ -556,6 +552,17 @@ offset_bottom = 81.0
 grow_horizontal = 2
 text = "Inventory"
 label_settings = SubResource("LabelSettings_a8nlh")
+
+[node name="Empty" type="Label" parent="Main/Inventory/TabContainer/Your Bag"]
+layout_mode = 2
+offset_left = 40.0
+offset_top = 197.0
+offset_right = 1080.0
+offset_bottom = 428.0
+text = "You don't have any items in your fishing bag. Fish by the water to get fish!"
+label_settings = SubResource("LabelSettings_c5ifu")
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="Fishing Rod" type="Panel" parent="Main/Inventory/TabContainer"]
 visible = false
@@ -644,45 +651,46 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -624.0
+offset_top = -332.0
+offset_right = 624.0
+offset_bottom = 332.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="Shop"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -616.0
-offset_top = -314.0
-offset_right = 616.0
-offset_bottom = 314.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="Shop/Panel"]
+[node name="Label" type="Label" parent="Shop"]
 texture_filter = 1
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -616.0
 offset_top = 16.0
-offset_right = 1232.0
+offset_right = 616.0
 offset_bottom = 96.0
+grow_horizontal = 2
 text = "Shop"
 label_settings = SubResource("LabelSettings_8axal")
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="Shop/Panel"]
+[node name="Button" type="Button" parent="Shop"]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -72.0
-offset_bottom = 72.0
+offset_left = -80.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 80.0
 grow_horizontal = 0
 theme_override_fonts/font = ExtResource("17_g0huu")
 theme_override_font_sizes/font_size = 84
@@ -695,24 +703,37 @@ text = "X
 "
 script = ExtResource("18_q4fv6")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Shop/Panel"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 112.0
-offset_right = 1216.0
-offset_bottom = 600.0
+[node name="ScrollContainer" type="ScrollContainer" parent="Shop"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -232.0
+offset_right = 592.0
+offset_bottom = 288.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop/Panel/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="Shop/ScrollContainer"]
 layout_mode = 2
-theme_override_constants/separation = 64
+theme_override_constants/h_separation = 40
+theme_override_constants/v_separation = 20
+columns = 3
 
-[node name="Shop Item" parent="Shop/Panel/ScrollContainer/VBoxContainer" instance=ExtResource("18_lxinn")]
+[node name="Shop Item3" parent="Shop/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
 layout_mode = 2
 
-[node name="Shop Item2" parent="Shop/Panel/ScrollContainer/VBoxContainer" instance=ExtResource("18_lxinn")]
+[node name="Shop Item2" parent="Shop/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
 layout_mode = 2
 
-[node name="Shop Item3" parent="Shop/Panel/ScrollContainer/VBoxContainer" instance=ExtResource("18_lxinn")]
+[node name="Shop Item" parent="Shop/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
+layout_mode = 2
+
+[node name="Shop Item4" parent="Shop/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
 layout_mode = 2
 
 [node name="Sell" type="Control" parent="."]
@@ -827,11 +848,12 @@ script = ExtResource("18_q4fv6")
 [connection signal="released" from="Main/Buttons/TouchScreenButton2" to="Main/Buttons/TouchScreenButton2" method="_on_released"]
 [connection signal="pressed" from="Main/Inventory Button/TouchScreenButton" to="Main/Inventory Button/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory Button/TouchScreenButton" to="Main/Inventory Button/TouchScreenButton" method="_on_released"]
+[connection signal="tab_selected" from="Main/Inventory/TabContainer" to="Main/Joystick/Virtual Joystick" method="_on_tab_container_tab_selected"]
 [connection signal="pressed" from="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" to="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" to="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" method="_on_released"]
-[connection signal="button_down" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_button_down"]
-[connection signal="button_up" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_button_up"]
-[connection signal="pressed" from="Shop/Panel/Button" to="Shop/Panel/Button" method="_on_pressed"]
+[connection signal="button_down" from="Shop/Button" to="Shop/Button" method="_on_button_down"]
+[connection signal="button_up" from="Shop/Button" to="Shop/Button" method="_on_button_up"]
+[connection signal="pressed" from="Shop/Button" to="Shop/Button" method="_on_pressed"]
 [connection signal="pressed" from="Sell/Panel/Sell" to="Sell/Panel/Sell" method="_on_pressed"]
 [connection signal="button_down" from="Sell/Panel/Button" to="Sell/Panel/Button" method="_on_button_down"]
 [connection signal="button_up" from="Sell/Panel/Button" to="Sell/Panel/Button" method="_on_button_up"]

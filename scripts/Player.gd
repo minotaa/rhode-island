@@ -31,15 +31,25 @@ var maxVelocity = 6.0;
 var bounce = .6
 
 func _ready() -> void:
+	$"UI/Main/Inventory/TabContainer".connect("tab_selected", _tab_selected)
 	load_game()
 
-func open_inventory() -> void:
+func _tab_selected(tab: int) -> void:
+	if tab == 0:
+		open_bag()
+
+func open_bag():
 	#$"UI/Main/Inventory/TouchScreenButton/Close Button".text = str(inventory.list.size()) + "/" + str(inventory.max_capacity)
+	print("adding elements")
 	for children in $"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer".get_children():
 		children.queue_free()
 	#print(Inventory.max_capacity)
-	$"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer"
+	#$"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer".visible = true
 	var count = 0
+	if Inventory.list.size() == 0:
+		$"UI/Main/Inventory/TabContainer/Your Bag/Empty".visible = true
+	else:
+		$"UI/Main/Inventory/TabContainer/Your Bag/Empty".visible = false
 	for i in Inventory.list:
 		count += 1
 		#print(count)
@@ -50,6 +60,8 @@ func open_inventory() -> void:
 		object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + "...................." + "$" + buck_fiddy(i.type.sell_price * i.amount))
 		$"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer".add_child(object)
 	$"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer".custom_minimum_size = Vector2(1000, count * 80)
+
+func open_inventory() -> void:
 	$UI/Main/Inventory.visible = !$UI/Main/Inventory.visible
 	if $UI/Main/Inventory.visible == true:
 		$UI/Main/Joystick.visible = false
@@ -63,6 +75,7 @@ func open_inventory() -> void:
 		$"UI/Main/Inventory Button".visible = true
 		$"UI/Main/Item Log".visible = true
 		$UI/Main/Coins.visible = true
+	open_bag()
 
 
 	
