@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=57 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/buttons/TouchScreenButton.gd" id="2_lpp3g"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://bn032jb1ii5ru" path="res://assets/other icons/Hook.png" id="16_ggv0v"]
 [ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram.ttf" id="17_g0huu"]
 [ext_resource type="Script" path="res://scripts/buttons/sell.gd" id="18_0qopr"]
+[ext_resource type="PackedScene" uid="uid://cbacbq6j3kvfp" path="res://scenes/shop_item.tscn" id="18_lxinn"]
 [ext_resource type="Script" path="res://scripts/buttons/x_button.gd" id="18_q4fv6"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f8oh1"]
@@ -448,7 +449,7 @@ expand_mode = 3
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 8
-text = "Los Pollos Hermanos"
+text = "Ohhhh... I'll tell you what I want, what I really really want, yeah, I'll tell you."
 label_settings = SubResource("LabelSettings_0jr5a")
 vertical_alignment = 1
 
@@ -638,16 +639,31 @@ show_percentage = false
 [node name="Shop" type="Control" parent="."]
 visible = false
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="Shop"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 1256.0
-offset_bottom = 652.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -616.0
+offset_top = -314.0
+offset_right = 616.0
+offset_bottom = 314.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Label" type="Label" parent="Shop/Panel"]
 texture_filter = 1
@@ -678,6 +694,26 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_5cebw")
 text = "X
 "
 script = ExtResource("18_q4fv6")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Shop/Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 112.0
+offset_right = 1216.0
+offset_bottom = 600.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Shop/Panel/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="Shop Item" parent="Shop/Panel/ScrollContainer/VBoxContainer" instance=ExtResource("18_lxinn")]
+layout_mode = 2
+
+[node name="Shop Item2" parent="Shop/Panel/ScrollContainer/VBoxContainer" instance=ExtResource("18_lxinn")]
+layout_mode = 2
+
+[node name="Shop Item3" parent="Shop/Panel/ScrollContainer/VBoxContainer" instance=ExtResource("18_lxinn")]
+layout_mode = 2
 
 [node name="Sell" type="Control" parent="."]
 visible = false
