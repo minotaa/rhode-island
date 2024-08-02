@@ -48,6 +48,7 @@ layout_mode = 3
 anchor_right = 0.275
 anchor_bottom = 0.633
 offset_bottom = 0.239988
+mouse_filter = 1
 
 [node name="Panel" type="Panel" parent="."]
 auto_translate_mode = 1
@@ -56,6 +57,7 @@ offset_left = 8.0
 offset_top = 8.0
 offset_right = 344.0
 offset_bottom = 448.0
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ci8br")
 
 [node name="Button" type="Button" parent="Panel"]

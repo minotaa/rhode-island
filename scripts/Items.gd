@@ -90,6 +90,7 @@ func _init():
 	sea_horse.id = 5
 	sea_horse.description = "Unique fish with horse-like heads and curled tails, found in shallow waters worldwide."
 	sea_horse.cost = 50.0
+	sea_horse.reel_difficulty = "HARD"
 	sea_horse.sell_price = 25.0
 	sea_horse.reel_weight = 15
 	sea_horse.reel_location = "beach"
@@ -116,6 +117,7 @@ func _init():
 	cow_fish.id = 7
 	cow_fish.description = "Box-shaped fish with horn-like protrusions on the head, known for its slow swimming and distinctive shape."
 	cow_fish.cost = 45.0
+	sea_horse.reel_difficulty = "MEDIUM"
 	cow_fish.sell_price = 10.75
 	cow_fish.reel_weight = 55
 	cow_fish.reel_location = "beach"
@@ -129,6 +131,7 @@ func _init():
 	tuna.id = 8
 	tuna.description = "Fast-swimming, large fish valued for their strength and commercial importance, commonly found in oceans worldwide."
 	tuna.cost = 50.0
+	sea_horse.reel_difficulty = "MEDIUM"
 	tuna.sell_price = 15.0
 	tuna.reel_weight = 75
 	tuna.reel_location = "beach"
@@ -162,6 +165,7 @@ func _init():
 	blue_tang.id = 11
 	blue_tang.description = "Brightly colored reef fish with vivid blue scales and a yellow tail, commonly found in tropical Atlantic and Indo-Pacific regions."
 	blue_tang.cost = 45.50
+	sea_horse.reel_difficulty = "MEDIUM"
 	blue_tang.sell_price = 22.50
 	blue_tang.reel_weight = 15
 	blue_tang.reel_location = "beach"
@@ -306,6 +310,7 @@ func _init():
 	stingray.id = 23
 	stingray.cost = 150.0
 	stingray.sell_price = 125.0
+	sea_horse.reel_difficulty = "HARD"
 	stingray.reel_location = "beach"
 	stingray.reel_weight = 2
 	stingray.atlas_region_x = 48.0
@@ -329,6 +334,7 @@ func _init():
 	bonefish.description = "A sleek, silvery fish found in shallow tropical waters, known for its speed and agility. A popular target for sport fishing, bonefish are valued for their challenging fight when hooked."
 	bonefish.id = 25
 	bonefish.cost = 55.0
+	sea_horse.reel_difficulty = "MEDIUM"
 	bonefish.sell_price = 35.0
 	bonefish.reel_location = "beach"
 	bonefish.reel_weight = 55
@@ -354,6 +360,7 @@ func _init():
 	black_drum.id = 27
 	black_drum.cost = 65.0
 	black_drum.sell_price = 45.0
+	sea_horse.reel_difficulty = "HARD"
 	black_drum.reel_location = "beach"
 	black_drum.reel_weight = 25
 	black_drum.atlas_region_x = 112.0
