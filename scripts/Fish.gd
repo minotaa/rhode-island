@@ -7,6 +7,7 @@ var atlas_region_w: float = 16.0
 var atlas_region_h: float = 16.0
 var reel_weight: int
 var reel_location: String
+var reel_difficulty: String # Should be only EASY, MEDIUM, HARD
 
 func _to_string() -> String:
 	return "Name: %s\nID: %s\nDescription: %s\nWeight: %s\nLocation: %s\n" % [name, id, description, reel_weight, reel_location]

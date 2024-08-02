@@ -40,7 +40,7 @@ func _tab_selected(tab: int) -> void:
 
 func open_bag():
 	#$"UI/Main/Inventory/TouchScreenButton/Close Button".text = str(inventory.list.size()) + "/" + str(inventory.max_capacity)
-	print("adding elements")
+	print("Opening the bag")
 	for children in $"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer".get_children():
 		children.queue_free()
 	#print(Inventory.max_capacity)
@@ -62,6 +62,7 @@ func open_bag():
 	$"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer".custom_minimum_size = Vector2(1000, count * 80)
 
 func open_inventory() -> void:
+	print("Opening the inventory")
 	$UI/Main/Inventory.visible = !$UI/Main/Inventory.visible
 	if $UI/Main/Inventory.visible == true:
 		$UI/Main/Joystick.visible = false
@@ -77,8 +78,22 @@ func open_inventory() -> void:
 		$UI/Main/Coins.visible = true
 	open_bag()
 
-
+func _hide_ui() -> void:
+	$UI/Main/Joystick.visible = false
+	$"UI/Main/Inventory Button".visible = false
+	$UI/Main/Buttons/TouchScreenButton.visible = false
+	$UI/Main/Buttons/TouchScreenButton2.visible = false
+	$"UI/Main/Item Log".visible = false
+	$UI/Main/Coins.visible = false
 	
+func _show_ui() -> void:
+	$UI/Main/Joystick.visible = true
+	$UI/Main/Buttons/TouchScreenButton.visible = true
+	$UI/Main/Buttons/TouchScreenButton2.visible = true
+	$"UI/Main/Inventory Button".visible = true
+	$"UI/Main/Item Log".visible = true
+	$UI/Main/Coins.visible = true
+
 func fish() -> void:
 	reeling = false
 	reeling_back_fish = false
@@ -88,6 +103,8 @@ func _fishing_timer() -> void:
 	var odds = randi_range(100, 500)
 	var your_odds = 0
 	print("Fishing timer started...")
+	_hide_ui()
+	$"UI/Main/Buttons/TouchScreenButton".visible = true
 	while (fishing == true):
 		bobber.set_emitting(false)
 		print("Odds: " + str(odds) + " | Your Odds: " + str(your_odds))
@@ -103,7 +120,13 @@ func _fishing_timer() -> void:
 			bobber.set_emitting(true)
 			#$Lightbulb.visible = true
 			reeling_back_fish = true
-			add_fish(30, 80, 4, 2)
+			print(fish.reel_difficulty)
+			if fish.reel_difficulty == "" or fish.reel_difficulty == "EASY":
+				add_fish(30, 80, 4, 2)
+			elif fish.reel_difficulty == "MEDIUM":
+				add_fish(40, 100, 4, 1.5)
+			elif fish.reel_difficulty == "HARD":
+				add_fish(60, 140, 3, 1)
 			return
 		if randi_range(0, 10) <= 2:
 			bobber.set_emitting(true)
@@ -207,13 +230,18 @@ func add_fish(min_d, max_d, move_speed, move_time):
 	$UI/Main/BobberProgress/FishingColumn.add_child(f)
 	$UI/Main/BobberProgress/Progress.value = 200
 
+var whiffs = 0
+var catches = 0 
+
 func get_game_data() -> Dictionary:
 	return {
 		"inventory": Inventory.to_list(),
 		"inventory_max_capacity": Inventory.max_capacity,
 		"coins": Coins.balance,
 		"pos_x": position.x,
-		"pos_y": position.y
+		"pos_y": position.y,
+		"whiffs": whiffs,
+		"catches": catches
 	}
 
 func save_game(_data: Dictionary, reason: String):
@@ -246,10 +274,14 @@ func load_game():
 		Inventory.set_list_from_save(data["inventory"])
 		Coins.balance = data["coins"]
 		Inventory.max_capacity = data["inventory_max_capacity"] 
-		if data["pos_x"] != null:
+		if data.has("pos_x"):
 			position.x = data["pos_x"]
-		if data["pos_y"] != null:
+		if data.has("pos_y"):
 			position.y = data["pos_y"]
+		if data.has("whiffs"):
+			whiffs = data["whiffs"]
+		if data.has("catches"):
+			catches = data["catches"]
 	print("Loaded the game.")
 	var item_log = item_log_object.instantiate()
 	item_log.set_text("- Loaded the game.")
@@ -293,7 +325,7 @@ func _process_input(delta) -> void:
 
 	if reeling_back_fish == true:
 		$UI/Main/BobberProgress.visible = true
-
+		
 			
 		# Adjust Value
 		if (len($"UI/Main/BobberProgress/Hook/Area2D".get_overlapping_areas()) > 0):
@@ -303,6 +335,8 @@ func _process_input(delta) -> void:
 				reeling = true
 				reeling_back_fish = false
 				print("Caught the fish.")
+				catches += 1
+				_show_ui()
 		else:
 			$UI/Main/BobberProgress/Progress.value -= 85 * delta
 			if ($UI/Main/BobberProgress/Progress.value <= 0):
@@ -311,6 +345,8 @@ func _process_input(delta) -> void:
 				fishing = false
 				play_idle_animation()
 				print("Lost the fish.")
+				whiffs += 1
+				_show_ui()
 	else:
 		$UI/Main/BobberProgress.visible = false
 		for children in $UI/Main/BobberProgress/FishingColumn.get_children():
