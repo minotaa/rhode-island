@@ -14,7 +14,6 @@ var this_is_stupid_and_just_straight_up_bad_code = true
 var bobber_object = preload("res://scenes/bobber.tscn")
 var inventory_item_object = preload("res://scenes/inventory_item.tscn")
 var fish_object = preload("res://scenes/fish.tscn")
-var item_log_object = preload("res://scenes/item_log_item.tscn")
 var hook_object = preload("res://scenes/BobberFish.tscn")
 var fishing = false
 var reeling = false
@@ -254,17 +253,17 @@ func get_game_data() -> Dictionary:
 		"catches": catches
 	}
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
+		save_game(get_game_data(), "went to background")
+
 func save_game(_data: Dictionary, reason: String):
 	var save_file = FileAccess.open("user://game.rtlbe", FileAccess.WRITE)
 	save_file.store_line(JSON.stringify(get_game_data()))
 	#for key in _data.keys():
 	#	save_file.store_line(JSON.stringify({key: _data[key]}))
-	var item_log = item_log_object.instantiate()
 	if reason != "action":
-		item_log.set_text("- Saved the game. " + "(" + reason + ")")
-	#else:
-	#	item_log.set_text("- Saved the game.")
-	$"UI/Main/Item Log/ScrollContainer/Container".add_child(item_log)
+		$"UI/Main/Item Log".add_text("Saved the game. " + "(" + reason + ")")
 	print("Saved the game. " + "(" + reason + ")")
 	
 func load_game():
@@ -293,9 +292,7 @@ func load_game():
 		if data.has("catches"):
 			catches = data["catches"]
 	print("Loaded the game.")
-	var item_log = item_log_object.instantiate()
-	item_log.set_text("- Loaded the game.")
-	$"UI/Main/Item Log/ScrollContainer/Container".add_child(item_log)
+	$"UI/Main/Item Log".add_text("Loaded the game.")
 
 
 
@@ -477,15 +474,13 @@ func _physics_process(delta) -> void:
 			var item = ItemStack.new()
 			item.amount = 1
 			item.type = Items.get_from_id(bobber_fish.type)
-			var item_log = item_log_object.instantiate()
 			if Inventory.is_full():
-				item_log.set_text("- Your inventory is full.")
+				$"UI/Main/Item Log".add_text("Your inventory is full.")
 				print("Inventory is too full to add item.")
 			else:
-				item_log.set_item(item)
+				$"UI/Main/Item Log".add_text("x" + str(item.amount) + " " + str(item.type.name))
 				Inventory.add_item(item)
 				print("Added item to inventory.")
-			$"UI/Main/Item Log/ScrollContainer/Container".add_child(item_log)
 			save_game(get_game_data(), "action")
 			bobber_fish.queue_free()
 			bobber_fish = null

@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=59 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/buttons/TouchScreenButton.gd" id="2_lpp3g"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/buttons/touch_screen_button2.gd" id="8_dm5ih"]
 [ext_resource type="Script" path="res://scripts/buttons/touch_screen_button.gd" id="8_hrldg"]
 [ext_resource type="Texture2D" uid="uid://hkvhgy68mbwt" path="res://assets/other icons/Backpack.png" id="8_otfdw"]
+[ext_resource type="Script" path="res://scenes/item_log.gd" id="10_lg1nf"]
 [ext_resource type="Texture2D" uid="uid://i1wrfpokwkrv" path="res://assets/other icons/Coin2.png" id="11_y52ah"]
 [ext_resource type="Texture2D" uid="uid://0qwcp00oep1c" path="res://assets/other icons/Fishing-Column.png" id="13_jhfam"]
 [ext_resource type="Texture2D" uid="uid://bq8v5ythff5pk" path="res://assets/other icons/Progress-Empty.png" id="14_cdgpj"]
@@ -110,6 +111,10 @@ expand_margin_left = 12.0
 expand_margin_top = 12.0
 expand_margin_right = 12.0
 expand_margin_bottom = 12.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_bqygk"]
+font = ExtResource("17_g0huu")
+font_size = 72
 
 [sub_resource type="LabelSettings" id="LabelSettings_0jr5a"]
 font = ExtResource("17_g0huu")
@@ -398,21 +403,32 @@ expand_icon = true
 
 [node name="Item Log" type="Control" parent="Main"]
 layout_mode = 1
-anchor_right = 0.3
-anchor_bottom = 0.267
+anchor_right = 0.35
+anchor_bottom = 0.578
 offset_left = 24.0
 offset_top = 24.0
-offset_right = 24.0
-offset_bottom = 23.76
+offset_right = -3.05176e-05
+offset_bottom = -0.160007
+script = ExtResource("10_lg1nf")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Main/Item Log"]
-layout_mode = 0
-offset_right = 736.0
-offset_bottom = 400.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.094
+anchor_bottom = 1.0
+offset_right = 0.143957
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
 
-[node name="Container" type="VBoxContainer" parent="Main/Item Log/ScrollContainer"]
+[node name="Label" type="Label" parent="Main/Item Log/ScrollContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(462, 392)
 layout_mode = 2
-theme_override_constants/separation = 52
+text = "
+"
+label_settings = SubResource("LabelSettings_bqygk")
+autowrap_mode = 2
 
 [node name="Coins" type="Control" parent="Main"]
 layout_mode = 1
@@ -452,7 +468,7 @@ expand_mode = 3
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 8
-text = "Ohhhh... I'll tell you what I want, what I really really want, yeah, I'll tell you."
+text = "pussy da bomb"
 label_settings = SubResource("LabelSettings_0jr5a")
 vertical_alignment = 1
 
