@@ -1,7 +1,19 @@
 [gd_scene load_steps=4 format=3 uid="uid://c2dc8n2i1iuft"]
 
-[ext_resource type="Script" path="res://scripts/item_log_item.gd" id="1_o0gou"]
 [ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram.ttf" id="2_d376x"]
+
+[sub_resource type="GDScript" id="GDScript_xjqkm"]
+script/source = "extends Control
+
+func _on_timer_timeout() -> void:
+	queue_free()
+	
+func set_item(item: ItemStack) -> void:
+	$Label.text = \"- \" + \"x\" + str(item.amount) + \" \" + str(item.type.name)
+
+func set_text(text: String) -> void:
+	$Label.text = text
+"
 
 [sub_resource type="LabelSettings" id="LabelSettings_rmet0"]
 font = ExtResource("2_d376x")
@@ -12,7 +24,7 @@ outline_color = Color(0, 0, 0, 1)
 auto_translate_mode = 1
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_o0gou")
+script = SubResource("GDScript_xjqkm")
 
 [node name="Label" type="Label" parent="."]
 auto_translate_mode = 1
