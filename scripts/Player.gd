@@ -19,6 +19,7 @@ var hook_object = preload("res://scenes/BobberFish.tscn")
 var fishing = false
 var reeling = false
 var fish_on_line = false
+var pulling_back = false
 var reeling_back_fish = false
 var bobber: RigidBody2D
 var bobber_fish: Area2D
@@ -187,6 +188,14 @@ func use() -> void:
 	
 func _on_body_animation_finished() -> void:
 	if $Body.animation.ends_with("fish_right") or $Body.animation.ends_with("fish_up") or $Body.animation.ends_with("fish_left") or $Body.animation.ends_with("fish_down"):
+		if pulling_back == true:
+			pulling_back = false
+			fishing = false
+			reeling = false
+			reeling_back_fish = false
+			play_idle_animation()
+			_show_ui()
+			return
 		if bobber != null:
 			bobber.queue_free()
 		reeling_back_fish = false
@@ -207,9 +216,10 @@ func _on_body_animation_finished() -> void:
 			var bobber_position = tile_map.to_local(bobber.global_position)
 			var data = tile_map.get_cell_tile_data(0, tile_map.local_to_map(bobber_position))
 			if data and data.get_custom_data("fishable") == true:
-				print("Yup, this is... something")
+				print("Valid tile to fish on, starting timer")
 				_fishing_timer()
 			else:
+				print("Invalid tile to fish on, stopping fishing")
 				fishing = false
 				play_idle_animation()
 
@@ -356,21 +366,25 @@ func _process_input(delta) -> void:
 
 	# Charge up the fishing bar by holding down the FISH button.
 	if Input.is_action_pressed("fish") and reeling_back_fish == false and reeling == false:
-		fishing = false
-		if !$UI/Main/FishProgressBar.visible:
-			$UI/Main/FishProgressBar.visible = true
-			this_is_stupid_and_just_straight_up_bad_code = true
-			$UI/Main/FishProgressBar.value = 0
-		if this_is_stupid_and_just_straight_up_bad_code:
-			$UI/Main/FishProgressBar.value += 1
-			if $UI/Main/FishProgressBar.value >= 100:
-				this_is_stupid_and_just_straight_up_bad_code = false
-		else:
-			$UI/Main/FishProgressBar.value -= 1 
-			if $UI/Main/FishProgressBar.value <= 0:
+		if fishing == false:
+			if !$UI/Main/FishProgressBar.visible:
+				$UI/Main/FishProgressBar.visible = true
 				this_is_stupid_and_just_straight_up_bad_code = true
+				$UI/Main/FishProgressBar.value = 0
+			if this_is_stupid_and_just_straight_up_bad_code:
+				$UI/Main/FishProgressBar.value += 1
+				if $UI/Main/FishProgressBar.value >= 100:
+					this_is_stupid_and_just_straight_up_bad_code = false
+			else:
+				$UI/Main/FishProgressBar.value -= 1 
+				if $UI/Main/FishProgressBar.value <= 0:
+					this_is_stupid_and_just_straight_up_bad_code = true
+		else:
+			pulling_back = true
+			$Body.play_backwards("char1_fish_" + last_direction)
+			
 	# Actually fish when you release the button.
-	if Input.is_action_just_released("fish") and reeling_back_fish == false and reeling == false:
+	if Input.is_action_just_released("fish") and reeling_back_fish == false and reeling == false and pulling_back == false:
 		fish()
 		this_is_stupid_and_just_straight_up_bad_code = true
 		$UI/Main/FishProgressBar.visible = false
