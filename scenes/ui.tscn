@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=64 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/buttons/TouchScreenButton.gd" id="2_lpp3g"]
@@ -150,10 +150,6 @@ size = Vector2(115, 115)
 [sub_resource type="LabelSettings" id="LabelSettings_a8nlh"]
 font = ExtResource("17_g0huu")
 font_size = 72
-outline_size = 16
-outline_color = Color(0.18359, 0.18359, 0.18359, 1)
-shadow_size = 2
-shadow_color = Color(0.051971, 0.051971, 0.051971, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_c5ifu"]
 font = ExtResource("17_g0huu")
@@ -176,6 +172,13 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfkk3"]
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 0.658824)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+
 [sub_resource type="LabelSettings" id="LabelSettings_8axal"]
 font = ExtResource("17_g0huu")
 font_size = 84
@@ -189,6 +192,50 @@ font_size = 84
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sxdeh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cebw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgqoc"]
+content_margin_left = 48.0
+content_margin_top = 16.0
+content_margin_right = 48.0
+content_margin_bottom = 24.0
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 0.505882)
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1me61"]
+content_margin_left = 48.0
+content_margin_top = 16.0
+content_margin_right = 48.0
+content_margin_bottom = 24.0
+bg_color = Color(0.333333, 0.333333, 0.333333, 0.8)
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cbea"]
+content_margin_left = 48.0
+content_margin_top = 16.0
+content_margin_right = 48.0
+content_margin_bottom = 24.0
+bg_color = Color(0.347817, 0.347817, 0.347817, 0.505882)
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4a8ix"]
+content_margin_left = 48.0
+content_margin_top = 16.0
+content_margin_right = 48.0
+content_margin_bottom = 24.0
+bg_color = Color(0.698039, 0.698039, 0.698039, 0.647059)
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2gthc"]
 
@@ -397,7 +444,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_s8ee3")
 theme_override_styles/hover = SubResource("StyleBoxFlat_dn5yn")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_dq7gx")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jtexw")
-text = "women fear me fish love me"
+text = "0/30"
 icon = ExtResource("8_otfdw")
 expand_icon = true
 
@@ -407,23 +454,22 @@ anchor_right = 0.35
 anchor_bottom = 0.578
 offset_left = 24.0
 offset_top = 24.0
-offset_right = -3.05176e-05
+offset_right = 144.0
 offset_bottom = -0.160007
 script = ExtResource("10_lg1nf")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Main/Item Log"]
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.094
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 0.143957
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
 
 [node name="Label" type="Label" parent="Main/Item Log/ScrollContainer"]
 texture_filter = 1
-custom_minimum_size = Vector2(462, 392)
+custom_minimum_size = Vector2(520, 392)
 layout_mode = 2
 text = "
 "
@@ -468,7 +514,6 @@ expand_mode = 3
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 8
-text = "pussy da bomb"
 label_settings = SubResource("LabelSettings_0jr5a")
 vertical_alignment = 1
 
@@ -509,7 +554,7 @@ current_tab = 0
 layout_mode = 2
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory/TabContainer/Your Bag"]
-position = Vector2(1168, 305)
+position = Vector2(1168, 65)
 shape = SubResource("RectangleShape2D_21cbf")
 script = ExtResource("8_dm5ih")
 
@@ -543,10 +588,10 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 48.0
-offset_top = -255.5
-offset_right = 1096.0
-offset_bottom = 264.5
+offset_left = 32.0
+offset_top = -189.5
+offset_right = 1200.0
+offset_bottom = 282.5
 grow_vertical = 2
 
 [node name="GridContainer" type="VBoxContainer" parent="Main/Inventory/TabContainer/Your Bag/ScrollContainer"]
@@ -556,7 +601,6 @@ theme_override_constants/separation = 76
 
 [node name="Title" type="Label" parent="Main/Inventory/TabContainer/Your Bag"]
 auto_translate_mode = 1
-visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -566,14 +610,14 @@ offset_top = 24.0
 offset_right = 123.0
 offset_bottom = 81.0
 grow_horizontal = 2
-text = "Inventory"
+text = "Fishing Bag"
 label_settings = SubResource("LabelSettings_a8nlh")
 
 [node name="Empty" type="Label" parent="Main/Inventory/TabContainer/Your Bag"]
 layout_mode = 2
-offset_left = 40.0
+offset_left = 96.0
 offset_top = 197.0
-offset_right = 1080.0
+offset_right = 1144.0
 offset_bottom = 428.0
 text = "You don't have any items in your fishing bag. Fish by the water to get fish!"
 label_settings = SubResource("LabelSettings_c5ifu")
@@ -659,30 +703,38 @@ theme_override_styles/background = SubResource("StyleBoxFlat_xgjoy")
 theme_override_styles/fill = SubResource("StyleBoxFlat_4egwi")
 show_percentage = false
 
-[node name="Shop" type="Control" parent="."]
+[node name="Vender" type="Control" parent="."]
 visible = false
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -624.0
-offset_top = -332.0
-offset_right = 624.0
-offset_bottom = 332.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="Panel" parent="Shop"]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="Shop"]
+[node name="TabContainer" type="TabContainer" parent="Vender"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 1264.0
+offset_bottom = 696.0
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 70
+theme_override_styles/tab_focus = SubResource("StyleBoxFlat_7078t")
+theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_a1s4r")
+theme_override_styles/panel = SubResource("StyleBoxFlat_nfkk3")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_djtna")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_gfyfq")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_rkivi")
+tab_alignment = 1
+current_tab = 1
+
+[node name="Buy" type="Control" parent="Vender/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Vender/TabContainer/Buy"]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 5
@@ -697,16 +749,16 @@ text = "Shop"
 label_settings = SubResource("LabelSettings_8axal")
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="Shop"]
+[node name="Button" type="Button" parent="Vender/TabContainer/Buy"]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -80.0
-offset_top = 8.0
-offset_right = -8.0
-offset_bottom = 80.0
+offset_left = -88.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 88.0
 grow_horizontal = 0
 theme_override_fonts/font = ExtResource("17_g0huu")
 theme_override_font_sizes/font_size = 84
@@ -719,7 +771,97 @@ text = "X
 "
 script = ExtResource("18_q4fv6")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Shop"]
+[node name="GridContainer" type="GridContainer" parent="Vender/TabContainer/Buy"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 112.0
+offset_top = 104.0
+offset_right = -48.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 24
+columns = 3
+
+[node name="Fishing Rods" type="Button" parent="Vender/TabContainer/Buy/GridContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+focus_mode = 1
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 90
+theme_override_styles/focus = SubResource("StyleBoxFlat_kgqoc")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1me61")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2cbea")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4a8ix")
+theme_override_styles/normal = SubResource("StyleBoxFlat_kgqoc")
+text = "Rods"
+icon = SubResource("AtlasTexture_4fx2m")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="Upgrades" type="Button" parent="Vender/TabContainer/Buy/GridContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+focus_mode = 1
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 90
+theme_override_styles/focus = SubResource("StyleBoxFlat_kgqoc")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1me61")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2cbea")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4a8ix")
+theme_override_styles/normal = SubResource("StyleBoxFlat_kgqoc")
+text = "Upgrades"
+icon = ExtResource("8_otfdw")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="Clothes" type="Button" parent="Vender/TabContainer/Buy/GridContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+focus_mode = 1
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 90
+theme_override_styles/focus = SubResource("StyleBoxFlat_kgqoc")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1me61")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2cbea")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4a8ix")
+theme_override_styles/normal = SubResource("StyleBoxFlat_kgqoc")
+text = "Cosmetics"
+icon = ExtResource("8_otfdw")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="Bait" type="Button" parent="Vender/TabContainer/Buy/GridContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+focus_mode = 1
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 90
+theme_override_styles/focus = SubResource("StyleBoxFlat_kgqoc")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1me61")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2cbea")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4a8ix")
+theme_override_styles/normal = SubResource("StyleBoxFlat_kgqoc")
+text = "Bait
+"
+icon = ExtResource("8_otfdw")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Vender/TabContainer/Buy"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -734,68 +876,52 @@ grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
 
-[node name="GridContainer" type="GridContainer" parent="Shop/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="Vender/TabContainer/Buy/ScrollContainer"]
 layout_mode = 2
 theme_override_constants/h_separation = 40
 theme_override_constants/v_separation = 20
 columns = 3
 
-[node name="Shop Item3" parent="Shop/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
+[node name="Shop Item3" parent="Vender/TabContainer/Buy/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
 layout_mode = 2
 
-[node name="Shop Item2" parent="Shop/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
+[node name="Shop Item2" parent="Vender/TabContainer/Buy/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
 layout_mode = 2
 
-[node name="Shop Item" parent="Shop/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
+[node name="Shop Item" parent="Vender/TabContainer/Buy/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
 layout_mode = 2
 
-[node name="Shop Item4" parent="Shop/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
+[node name="Shop Item4" parent="Vender/TabContainer/Buy/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
 layout_mode = 2
 
-[node name="Sell" type="Control" parent="."]
-visible = false
+[node name="Sell" type="Control" parent="Vender/TabContainer"]
 texture_filter = 1
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+layout_mode = 2
+
+[node name="Panel" type="Control" parent="Vender/TabContainer/Sell"]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 31.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="Sell"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -616.0
-offset_top = -314.0
-offset_right = 616.0
-offset_bottom = 314.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Title" type="Label" parent="Sell/Panel"]
+[node name="Title" type="Label" parent="Vender/TabContainer/Sell/Panel"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -192.0
-offset_top = 34.0
+offset_top = 2.0
 offset_right = 186.0
-offset_bottom = 91.0
+offset_bottom = 59.0
 grow_horizontal = 2
-text = "Sell Inventory"
+text = "Sell Bag"
 label_settings = SubResource("LabelSettings_a8nlh")
+horizontal_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Sell/Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Vender/TabContainer/Sell/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -803,19 +929,19 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -576.0
-offset_top = -192.0
+offset_top = -215.5
 offset_right = 576.0
-offset_bottom = 192.0
+offset_bottom = 168.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Sell/Panel/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Vender/TabContainer/Sell/Panel/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 80
 
-[node name="Sell" type="Button" parent="Sell/Panel"]
+[node name="Sell" type="Button" parent="Vender/TabContainer/Sell/Panel"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -837,15 +963,17 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_8f1d4")
 text = "Sell"
 script = ExtResource("18_0qopr")
 
-[node name="Button" type="Button" parent="Sell/Panel"]
+[node name="Button" type="Button" parent="Vender/TabContainer/Sell/Panel"]
 auto_translate_mode = 1
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -72.0
-offset_bottom = 72.0
+offset_left = -88.0
+offset_top = -14.0
+offset_right = -16.0
+offset_bottom = 58.0
 grow_horizontal = 0
 theme_override_fonts/font = ExtResource("17_g0huu")
 theme_override_font_sizes/font_size = 84
@@ -867,10 +995,10 @@ script = ExtResource("18_q4fv6")
 [connection signal="tab_selected" from="Main/Inventory/TabContainer" to="Main/Joystick/Virtual Joystick" method="_on_tab_container_tab_selected"]
 [connection signal="pressed" from="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" to="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" to="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" method="_on_released"]
-[connection signal="button_down" from="Shop/Button" to="Shop/Button" method="_on_button_down"]
-[connection signal="button_up" from="Shop/Button" to="Shop/Button" method="_on_button_up"]
-[connection signal="pressed" from="Shop/Button" to="Shop/Button" method="_on_pressed"]
-[connection signal="pressed" from="Sell/Panel/Sell" to="Sell/Panel/Sell" method="_on_pressed"]
-[connection signal="button_down" from="Sell/Panel/Button" to="Sell/Panel/Button" method="_on_button_down"]
-[connection signal="button_up" from="Sell/Panel/Button" to="Sell/Panel/Button" method="_on_button_up"]
-[connection signal="pressed" from="Sell/Panel/Button" to="Sell/Panel/Button" method="_on_pressed"]
+[connection signal="button_down" from="Vender/TabContainer/Buy/Button" to="Vender/TabContainer/Buy/Button" method="_on_button_down"]
+[connection signal="button_up" from="Vender/TabContainer/Buy/Button" to="Vender/TabContainer/Buy/Button" method="_on_button_up"]
+[connection signal="pressed" from="Vender/TabContainer/Buy/Button" to="Vender/TabContainer/Buy/Button" method="_on_pressed"]
+[connection signal="pressed" from="Vender/TabContainer/Sell/Panel/Sell" to="Vender/TabContainer/Sell/Panel/Sell" method="_on_pressed"]
+[connection signal="button_down" from="Vender/TabContainer/Sell/Panel/Button" to="Vender/TabContainer/Sell/Panel/Button" method="_on_button_down"]
+[connection signal="button_up" from="Vender/TabContainer/Sell/Panel/Button" to="Vender/TabContainer/Sell/Panel/Button" method="_on_button_up"]
+[connection signal="pressed" from="Vender/TabContainer/Sell/Panel/Button" to="Vender/TabContainer/Sell/Panel/Button" method="_on_pressed"]
