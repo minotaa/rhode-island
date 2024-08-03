@@ -32,6 +32,7 @@ var bounce = .6
 
 func _ready() -> void:
 	$"UI/Main/Inventory/TabContainer".connect("tab_selected", _tab_selected)
+	$UI/Vender/TabContainer.connect("tab_selected", _shop_tab_selected)
 	load_game()
 
 func _tab_selected(tab: int) -> void:
@@ -122,11 +123,11 @@ func _fishing_timer() -> void:
 			reeling_back_fish = true
 			print(fish.reel_difficulty)
 			if fish.reel_difficulty == "" or fish.reel_difficulty == "EASY":
-				add_fish(30, 80, 4, 2)
+				add_fish(30, 80, 3, 1.5)
 			elif fish.reel_difficulty == "MEDIUM":
-				add_fish(40, 100, 4, 1.5)
+				add_fish(40, 100, 2, 1)
 			elif fish.reel_difficulty == "HARD":
-				add_fish(60, 140, 3, 1)
+				add_fish(60, 140, 1, 0.5)
 			return
 		if randi_range(0, 10) <= 2:
 			bobber.set_emitting(true)
@@ -151,40 +152,49 @@ func use() -> void:
 	if len($Area2D.get_overlapping_areas()) > 0:
 		for area in $Area2D.get_overlapping_areas():
 			if area.is_in_group("shop"):
-				if $UI/Shop.visible == true:
+				if $UI/Vender.visible == true:
 					$UI/Main.visible = true 
-					$UI/Shop.visible = false
+					$UI/Vender.visible = false
 				else:
 					$UI/Main.visible = false
-					$UI/Shop.visible = true
+					$UI/Vender.visible = true
+					$UI/Vender/TabContainer.current_tab = 0
 			if area.is_in_group("sell"):
-				if $UI/Sell.visible == true:
+				if $UI/Vender.visible == true:
 					$UI/Main.visible = true 
-					$UI/Sell.visible = false
+					$UI/Vender.visible = false
 				else:
 					$UI/Main.visible = false
-					$UI/Sell.visible = true
-	
-				for children in $UI/Sell/Panel/ScrollContainer/VBoxContainer.get_children():
-					children.queue_free()
-				var count = 0
-				var total: float
-				for item in Inventory.list:
-					total += item.type.sell_price * item.amount
-				$UI/Sell/Panel/Sell.text = "Sell" + "\t" + "...................." + "$" + buck_fiddy(total)
-				#print(Inventory.max_capacity)
-				#print(Items.fish_list.size())
-				for i in Inventory.list:
-					#print(str(i.amount) + " " + i.type.name)
-					var object = inventory_item_object.instantiate()
-					object.scale = Vector2(2.2, 2.2)
-					if i.type is Fish:
-						object.set_sprite(i.type.atlas_region_x, i.type.atlas_region_y, i.type.atlas_region_w, i.type.atlas_region_h)
-					object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + "......................\t" + "$" + buck_fiddy(i.type.sell_price * i.amount))
-					count += 1
-					$UI/Sell/Panel/ScrollContainer/VBoxContainer.add_child(object)
-				$UI/Sell/Panel/ScrollContainer/VBoxContainer.custom_minimum_size = Vector2(1000, count * 80)
-	
+					$UI/Vender.visible = true
+					$UI/Vender/TabContainer.current_tab = 1
+				print("deploying")
+				_update_sell()
+
+func _shop_tab_selected(tab: int):
+	if tab == 1:
+		_update_sell()
+
+func _update_sell() -> void:
+	for children in $UI/Vender/TabContainer/Sell/Panel/ScrollContainer/VBoxContainer.get_children():
+		children.queue_free()
+	var count = 0
+	var total: float
+	for item in Inventory.list:
+		total += item.type.sell_price * item.amount
+	$UI/Vender/TabContainer/Sell/Panel/Sell.text = "Sell" + "\t" + "...................." + "$" + buck_fiddy(total)
+	#print(Inventory.max_capacity)
+	#print(Items.fish_list.size())
+	for i in Inventory.list:
+		#print(str(i.amount) + " " + i.type.name)
+		var object = inventory_item_object.instantiate()
+		object.scale = Vector2(2.2, 2.2)
+		if i.type is Fish:
+			object.set_sprite(i.type.atlas_region_x, i.type.atlas_region_y, i.type.atlas_region_w, i.type.atlas_region_h)
+		object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + "......................\t" + "$" + buck_fiddy(i.type.sell_price * i.amount))
+		count += 1
+		$UI/Vender/TabContainer/Sell/Panel/ScrollContainer/VBoxContainer.add_child(object)
+	$UI/Vender/TabContainer/Sell/Panel/ScrollContainer/VBoxContainer.custom_minimum_size = Vector2(1000, count * 80)
+
 func _on_body_animation_finished() -> void:
 	if $Body.animation.ends_with("fish_right") or $Body.animation.ends_with("fish_up") or $Body.animation.ends_with("fish_left") or $Body.animation.ends_with("fish_down"):
 		if pulling_back == true:
@@ -220,6 +230,7 @@ func _on_body_animation_finished() -> void:
 			else:
 				print("Invalid tile to fish on, stopping fishing")
 				fishing = false
+				pulling_back = false
 				play_idle_animation()
 
 
@@ -244,8 +255,8 @@ var catches = 0
 
 func get_game_data() -> Dictionary:
 	return {
-		"inventory": Inventory.to_list(),
-		"inventory_max_capacity": Inventory.max_capacity,
+		"bag": Inventory.to_list(),
+		"bag_max_capacity": Inventory.max_capacity,
 		"coins": Coins.balance,
 		"pos_x": position.x,
 		"pos_y": position.y,
@@ -262,8 +273,8 @@ func save_game(_data: Dictionary, reason: String):
 	save_file.store_line(JSON.stringify(get_game_data()))
 	#for key in _data.keys():
 	#	save_file.store_line(JSON.stringify({key: _data[key]}))
-	if reason != "action":
-		$"UI/Main/Item Log".add_text("Saved the game. " + "(" + reason + ")")
+	if reason != "action" and reason != "went to background":
+		$"UI/Main/Item Log".add_text("Saved the game.")
 	print("Saved the game. " + "(" + reason + ")")
 	
 func load_game():
@@ -280,9 +291,11 @@ func load_game():
 			continue
 		
 		var data = json.get_data()
-		Inventory.set_list_from_save(data["inventory"])
+		if data.has("bag"):
+			Inventory.set_list_from_save(data["bag"])
 		Coins.balance = data["coins"]
-		Inventory.max_capacity = data["inventory_max_capacity"] 
+		if data.has("bag_max_capacity"):
+			Inventory.max_capacity = data["bag_max_capacity"] 
 		if data.has("pos_x"):
 			position.x = data["pos_x"]
 		if data.has("pos_y"):
@@ -302,7 +315,7 @@ func _process_input(delta) -> void:
 		velocity.y = Input.get_action_strength("down") - Input.get_action_strength("up")  
 	velocity.normalized()
 
-	if $UI/Shop.visible == true or $UI/Sell.visible == true:
+	if $UI/Vender.visible == true:
 		velocity = Vector2(0.0, 0.0)
 	# Add this.
 	if Input.is_action_just_pressed("open_inventory"):
@@ -442,7 +455,7 @@ func _physics_process(delta) -> void:
 				$Notifications/Panel/Label.text = "Shop"
 			if area.is_in_group("sell"):
 				$Notifications.visible = true
-				$Notifications/Panel/Label.text = "Sell Inventory"
+				$Notifications/Panel/Label.text = "Sell Bag"
 	
 	
 	# Update UI

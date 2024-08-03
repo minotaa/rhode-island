@@ -7,7 +7,7 @@ func _process(delta: float) -> void:
 
 func add_text(line: String) -> void:
 	list.append("- " + line)
-	print("Added \"" + line + "\" to the notification list.")
+	#print("Added \"" + line + "\" to the notification list.")
 	await get_tree().create_timer(3.0).timeout
 	list.remove_at(list.find("- " + line))
-	print("Removed \"" + line + "\" from the notification list.")
+	#print("Removed \"" + line + "\" from the notification list.")
