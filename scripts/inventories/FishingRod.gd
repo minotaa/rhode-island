@@ -10,3 +10,9 @@ var atlas_region_y: float = 0
 var atlas_region_w: float = 16.0
 var atlas_region_h: float = 16.0
 
+func to_json() -> Dictionary:
+	return {
+		"name": name,
+		"id": id,
+		"description": description
+	}

@@ -3,6 +3,7 @@ extends Node
 
 var list = []
 var max_capacity = 10
+var collected = {}
 
 func sell_items() -> void:
 	var total = 0.0
@@ -41,6 +42,10 @@ func is_full() -> bool:
 	return size() >= max_capacity
 
 func add_item(item: ItemStack) -> void:
+	if collected.has(item.type.id):
+		collected[item.type.id] += item.amount
+	else:
+		collected[item.type.id] = item.amount
 	for i in list: # Checks for existing items.
 		if i.type.id == item.type.id:
 			var prev = list[list.find(i)]

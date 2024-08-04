@@ -37,7 +37,7 @@ corner_radius_bottom_left = 16
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_le7wm"]
 atlas = ExtResource("3_afbui")
-region = Rect2(16, 96, 16, 16)
+region = Rect2(16, 32, 16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_i4y8i"]
 font = ExtResource("2_ckuno")

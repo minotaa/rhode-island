@@ -37,7 +37,7 @@ func _ready() -> void:
 	$UI/Vender/TabContainer/Buy/Catalog/Back.connect("pressed", _shop_back_button)
 	$"UI/Vender/TabContainer/Buy/GridContainer/Fishing Rods".connect("pressed", _shop_fishing_rods_button_pressed)
 	load_game()
-	print(Items.fish_list.size())
+	#print(Items.fish_list.size())
 
 func _shop_back_button() -> void:
 	$UI/Vender/TabContainer/Buy/Catalog.visible = false
@@ -55,9 +55,47 @@ func _shop_fishing_rods_button_pressed() -> void:
 			shop_object.set_rod(rod)
 			$UI/Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.add_child(shop_object)
 
+var rod_textures = preload("res://assets/tiles/inv_items.png")
+var rod_button = preload("res://scenes/rod.tscn")
+var catalog_item = preload("res://scenes/catalog_fish.tscn")
 func _inventory_tab_selected(tab: int) -> void:
 	if tab == 0:
 		open_bag()
+	if tab == 1:
+		update_rod_list()
+	if tab == 2:
+		update_catalog()
+
+func update_catalog() -> void:
+	for children in $UI/Main/Inventory/TabContainer/Catalog/ScrollContainer/GridContainer.get_children():
+		children.queue_free()
+	$UI/Main/Inventory/TabContainer/Catalog/Title.text = "Your Catalog (" + str(FishingBag.collected.keys().size()) + "/" + str(Items.fish_list.size()) + ")"
+	for fish in FishingBag.collected.keys():
+		var catalog_item_object = catalog_item.instantiate()
+		var actual = Items.get_fish_from_id(fish as int)
+		catalog_item_object.set_sprite(actual.atlas_region_x, actual.atlas_region_y, actual.atlas_region_w, actual.atlas_region_h)
+		catalog_item_object.set_fish_name(actual.name)
+		catalog_item_object.set_amount(FishingBag.collected[fish])
+		$UI/Main/Inventory/TabContainer/Catalog/ScrollContainer/GridContainer.add_child(catalog_item_object)
+func update_rod_list() -> void:
+	for children in $"UI/Main/Inventory/TabContainer/Fishing Rod/ScrollContainer/GridContainer".get_children():
+		children.queue_free()
+	for rod in FishingRods.list:
+		#print(rod.type)
+		var rod_button_object = rod_button.instantiate()
+		rod_button_object.set_rod(rod.type)
+		$"UI/Main/Inventory/TabContainer/Fishing Rod/ScrollContainer/GridContainer".add_child(rod_button_object)
+	var atlas = AtlasTexture.new()
+	atlas.atlas = rod_textures
+	atlas.region = Rect2(FishingRods.equipped.atlas_region_x, FishingRods.equipped.atlas_region_y, FishingRods.equipped.atlas_region_w, FishingRods.equipped.atlas_region_h)
+	$"UI/Main/Inventory/TabContainer/Fishing Rod/Name".text = FishingRods.equipped.name
+	$"UI/Main/Inventory/TabContainer/Fishing Rod/DescriptionContainer/Description".text = FishingRods.equipped.description
+	$"UI/Main/Inventory/TabContainer/Fishing Rod/TextureRect".texture = atlas
+	if FishingRods.equipped.baitable:
+		$"UI/Main/Inventory/TabContainer/Fishing Rod/Meta".text = "Baitable?: Yes\nDerraticness: " + str(FishingRods.equipped.deerraticness) + "\nBonus Weight: " + str(FishingRods.equipped.added_weight)
+	else:
+		$"UI/Main/Inventory/TabContainer/Fishing Rod/Meta".text = "Baitable?: No\nDerraticness: " + str(FishingRods.equipped.deerraticness) + "\nBonus Weight: " + str(FishingRods.equipped.added_weight)
+	
 
 func open_bag():
 	#$"UI/Main/Inventory/TouchScreenButton/Close Button".text = str(inventory.list.size()) + "/" + str(inventory.max_capacity)
@@ -98,6 +136,8 @@ func open_inventory() -> void:
 		$"UI/Main/Item Log".visible = true
 		$UI/Main/Coins.visible = true
 	open_bag()
+	update_rod_list()
+	update_catalog()
 
 func _hide_ui() -> void:
 	$UI/Main/Joystick.visible = false
@@ -121,7 +161,7 @@ func fish() -> void:
 	$Body.play("char1_fish_" + last_direction)
 
 func _fishing_timer() -> void:
-	var odds = randi_range(100, 500)
+	var odds = randi_range(250, 750)
 	var your_odds = 0
 	print("Fishing timer started...")
 	_hide_ui()
@@ -131,7 +171,7 @@ func _fishing_timer() -> void:
 		print("Odds: " + str(odds) + " | Your Odds: " + str(your_odds))
 		if your_odds >= odds:
 			Input.vibrate_handheld(500)
-			var fish = Items.fish_roll(fishing_rod.added_weight)
+			var fish = Items.fish_roll(FishingRods.equipped.added_weight)
 			bobber_fish = fish_object.instantiate()
 			bobber_fish.set_type(fish.id)
 			bobber_fish.set_sprite(fish.atlas_region_x, fish.atlas_region_y, fish.atlas_region_w, fish.atlas_region_h)
@@ -142,12 +182,17 @@ func _fishing_timer() -> void:
 			#$Lightbulb.visible = true
 			reeling_back_fish = true
 			print(fish.reel_difficulty)
+			var modifier = (FishingRods.equipped.deerraticness * 0.01) 
 			if fish.reel_difficulty == "" or fish.reel_difficulty == "EASY":
-				add_fish(30, 80, 3, 1.5)
+				add_fish(30 - (modifier * 15), 80 - (modifier * 25), 3 + (modifier * 0.5), 3 + (modifier * 1.5))
 			elif fish.reel_difficulty == "MEDIUM":
-				add_fish(40, 100, 2, 1)
+				add_fish(40 - (modifier * 15), 100 - (modifier * 25), 2 + (modifier * 0.5), 2 + (modifier * 1.5))
 			elif fish.reel_difficulty == "HARD":
-				add_fish(60, 140, 1, 0.5)   
+				add_fish(60 - (modifier * 15), 140 - (modifier * 25), 1 + (modifier * 0.5), 1.25 + (modifier * 1.5))   
+			elif fish.reel_difficulty == "IMPOSSIBLE":
+				add_fish(80 - (modifier * 15), 160 - (modifier * 25), 0.5 + (modifier * 0.5), 0.75 + (modifier * 1.5))  
+			elif fish.reel_difficulty == "SUPREME":
+				add_fish(100 - (modifier * 7.5), 180 - (modifier * 22.5), 0.25 + (modifier * 0.5), 0.1 + (modifier * 1.5))  
 			return
 		if randi_range(0, 10) <= 2:
 			bobber.set_emitting(true)
@@ -208,6 +253,7 @@ func _update_sell() -> void:
 		#print(str(i.amount) + " " + i.type.name)
 		var object = inventory_item_object.instantiate()
 		object.scale = Vector2(2.2, 2.2)
+		object.set_tooltip(i.type.description)
 		if i.type is Fish:
 			object.set_sprite(i.type.atlas_region_x, i.type.atlas_region_y, i.type.atlas_region_w, i.type.atlas_region_h)
 		object.set_text("x" + str(i.amount) + " " + i.type.name + "\t" + "......................\t" + "$" + buck_fiddy(i.type.sell_price * i.amount))
@@ -272,7 +318,6 @@ func add_fish(min_d, max_d, move_speed, move_time):
 
 var whiffs = 0
 var catches = 0 
-var fishing_rod: FishingRod = Items.get_rod_from_id(0)
 
 func get_game_data() -> Dictionary:
 	return {
@@ -283,7 +328,9 @@ func get_game_data() -> Dictionary:
 		"pos_y": position.y,
 		"whiffs": whiffs,
 		"catches": catches,
-		"fishing_rod": fishing_rod
+		"fishing_rod": FishingRods.equipped.id,
+		"rods": FishingRods.to_list(),
+		"catalog": FishingBag.collected
 	}
 
 func _notification(what: int) -> void:
@@ -326,6 +373,13 @@ func load_game():
 			whiffs = data["whiffs"]
 		if data.has("catches"):
 			catches = data["catches"]
+		if data.has("fishing_rod"):
+			#print(data["fishing_rod"])
+			FishingRods.equipped = Items.get_rod_from_id(data["fishing_rod"])
+		if data.has("rods"):
+			FishingRods.set_list_from_save(data["rods"])
+		if data.has("catalog"):
+			FishingBag.collected = data["catalog"]
 	print("Loaded the game.")
 	$"UI/Main/Item Log".add_text("Loaded the game.")
 
@@ -371,7 +425,8 @@ func _process_input(delta) -> void:
 			
 		# Adjust Value
 		if (len($"UI/Main/BobberProgress/Hook/Area2D".get_overlapping_areas()) > 0):
-			$UI/Main/BobberProgress/Progress.value += 145 * delta
+			var modifier = (FishingRods.equipped.deerraticness * 0.01) 
+			$UI/Main/BobberProgress/Progress.value += 145 * delta + (modifier * 5)
 			Input.vibrate_handheld(20)
 			if ($UI/Main/BobberProgress/Progress.value >= 999):
 				reeling = true
@@ -469,6 +524,13 @@ var tween: Tween
 func _physics_process(delta) -> void:
 	# Process player input
 	_process_input(delta)
+	if $"UI/Main/Inventory/TabContainer/Fishing Rod/Name".text != FishingRods.equipped.name:
+		update_rod_list()
+
+	var atlas = AtlasTexture.new()
+	atlas.atlas = rod_textures
+	atlas.region = Rect2(FishingRods.equipped.atlas_region_x, FishingRods.equipped.atlas_region_y, FishingRods.equipped.atlas_region_w, FishingRods.equipped.atlas_region_h)
+	$"UI/Main/Buttons/TouchScreenButton/Fish Button".icon = atlas
 	$Notifications.visible = false
 	if len($Area2D.get_overlapping_areas()) > 0:
 		for area in $Area2D.get_overlapping_areas():

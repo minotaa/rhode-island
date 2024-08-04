@@ -1,0 +1,75 @@
+[gd_scene load_steps=10 format=3 uid="uid://c0p4fv026gsg4"]
+
+[ext_resource type="Script" path="res://scripts/rod.gd" id="1_rhki4"]
+[ext_resource type="Texture2D" uid="uid://dweeegoe5hn47" path="res://assets/tiles/inv_items.png" id="2_7d3kg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u5mpb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pdpfy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kexdh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i46bb"]
+content_margin_left = 12.0
+content_margin_top = 24.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.403922, 0.403922, 0.403922, 0.65098)
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jv10f"]
+content_margin_left = 12.0
+content_margin_top = 24.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.74902, 0.74902, 0.74902, 0.615686)
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_alvm7"]
+content_margin_left = 12.0
+content_margin_top = 24.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 0.803922)
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x50f0"]
+atlas = ExtResource("2_7d3kg")
+region = Rect2(16, 32, 16, 16)
+
+[node name="Rod" type="Control"]
+auto_translate_mode = 1
+layout_mode = 3
+anchor_right = 0.123
+anchor_bottom = 0.222
+offset_right = 0.559996
+offset_bottom = 0.159987
+script = ExtResource("1_rhki4")
+
+[node name="Button" type="Button" parent="."]
+auto_translate_mode = 1
+texture_filter = 1
+layout_mode = 0
+offset_right = 158.0
+offset_bottom = 160.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_u5mpb")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_pdpfy")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_kexdh")
+theme_override_styles/hover = SubResource("StyleBoxFlat_i46bb")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jv10f")
+theme_override_styles/normal = SubResource("StyleBoxFlat_alvm7")
+action_mode = 0
+icon = SubResource("AtlasTexture_x50f0")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
