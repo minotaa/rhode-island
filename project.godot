@@ -20,9 +20,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Items="*res://scripts/Items.gd"
-FishingBag="*res://scripts/FishingBag.gd"
+Items="*res://scripts/inventories/Items.gd"
+FishingBag="*res://scripts/inventories/FishingBag.gd"
 Coins="*res://scripts/Coins.gd"
+FishingRods="*res://scripts/inventories/FishingRods.gd"
 
 [display]
 

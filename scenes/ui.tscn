@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=77 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/buttons/TouchScreenButton.gd" id="2_lpp3g"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" path="res://scripts/item_log.gd" id="10_lg1nf"]
 [ext_resource type="Texture2D" uid="uid://i1wrfpokwkrv" path="res://assets/other icons/Coin2.png" id="11_y52ah"]
 [ext_resource type="Texture2D" uid="uid://0qwcp00oep1c" path="res://assets/other icons/Fishing-Column.png" id="13_jhfam"]
+[ext_resource type="PackedScene" uid="uid://c0p4fv026gsg4" path="res://scenes/rod.tscn" id="13_x66uw"]
+[ext_resource type="PackedScene" uid="uid://bgqkcvatt3eul" path="res://scenes/catalog_fish.tscn" id="14_bpdd7"]
 [ext_resource type="Texture2D" uid="uid://bq8v5ythff5pk" path="res://assets/other icons/Progress-Empty.png" id="14_cdgpj"]
 [ext_resource type="Texture2D" uid="uid://bfu0lohs641p0" path="res://assets/other icons/Progress-Bar.png" id="15_83dsy"]
 [ext_resource type="Texture2D" uid="uid://bn032jb1ii5ru" path="res://assets/other icons/Hook.png" id="16_ggv0v"]
@@ -32,6 +34,10 @@ size = Vector2(180, 180)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q2crv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v758a"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
 bg_color = Color(0.121569, 0.121569, 0.121569, 0.631373)
 border_blend = true
 corner_radius_top_left = 32
@@ -40,6 +46,10 @@ corner_radius_bottom_right = 32
 corner_radius_bottom_left = 32
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_220be"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
 bg_color = Color(0.194349, 0.194349, 0.194349, 0.396078)
 border_blend = true
 corner_radius_top_left = 32
@@ -48,6 +58,10 @@ corner_radius_bottom_right = 32
 corner_radius_bottom_left = 32
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6usd"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
 bg_color = Color(0.722554, 0.722555, 0.722554, 0.721569)
 border_blend = true
 corner_radius_top_left = 32
@@ -55,7 +69,11 @@ corner_radius_top_right = 32
 corner_radius_bottom_right = 32
 corner_radius_bottom_left = 32
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_23u6v"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tm01x"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
 bg_color = Color(0, 0, 0, 0.6)
 corner_radius_top_left = 32
 corner_radius_top_right = 32
@@ -67,10 +85,20 @@ shadow_offset = Vector2(10, 10)
 [sub_resource type="AtlasTexture" id="AtlasTexture_4fx2m"]
 atlas = ExtResource("4_d5cbg")
 region = Rect2(2.08165e-12, 32, 16, 16)
-margin = Rect2(2, 2, 3, 2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2peym"]
 size = Vector2(132, 132)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_23u6v"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+bg_color = Color(0, 0, 0, 0.6)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+shadow_color = Color(0, 0, 0, 0.713726)
+shadow_offset = Vector2(10, 10)
 
 [sub_resource type="LabelSettings" id="LabelSettings_o1pwl"]
 font = ExtResource("17_g0huu")
@@ -156,6 +184,22 @@ font_size = 72
 [sub_resource type="LabelSettings" id="LabelSettings_c5ifu"]
 font = ExtResource("17_g0huu")
 font_size = 84
+
+[sub_resource type="LabelSettings" id="LabelSettings_m4ne3"]
+font = ExtResource("17_g0huu")
+font_size = 72
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swf0p"]
+atlas = ExtResource("4_d5cbg")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="LabelSettings" id="LabelSettings_bohx7"]
+font = ExtResource("17_g0huu")
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_fj0gr"]
+font = ExtResource("17_g0huu")
+font_size = 36
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gbr1f"]
 size = Vector2(82, 34)
@@ -374,7 +418,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_q2crv")
 theme_override_styles/hover = SubResource("StyleBoxFlat_v758a")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_220be")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_s6usd")
-theme_override_styles/normal = SubResource("StyleBoxFlat_23u6v")
+theme_override_styles/normal = SubResource("StyleBoxFlat_tm01x")
 action_mode = 0
 icon = SubResource("AtlasTexture_4fx2m")
 icon_alignment = 1
@@ -573,9 +617,10 @@ theme_override_styles/tab_selected = SubResource("StyleBoxFlat_djtna")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_gfyfq")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_rkivi")
 tab_alignment = 1
-current_tab = 0
+current_tab = 2
 
 [node name="Your Bag" type="Panel" parent="Main/Inventory/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory/TabContainer/Your Bag"]
@@ -653,6 +698,197 @@ autowrap_mode = 3
 visible = false
 layout_mode = 2
 
+[node name="Name" type="Label" parent="Main/Inventory/TabContainer/Fishing Rod"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.967532
+anchor_top = 0.0619765
+anchor_right = 0.967532
+anchor_bottom = 0.0619765
+offset_left = -360.0
+offset_top = 96.0
+offset_right = 8.00001
+offset_bottom = 160.0
+grow_horizontal = 0
+text = "Fishing Rod"
+label_settings = SubResource("LabelSettings_m4ne3")
+horizontal_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="Main/Inventory/TabContainer/Fishing Rod"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 960.0
+offset_top = 197.0
+offset_right = 1208.0
+offset_bottom = 445.0
+texture = SubResource("AtlasTexture_swf0p")
+
+[node name="DescriptionContainer" type="ScrollContainer" parent="Main/Inventory/TabContainer/Fishing Rod"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -464.0
+offset_top = -144.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Description" type="Label" parent="Main/Inventory/TabContainer/Fishing Rod/DescriptionContainer"]
+auto_translate_mode = 1
+custom_minimum_size = Vector2(430, 2.08165e-12)
+layout_mode = 2
+text = "Fishing Rod"
+label_settings = SubResource("LabelSettings_bohx7")
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="Meta" type="Label" parent="Main/Inventory/TabContainer/Fishing Rod"]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 192.0
+offset_top = 29.0
+offset_right = 486.0
+offset_bottom = 122.0
+grow_horizontal = 2
+text = "Baitable?: Yes
+Bonus Weight: 100
+Derraticness: 0"
+label_settings = SubResource("LabelSettings_fj0gr")
+horizontal_alignment = 2
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory/TabContainer/Fishing Rod"]
+position = Vector2(1168, 65)
+shape = SubResource("RectangleShape2D_21cbf")
+script = ExtResource("8_dm5ih")
+
+[node name="Close Button" type="Button" parent="Main/Inventory/TabContainer/Fishing Rod/TouchScreenButton"]
+auto_translate_mode = 1
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -36.0
+offset_right = 36.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 12
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_s8ee3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dn5yn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dq7gx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jtexw")
+icon = ExtResource("8_otfdw")
+expand_icon = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Main/Inventory/TabContainer/Fishing Rod"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 45.0
+offset_right = 744.0
+offset_bottom = 557.0
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="Main/Inventory/TabContainer/Fishing Rod/ScrollContainer"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+theme_override_constants/h_separation = 195
+theme_override_constants/v_separation = 170
+columns = 3
+
+[node name="Rod" parent="Main/Inventory/TabContainer/Fishing Rod/ScrollContainer/GridContainer" instance=ExtResource("13_x66uw")]
+layout_mode = 2
+
+[node name="Rod2" parent="Main/Inventory/TabContainer/Fishing Rod/ScrollContainer/GridContainer" instance=ExtResource("13_x66uw")]
+layout_mode = 2
+
+[node name="Rod3" parent="Main/Inventory/TabContainer/Fishing Rod/ScrollContainer/GridContainer" instance=ExtResource("13_x66uw")]
+layout_mode = 2
+
+[node name="Rod4" parent="Main/Inventory/TabContainer/Fishing Rod/ScrollContainer/GridContainer" instance=ExtResource("13_x66uw")]
+layout_mode = 2
+
+[node name="Catalog" type="Panel" parent="Main/Inventory/TabContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Main/Inventory/TabContainer/Catalog"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -189.5
+offset_right = 576.0
+offset_bottom = 258.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="Main/Inventory/TabContainer/Catalog/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 240
+theme_override_constants/v_separation = 220
+columns = 5
+
+[node name="Catalog Fish" parent="Main/Inventory/TabContainer/Catalog/ScrollContainer/GridContainer" instance=ExtResource("14_bpdd7")]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Main/Inventory/TabContainer/Catalog"]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_top = 24.0
+offset_right = 123.0
+offset_bottom = 81.0
+grow_horizontal = 2
+text = "Your Catalog (0/91)"
+label_settings = SubResource("LabelSettings_a8nlh")
+horizontal_alignment = 1
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory/TabContainer/Catalog"]
+position = Vector2(1168, 65)
+shape = SubResource("RectangleShape2D_21cbf")
+script = ExtResource("8_dm5ih")
+
+[node name="Close Button" type="Button" parent="Main/Inventory/TabContainer/Catalog/TouchScreenButton"]
+auto_translate_mode = 1
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -36.0
+offset_right = 36.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 12
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_s8ee3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dn5yn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dq7gx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jtexw")
+icon = ExtResource("8_otfdw")
+expand_icon = true
+
 [node name="BobberProgress" type="Control" parent="Main"]
 visible = false
 layout_mode = 1
@@ -729,6 +965,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_4egwi")
 show_percentage = false
 
 [node name="Vender" type="Control" parent="."]
+visible = false
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -1049,6 +1286,10 @@ script = ExtResource("18_q4fv6")
 [connection signal="tab_selected" from="Main/Inventory/TabContainer" to="Main/Joystick/Virtual Joystick" method="_on_tab_container_tab_selected"]
 [connection signal="pressed" from="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" to="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" to="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" method="_on_released"]
+[connection signal="pressed" from="Main/Inventory/TabContainer/Fishing Rod/TouchScreenButton" to="Main/Inventory/TabContainer/Fishing Rod/TouchScreenButton" method="_on_pressed"]
+[connection signal="released" from="Main/Inventory/TabContainer/Fishing Rod/TouchScreenButton" to="Main/Inventory/TabContainer/Fishing Rod/TouchScreenButton" method="_on_released"]
+[connection signal="pressed" from="Main/Inventory/TabContainer/Catalog/TouchScreenButton" to="Main/Inventory/TabContainer/Catalog/TouchScreenButton" method="_on_pressed"]
+[connection signal="released" from="Main/Inventory/TabContainer/Catalog/TouchScreenButton" to="Main/Inventory/TabContainer/Catalog/TouchScreenButton" method="_on_released"]
 [connection signal="button_down" from="Vender/TabContainer/Buy/Button" to="Vender/TabContainer/Buy/Button" method="_on_button_down"]
 [connection signal="button_up" from="Vender/TabContainer/Buy/Button" to="Vender/TabContainer/Buy/Button" method="_on_button_up"]
 [connection signal="pressed" from="Vender/TabContainer/Buy/Button" to="Vender/TabContainer/Buy/Button" method="_on_pressed"]
