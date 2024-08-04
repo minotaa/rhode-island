@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=70 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/buttons/TouchScreenButton.gd" id="2_lpp3g"]
@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://scripts/buttons/touch_screen_button2.gd" id="8_dm5ih"]
 [ext_resource type="Script" path="res://scripts/buttons/touch_screen_button.gd" id="8_hrldg"]
 [ext_resource type="Texture2D" uid="uid://hkvhgy68mbwt" path="res://assets/other icons/Backpack.png" id="8_otfdw"]
-[ext_resource type="Script" path="res://scenes/item_log.gd" id="10_lg1nf"]
+[ext_resource type="Script" path="res://scripts/item_log.gd" id="10_lg1nf"]
 [ext_resource type="Texture2D" uid="uid://i1wrfpokwkrv" path="res://assets/other icons/Coin2.png" id="11_y52ah"]
 [ext_resource type="Texture2D" uid="uid://0qwcp00oep1c" path="res://assets/other icons/Fishing-Column.png" id="13_jhfam"]
 [ext_resource type="Texture2D" uid="uid://bq8v5ythff5pk" path="res://assets/other icons/Progress-Empty.png" id="14_cdgpj"]
@@ -238,6 +238,29 @@ corner_radius_top_left = 36
 corner_radius_top_right = 36
 corner_radius_bottom_right = 36
 corner_radius_bottom_left = 36
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h0fga"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hvxih"]
+bg_color = Color(0.378294, 0.428731, 0.478782, 0.74902)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2vedd"]
+bg_color = Color(0.707164, 0.749855, 0.792592, 0.74902)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5gnjs"]
+bg_color = Color(0.0980392, 0.117647, 0.137255, 0.819608)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2gthc"]
 
@@ -706,7 +729,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_4egwi")
 show_percentage = false
 
 [node name="Vender" type="Control" parent="."]
-visible = false
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -869,39 +891,61 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Vender/TabContainer/Buy"]
+[node name="Catalog" type="Control" parent="Vender/TabContainer/Buy"]
 visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Vender/TabContainer/Buy/Catalog"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -576.0
-offset_top = -232.0
-offset_right = 592.0
-offset_bottom = 288.0
+offset_left = -584.0
+offset_top = -169.5
+offset_right = 584.0
+offset_bottom = 297.5
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
 
-[node name="GridContainer" type="GridContainer" parent="Vender/TabContainer/Buy/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="Vender/TabContainer/Buy/Catalog/ScrollContainer"]
 layout_mode = 2
 theme_override_constants/h_separation = 40
 theme_override_constants/v_separation = 20
 columns = 3
 
-[node name="Shop Item3" parent="Vender/TabContainer/Buy/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
+[node name="Shop Item3" parent="Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
 layout_mode = 2
 
-[node name="Shop Item2" parent="Vender/TabContainer/Buy/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
+[node name="Shop Item2" parent="Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
 layout_mode = 2
 
-[node name="Shop Item" parent="Vender/TabContainer/Buy/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
+[node name="Shop Item" parent="Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
 layout_mode = 2
 
-[node name="Shop Item4" parent="Vender/TabContainer/Buy/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
+[node name="Shop Item4" parent="Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer" instance=ExtResource("18_lxinn")]
 layout_mode = 2
+
+[node name="Back" type="Button" parent="Vender/TabContainer/Buy/Catalog"]
+layout_mode = 1
+offset_left = 48.0
+offset_top = 28.0
+offset_right = 240.0
+offset_bottom = 84.0
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_h0fga")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hvxih")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2vedd")
+theme_override_styles/normal = SubResource("StyleBoxFlat_5gnjs")
+text = "Go back"
 
 [node name="Sell" type="Control" parent="Vender/TabContainer"]
 visible = false
