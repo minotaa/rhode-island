@@ -34,6 +34,7 @@ func _ready() -> void:
 	$"UI/Main/Inventory/TabContainer".connect("tab_selected", _tab_selected)
 	$UI/Vender/TabContainer.connect("tab_selected", _shop_tab_selected)
 	load_game()
+	print(Items.fish_list.size())
 
 func _tab_selected(tab: int) -> void:
 	if tab == 0:
@@ -127,7 +128,7 @@ func _fishing_timer() -> void:
 			elif fish.reel_difficulty == "MEDIUM":
 				add_fish(40, 100, 2, 1)
 			elif fish.reel_difficulty == "HARD":
-				add_fish(60, 140, 1, 0.5)
+				add_fish(60, 140, 1, 0.5)   
 			return
 		if randi_range(0, 10) <= 2:
 			bobber.set_emitting(true)
