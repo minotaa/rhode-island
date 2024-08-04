@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=66 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/buttons/TouchScreenButton.gd" id="2_lpp3g"]
@@ -17,8 +17,10 @@
 [ext_resource type="Texture2D" uid="uid://bn032jb1ii5ru" path="res://assets/other icons/Hook.png" id="16_ggv0v"]
 [ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram.ttf" id="17_g0huu"]
 [ext_resource type="Script" path="res://scripts/buttons/sell.gd" id="18_0qopr"]
+[ext_resource type="Texture2D" uid="uid://tucn4nuiys57" path="res://assets/other icons/FlowerPot.png" id="18_e8xvv"]
 [ext_resource type="PackedScene" uid="uid://cbacbq6j3kvfp" path="res://scenes/shop_item.tscn" id="18_lxinn"]
 [ext_resource type="Script" path="res://scripts/buttons/x_button.gd" id="18_q4fv6"]
+[ext_resource type="Texture2D" uid="uid://c3lvepchhqyq8" path="res://assets/things/worm.png" id="19_bqi5g"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f8oh1"]
 
@@ -452,9 +454,9 @@ expand_icon = true
 layout_mode = 1
 anchor_right = 0.35
 anchor_bottom = 0.578
-offset_left = 24.0
+offset_left = 40.0
 offset_top = 24.0
-offset_right = 144.0
+offset_right = 160.0
 offset_bottom = -0.160007
 script = ExtResource("10_lg1nf")
 
@@ -705,6 +707,7 @@ show_percentage = false
 
 [node name="Vender" type="Control" parent="."]
 visible = false
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -714,11 +717,18 @@ grow_vertical = 2
 
 [node name="TabContainer" type="TabContainer" parent="Vender"]
 texture_filter = 1
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 1264.0
-offset_bottom = 696.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -624.0
+offset_top = -340.0
+offset_right = 624.0
+offset_bottom = 340.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("17_g0huu")
 theme_override_font_sizes/font_size = 70
 theme_override_styles/tab_focus = SubResource("StyleBoxFlat_7078t")
@@ -728,10 +738,9 @@ theme_override_styles/tab_selected = SubResource("StyleBoxFlat_djtna")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_gfyfq")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_rkivi")
 tab_alignment = 1
-current_tab = 1
+current_tab = 0
 
 [node name="Buy" type="Control" parent="Vender/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Vender/TabContainer/Buy"]
@@ -836,7 +845,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_2cbea")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_4a8ix")
 theme_override_styles/normal = SubResource("StyleBoxFlat_kgqoc")
 text = "Cosmetics"
-icon = ExtResource("8_otfdw")
+icon = ExtResource("18_e8xvv")
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
@@ -855,7 +864,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_4a8ix")
 theme_override_styles/normal = SubResource("StyleBoxFlat_kgqoc")
 text = "Bait
 "
-icon = ExtResource("8_otfdw")
+icon = ExtResource("19_bqi5g")
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
@@ -895,6 +904,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Sell" type="Control" parent="Vender/TabContainer"]
+visible = false
 texture_filter = 1
 layout_mode = 2
 
