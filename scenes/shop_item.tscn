@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cbacbq6j3kvfp"]
+[gd_scene load_steps=12 format=3 uid="uid://cbacbq6j3kvfp"]
 
-[ext_resource type="Texture2D" uid="uid://bbgnt62w2u4co" path="res://assets/other icons/Lightbulb.png" id="1_btu60"]
+[ext_resource type="Script" path="res://scripts/shop_item_entity.gd" id="1_yiw8a"]
 [ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram.ttf" id="2_ckuno"]
+[ext_resource type="Texture2D" uid="uid://dweeegoe5hn47" path="res://assets/tiles/inv_items.png" id="3_afbui"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ci8br"]
 bg_color = Color(0.0313726, 0.0313726, 0.0313726, 0.596078)
@@ -34,6 +35,10 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_le7wm"]
+atlas = ExtResource("3_afbui")
+region = Rect2(16, 96, 16, 16)
+
 [sub_resource type="LabelSettings" id="LabelSettings_i4y8i"]
 font = ExtResource("2_ckuno")
 font_size = 52
@@ -49,6 +54,7 @@ anchor_right = 0.275
 anchor_bottom = 0.633
 offset_bottom = 0.239988
 mouse_filter = 1
+script = ExtResource("1_yiw8a")
 
 [node name="Panel" type="Panel" parent="."]
 auto_translate_mode = 1
@@ -88,10 +94,10 @@ auto_translate_mode = 1
 texture_filter = 1
 layout_mode = 1
 offset_left = 112.0
-offset_top = 24.0
+offset_top = 40.0
 offset_right = 232.0
-offset_bottom = 144.0
-texture = ExtResource("1_btu60")
+offset_bottom = 160.0
+texture = SubResource("AtlasTexture_le7wm")
 
 [node name="Name" type="Label" parent="Panel"]
 auto_translate_mode = 1

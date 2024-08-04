@@ -13,6 +13,7 @@ var last_direction = "down"
 var this_is_stupid_and_just_straight_up_bad_code = true
 var bobber_object = preload("res://scenes/bobber.tscn")
 var inventory_item_object = preload("res://scenes/inventory_item.tscn")
+var shop_item_object = preload("res://scenes/shop_item.tscn")
 var fish_object = preload("res://scenes/fish.tscn")
 var hook_object = preload("res://scenes/BobberFish.tscn")
 var fishing = false
@@ -31,12 +32,30 @@ var maxVelocity = 6.0;
 var bounce = .6
 
 func _ready() -> void:
-	$"UI/Main/Inventory/TabContainer".connect("tab_selected", _tab_selected)
+	$"UI/Main/Inventory/TabContainer".connect("tab_selected", _inventory_tab_selected)
 	$UI/Vender/TabContainer.connect("tab_selected", _shop_tab_selected)
+	$UI/Vender/TabContainer/Buy/Catalog/Back.connect("pressed", _shop_back_button)
+	$"UI/Vender/TabContainer/Buy/GridContainer/Fishing Rods".connect("pressed", _shop_fishing_rods_button_pressed)
 	load_game()
 	print(Items.fish_list.size())
 
-func _tab_selected(tab: int) -> void:
+func _shop_back_button() -> void:
+	$UI/Vender/TabContainer/Buy/Catalog.visible = false
+	$UI/Vender/TabContainer/Buy/GridContainer.visible = true
+	pass
+
+func _shop_fishing_rods_button_pressed() -> void:
+	for children in $UI/Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children():
+		children.queue_free()
+	$UI/Vender/TabContainer/Buy/GridContainer.visible = false
+	$UI/Vender/TabContainer/Buy/Catalog.visible = true
+	for rod in Items.rods_list:
+		if rod.visible_in_shop == true:
+			var shop_object = shop_item_object.instantiate()
+			shop_object.set_rod(rod)
+			$UI/Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.add_child(shop_object)
+
+func _inventory_tab_selected(tab: int) -> void:
 	if tab == 0:
 		open_bag()
 
@@ -48,11 +67,11 @@ func open_bag():
 	#print(Inventory.max_capacity)
 	#$"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer".visible = true
 	var count = 0
-	if Inventory.list.size() == 0:
+	if FishingBag.list.size() == 0:
 		$"UI/Main/Inventory/TabContainer/Your Bag/Empty".visible = true
 	else:
 		$"UI/Main/Inventory/TabContainer/Your Bag/Empty".visible = false
-	for i in Inventory.list:
+	for i in FishingBag.list:
 		count += 1
 		#print(count)
 		#print(str(i.amount) + " " + i.type.name)
@@ -112,7 +131,7 @@ func _fishing_timer() -> void:
 		print("Odds: " + str(odds) + " | Your Odds: " + str(your_odds))
 		if your_odds >= odds:
 			Input.vibrate_handheld(500)
-			var fish = Items.fish_roll()
+			var fish = Items.fish_roll(fishing_rod.added_weight)
 			bobber_fish = fish_object.instantiate()
 			bobber_fish.set_type(fish.id)
 			bobber_fish.set_sprite(fish.atlas_region_x, fish.atlas_region_y, fish.atlas_region_w, fish.atlas_region_h)
@@ -180,12 +199,12 @@ func _update_sell() -> void:
 		children.queue_free()
 	var count = 0
 	var total: float
-	for item in Inventory.list:
+	for item in FishingBag.list:
 		total += item.type.sell_price * item.amount
 	$UI/Vender/TabContainer/Sell/Panel/Sell.text = "Sell" + "\t" + "...................." + "$" + buck_fiddy(total)
 	#print(Inventory.max_capacity)
 	#print(Items.fish_list.size())
-	for i in Inventory.list:
+	for i in FishingBag.list:
 		#print(str(i.amount) + " " + i.type.name)
 		var object = inventory_item_object.instantiate()
 		object.scale = Vector2(2.2, 2.2)
@@ -253,16 +272,18 @@ func add_fish(min_d, max_d, move_speed, move_time):
 
 var whiffs = 0
 var catches = 0 
+var fishing_rod: FishingRod = Items.get_rod_from_id(0)
 
 func get_game_data() -> Dictionary:
 	return {
-		"bag": Inventory.to_list(),
-		"bag_max_capacity": Inventory.max_capacity,
+		"bag": FishingBag.to_list(),
+		"bag_max_capacity": FishingBag.max_capacity,
 		"coins": Coins.balance,
 		"pos_x": position.x,
 		"pos_y": position.y,
 		"whiffs": whiffs,
-		"catches": catches
+		"catches": catches,
+		"fishing_rod": fishing_rod
 	}
 
 func _notification(what: int) -> void:
@@ -293,10 +314,10 @@ func load_game():
 		
 		var data = json.get_data()
 		if data.has("bag"):
-			Inventory.set_list_from_save(data["bag"])
+			FishingBag.set_list_from_save(data["bag"])
 		Coins.balance = data["coins"]
 		if data.has("bag_max_capacity"):
-			Inventory.max_capacity = data["bag_max_capacity"] 
+			FishingBag.max_capacity = data["bag_max_capacity"] 
 		if data.has("pos_x"):
 			position.x = data["pos_x"]
 		if data.has("pos_y"):
@@ -461,7 +482,7 @@ func _physics_process(delta) -> void:
 	
 	# Update UI
 	$UI/Main/Coins/PanelContainer/HBoxContainer/Label.text = "$" + buck_fiddy(Coins.balance)
-	$"UI/Main/Inventory Button/TouchScreenButton/Button".text = str(Inventory.size()) + "/" + str(Inventory.max_capacity)
+	$"UI/Main/Inventory Button/TouchScreenButton/Button".text = str(FishingBag.size()) + "/" + str(FishingBag.max_capacity)
 	
 	if bobber != null and fishing == false:
 		bobber.queue_free()
@@ -487,13 +508,13 @@ func _physics_process(delta) -> void:
 			reeling_back_fish = false
 			var item = ItemStack.new()
 			item.amount = 1
-			item.type = Items.get_from_id(bobber_fish.type)
-			if Inventory.is_full():
+			item.type = Items.get_fish_from_id(bobber_fish.type)
+			if FishingBag.is_full():
 				$"UI/Main/Item Log".add_text("Your inventory is full.")
 				print("Inventory is too full to add item.")
 			else:
 				$"UI/Main/Item Log".add_text("x" + str(item.amount) + " " + str(item.type.name))
-				Inventory.add_item(item)
+				FishingBag.add_item(item)
 				print("Added item to inventory.")
 			save_game(get_game_data(), "action")
 			bobber_fish.queue_free()

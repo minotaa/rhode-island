@@ -1,26 +1,35 @@
 extends Node
 
 var fish_list = []
+var rods_list = []
 
-func fish_roll() -> Fish:
+func fish_roll(weight: int) -> Fish:
 	var totalWeight = 0
 	for item in fish_list:
 		totalWeight += item.reel_weight
 	var randomValue = randi() % totalWeight
-	var currentWeight = 0
-	for item in fish_list:
+	var currentWeight = 0 + weight
+	var shuffled_list = fish_list
+	shuffled_list.shuffle()
+	for item in shuffled_list:
 		currentWeight += item.reel_weight
 		if randomValue < currentWeight:
 			return item
 	return null
 	
-func get_from_id(id: int) -> Fish:
+func get_fish_from_id(id: int) -> Fish:
 	for fish in fish_list:
 		if fish.id == id:
 			return fish
 	return null
+	
+func get_rod_from_id(id: int) -> FishingRod:
+	for rod in rods_list:
+		if rod.id == id:
+			return rod
+	return null
 
-func _init():
+func add_fish() -> void:
 	var parrot_fish = Fish.new()
 	parrot_fish.name = "Parrot Fish"
 	parrot_fish.id = 0
@@ -366,3 +375,27 @@ func _init():
 	black_drum.atlas_region_x = 112.0
 	black_drum.atlas_region_y = 32.0
 	fish_list.append(black_drum)
+
+func add_rods() -> void:
+	var ol_reliable = FishingRod.new()
+	ol_reliable.name = "Fishing Rod"
+	ol_reliable.description = "The default fishing rod you start the game with; Ol' Reliable."
+	ol_reliable.id = 0
+	ol_reliable.visible_in_shop = false
+	rods_list.append(ol_reliable)
+	
+	var bamboo_rod = FishingRod.new()
+	bamboo_rod.name = "Bamboo Rod"
+	bamboo_rod.description = "Crafted with traditional techniques from Eastern Asia, this bamboo rod combines elegance and functionality."
+	bamboo_rod.id = 1
+	bamboo_rod.cost = 500.0
+	bamboo_rod.added_weight = 75
+	bamboo_rod.baitable = true
+	bamboo_rod.deerraticness = 20
+	bamboo_rod.atlas_region_x = 16.0
+	bamboo_rod.atlas_region_y = 96.0
+	rods_list.append(bamboo_rod)
+	
+func _init():
+	add_fish()
+	add_rods()

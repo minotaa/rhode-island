@@ -22,7 +22,7 @@ func set_list_from_save(_list: Array):
 	for value in _list:
 		var item = ItemStack.new()
 		item.amount = value.amount
-		item.type = Items.get_from_id(value.id)
+		item.type = Items.get_fish_from_id(value.id)
 		list.append(item)
 
 func to_list() -> Array:
