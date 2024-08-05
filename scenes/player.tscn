@@ -510,7 +510,7 @@ shape = SubResource("CapsuleShape2D_b2r0b")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.2, 1.2)
-position_smoothing_enabled = true
+process_callback = 0
 position_smoothing_speed = 4.5
 
 [node name="Notifications" type="Control" parent="."]

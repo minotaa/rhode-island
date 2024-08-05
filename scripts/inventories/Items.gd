@@ -2,6 +2,8 @@ extends Node
 
 var fish_list = []
 var rods_list = []
+var bait_list = []
+var upgrade_list = []
 
 func fish_roll(weight: int) -> Fish:
 	var totalWeight = 0
@@ -16,11 +18,23 @@ func fish_roll(weight: int) -> Fish:
 		if randomValue < currentWeight:
 			return item
 	return null
+
+func get_upgrade_from_id(id: int) -> Upgrade:
+	for upgrade in upgrade_list:
+		if upgrade.id == id:
+			return upgrade
+	return null
 	
 func get_fish_from_id(id: int) -> Fish:
 	for fish in fish_list:
 		if fish.id == id:
 			return fish
+	return null
+	
+func get_bait_from_id(id: int) -> Bait:
+	for bait in bait_list:
+		if bait.id == id:
+			return bait
 	return null
 	
 func get_rod_from_id(id: int) -> FishingRod:
@@ -1308,14 +1322,9 @@ func add_fish() -> void:
 	axolotl.reel_difficulty = "SUPREME"
 	axolotl.reel_location = "beach"
 	axolotl.reel_weight = 8
-	axolotl.atlas_region_x = 0.0
-	axolotl.atlas_region_y = 160.0
+	axolotl.atlas_region_x = 144.0
+	axolotl.atlas_region_y = 144.0
 	fish_list.append(axolotl)
-
-
-
-
-
 
 func add_rods() -> void:
 	var ol_reliable = FishingRod.new()
@@ -1339,6 +1348,54 @@ func add_rods() -> void:
 	bamboo_rod.atlas_region_y = 96.0
 	rods_list.append(bamboo_rod)
 	
+func add_bait() -> void:
+	var worm = Bait.new()
+	worm.name = "Worm"
+	worm.description = "A common and effective bait used to attract a variety of fish."
+	worm.bonus_blessing = 35
+	worm.bonus_fishing_speed = 150
+	worm.cost = 25.0
+	bait_list.append(worm)
+
+func add_upgrades() -> void:
+	var bag_upgrade_one = Upgrade.new()
+	bag_upgrade_one.id = 0
+	bag_upgrade_one.name = "Bag Upgrade I"
+	bag_upgrade_one.description = "Upgrades your fishing bag size from 10 -> 25."
+	bag_upgrade_one.cost = 1000
+	bag_upgrade_one.one_time_buy = true
+	bag_upgrade_one.texture = load("res://assets/other icons/Backpack.png")
+	upgrade_list.append(bag_upgrade_one)
+	
+	var bag_upgrade_two = Upgrade.new()
+	bag_upgrade_two.id = 1
+	bag_upgrade_two.name = "Bag Upgrade II"
+	bag_upgrade_two.description = "Upgrades your fishing bag size from 25 -> 50."
+	bag_upgrade_two.cost = 10000
+	bag_upgrade_two.one_time_buy = true
+	bag_upgrade_two.texture = load("res://assets/other icons/Backpack.png")
+	upgrade_list.append(bag_upgrade_two)
+	
+	var blessing_upgrade_one = Upgrade.new()
+	blessing_upgrade_one.id = 2
+	blessing_upgrade_one.name = "Blessing I"
+	blessing_upgrade_one.description = "Upgrades your base blessing stat from 0 -> 25"
+	blessing_upgrade_one.cost = 5000
+	blessing_upgrade_one.one_time_buy = true
+	blessing_upgrade_one.texture = load("res://assets/other icons/blessing.png")
+	upgrade_list.append(blessing_upgrade_one)
+
+	var blessing_upgrade_two = Upgrade.new()
+	blessing_upgrade_two.id = 3
+	blessing_upgrade_two.name = "Blessing II"
+	blessing_upgrade_two.description = "Upgrades your base blessing stat from 25 -> 50"
+	blessing_upgrade_two.cost = 25000
+	blessing_upgrade_two.one_time_buy = true
+	blessing_upgrade_two.texture = load("res://assets/other icons/blessing.png")
+	upgrade_list.append(blessing_upgrade_two)
+
 func _init():
 	add_fish()
 	add_rods()
+	add_bait()
+	add_upgrades()
