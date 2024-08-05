@@ -36,15 +36,52 @@ func _ready() -> void:
 	$UI/Vender/TabContainer.connect("tab_selected", _shop_tab_selected)
 	$UI/Vender/TabContainer/Buy/Catalog/Back.connect("pressed", _shop_back_button)
 	$"UI/Vender/TabContainer/Buy/GridContainer/Fishing Rods".connect("pressed", _shop_fishing_rods_button_pressed)
+	$"UI/Vender/TabContainer/Buy/GridContainer/Bait".connect("pressed", _shop_bait_button_pressed)
+	$"UI/Vender/TabContainer/Buy/GridContainer/Upgrades".connect("pressed", _shop_upgrades_button_pressed)
 	load_game()
 	#print(Items.fish_list.size())
 
 func _shop_back_button() -> void:
 	$UI/Vender/TabContainer/Buy/Catalog.visible = false
 	$UI/Vender/TabContainer/Buy/GridContainer.visible = true
+	
 	pass
 
+func _shop_upgrades_button_pressed() -> void:
+	$UI/Vender/TabContainer/Buy/Catalog/Empty.visible = false
+	for children in $UI/Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children():
+		children.queue_free()
+	$UI/Vender/TabContainer/Buy/GridContainer.visible = false
+	$UI/Vender/TabContainer/Buy/Catalog.visible = true
+	for upgrade in Items.upgrade_list:
+		if upgrade.visible_in_shop == true:
+			var already_has_it = false
+			if upgrade.one_time_buy == true:
+				for item in Inventories.upgrade_bag.list:
+					if item.type.id == upgrade.id:
+						already_has_it = true
+			if already_has_it == false:
+				var shop_object = shop_item_object.instantiate()
+				shop_object.set_upgrade(upgrade)
+				$UI/Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.add_child(shop_object)
+	await get_tree().create_timer(0.5).timeout
+	if $UI/Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children().size() == 0:
+		$UI/Vender/TabContainer/Buy/Catalog/Empty.visible = true
+
+func _shop_bait_button_pressed() -> void:
+	$UI/Vender/TabContainer/Buy/Catalog/Empty.visible = false
+	for children in $UI/Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children():
+		children.queue_free()
+	$UI/Vender/TabContainer/Buy/GridContainer.visible = false
+	$UI/Vender/TabContainer/Buy/Catalog.visible = true
+	for bait in Items.bait_list:
+		if bait.visible_in_shop == true:
+			var shop_object = shop_item_object.instantiate()
+			shop_object.set_bait(bait)
+			$UI/Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.add_child(shop_object)
+
 func _shop_fishing_rods_button_pressed() -> void:
+	$UI/Vender/TabContainer/Buy/Catalog/Empty.visible = false
 	for children in $UI/Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children():
 		children.queue_free()
 	$UI/Vender/TabContainer/Buy/GridContainer.visible = false
@@ -58,43 +95,74 @@ func _shop_fishing_rods_button_pressed() -> void:
 var rod_textures = preload("res://assets/tiles/inv_items.png")
 var rod_button = preload("res://scenes/rod.tscn")
 var catalog_item = preload("res://scenes/catalog_fish.tscn")
+
 func _inventory_tab_selected(tab: int) -> void:
 	if tab == 0:
 		open_bag()
 	if tab == 1:
 		update_rod_list()
-	if tab == 2:
+	if tab == 3:
 		update_catalog()
+	if tab == 2:
+		update_baits()
+
+var bait_inv = preload("res://scenes/bait.tscn")
+var bait_textures = preload("res://assets/tiles/bait.png")
+var null_s = preload("res://assets/other icons/Power.png")
+
+func update_baits() -> void:
+	for children in $UI/Main/Inventory/TabContainer/Bait/ScrollContainer/GridContainer.get_children():
+		children.queue_free()
+	var null_inv_object = bait_inv.instantiate()
+	null_inv_object.set_null()
+	$UI/Main/Inventory/TabContainer/Bait/ScrollContainer/GridContainer.add_child(null_inv_object)
+	for bait in Inventories.bait_bag.list:
+		var bait_inv_object = bait_inv.instantiate()
+		bait_inv_object.set_bait(bait.type, bait.amount)
+		$UI/Main/Inventory/TabContainer/Bait/ScrollContainer/GridContainer.add_child(bait_inv_object)
+	if Inventories.bait_bag.equipped != null:
+		var atlas = AtlasTexture.new()
+		atlas.atlas = bait_textures
+		atlas.region = Rect2(Inventories.bait_bag.equipped.atlas_region_x, Inventories.bait_bag.equipped.atlas_region_y, Inventories.bait_bag.equipped.atlas_region_w, Inventories.bait_bag.equipped.atlas_region_h)
+		$"UI/Main/Inventory/TabContainer/Bait/Name".text = Inventories.bait_bag.equipped.name
+		$"UI/Main/Inventory/TabContainer/Bait/DescriptionContainer/Description".text = Inventories.bait_bag.equipped.description
+		$"UI/Main/Inventory/TabContainer/Bait/TextureRect".texture = atlas
+		$UI/Main/Inventory/TabContainer/Bait/Meta.text = "Bonus Fishing Speed: " + str(Inventories.bait_bag.equipped.bonus_fishing_speed) + "\nBonus Blessing: " + str(Inventories.bait_bag.equipped.bonus_blessing)
+	else:
+		$"UI/Main/Inventory/TabContainer/Bait/TextureRect".texture = null_s
+		$"UI/Main/Inventory/TabContainer/Bait/Name".text = "No bait selected!"
+		$"UI/Main/Inventory/TabContainer/Bait/DescriptionContainer/Description".text = "You haven't selected a bait yet! Buy some bait in the shop."
+		$UI/Main/Inventory/TabContainer/Bait/Meta.text = "Bonus Fishing Speed: 0\nBonus Blessing: 0"
 
 func update_catalog() -> void:
 	for children in $UI/Main/Inventory/TabContainer/Catalog/ScrollContainer/GridContainer.get_children():
 		children.queue_free()
-	$UI/Main/Inventory/TabContainer/Catalog/Title.text = "Your Catalog (" + str(FishingBag.collected.keys().size()) + "/" + str(Items.fish_list.size()) + ")"
-	for fish in FishingBag.collected.keys():
+	$UI/Main/Inventory/TabContainer/Catalog/Title.text = "Your Catalog (" + str(Inventories.fishing_bag.collected.keys().size()) + "/" + str(Items.fish_list.size()) + ")"
+	for fish in Inventories.fishing_bag.collected.keys():
 		var catalog_item_object = catalog_item.instantiate()
 		var actual = Items.get_fish_from_id(fish as int)
 		catalog_item_object.set_sprite(actual.atlas_region_x, actual.atlas_region_y, actual.atlas_region_w, actual.atlas_region_h)
 		catalog_item_object.set_fish_name(actual.name)
-		catalog_item_object.set_amount(FishingBag.collected[fish])
+		catalog_item_object.set_amount(Inventories.fishing_bag.collected[fish])
 		$UI/Main/Inventory/TabContainer/Catalog/ScrollContainer/GridContainer.add_child(catalog_item_object)
 func update_rod_list() -> void:
 	for children in $"UI/Main/Inventory/TabContainer/Fishing Rod/ScrollContainer/GridContainer".get_children():
 		children.queue_free()
-	for rod in FishingRods.list:
+	for rod in Inventories.fishing_rods.list:
 		#print(rod.type)
 		var rod_button_object = rod_button.instantiate()
 		rod_button_object.set_rod(rod.type)
 		$"UI/Main/Inventory/TabContainer/Fishing Rod/ScrollContainer/GridContainer".add_child(rod_button_object)
 	var atlas = AtlasTexture.new()
 	atlas.atlas = rod_textures
-	atlas.region = Rect2(FishingRods.equipped.atlas_region_x, FishingRods.equipped.atlas_region_y, FishingRods.equipped.atlas_region_w, FishingRods.equipped.atlas_region_h)
-	$"UI/Main/Inventory/TabContainer/Fishing Rod/Name".text = FishingRods.equipped.name
-	$"UI/Main/Inventory/TabContainer/Fishing Rod/DescriptionContainer/Description".text = FishingRods.equipped.description
+	atlas.region = Rect2(Inventories.fishing_rods.equipped.atlas_region_x, Inventories.fishing_rods.equipped.atlas_region_y, Inventories.fishing_rods.equipped.atlas_region_w, Inventories.fishing_rods.equipped.atlas_region_h)
+	$"UI/Main/Inventory/TabContainer/Fishing Rod/Name".text = Inventories.fishing_rods.equipped.name
+	$"UI/Main/Inventory/TabContainer/Fishing Rod/DescriptionContainer/Description".text = Inventories.fishing_rods.equipped.description
 	$"UI/Main/Inventory/TabContainer/Fishing Rod/TextureRect".texture = atlas
-	if FishingRods.equipped.baitable:
-		$"UI/Main/Inventory/TabContainer/Fishing Rod/Meta".text = "Baitable?: Yes\nDerraticness: " + str(FishingRods.equipped.deerraticness) + "\nBonus Weight: " + str(FishingRods.equipped.added_weight)
+	if Inventories.fishing_rods.equipped.baitable:
+		$"UI/Main/Inventory/TabContainer/Fishing Rod/Meta".text = "Baitable?: Yes\nDerraticness: " + str(Inventories.fishing_rods.equipped.deerraticness) + "\nBonus Weight: " + str(Inventories.fishing_rods.equipped.added_weight)
 	else:
-		$"UI/Main/Inventory/TabContainer/Fishing Rod/Meta".text = "Baitable?: No\nDerraticness: " + str(FishingRods.equipped.deerraticness) + "\nBonus Weight: " + str(FishingRods.equipped.added_weight)
+		$"UI/Main/Inventory/TabContainer/Fishing Rod/Meta".text = "Baitable?: No\nDerraticness: " + str(Inventories.fishing_rods.equipped.deerraticness) + "\nBonus Weight: " + str(Inventories.fishing_rods.equipped.added_weight)
 	
 
 func open_bag():
@@ -105,11 +173,11 @@ func open_bag():
 	#print(Inventory.max_capacity)
 	#$"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer".visible = true
 	var count = 0
-	if FishingBag.list.size() == 0:
+	if Inventories.fishing_bag.list.size() == 0:
 		$"UI/Main/Inventory/TabContainer/Your Bag/Empty".visible = true
 	else:
 		$"UI/Main/Inventory/TabContainer/Your Bag/Empty".visible = false
-	for i in FishingBag.list:
+	for i in Inventories.fishing_bag.list:
 		count += 1
 		#print(count)
 		#print(str(i.amount) + " " + i.type.name)
@@ -125,6 +193,7 @@ func open_inventory() -> void:
 	$UI/Main/Inventory.visible = !$UI/Main/Inventory.visible
 	if $UI/Main/Inventory.visible == true:
 		$UI/Main/Joystick.visible = false
+		$UI/Main/Bait.visible = false
 		$"UI/Main/Inventory Button".visible = false
 		$UI/Main/Buttons.visible = false
 		$"UI/Main/Item Log".visible = false
@@ -132,15 +201,18 @@ func open_inventory() -> void:
 	else:
 		$UI/Main/Joystick.visible = true
 		$UI/Main/Buttons.visible = true
+		$UI/Main/Bait.visible = true
 		$"UI/Main/Inventory Button".visible = true
 		$"UI/Main/Item Log".visible = true
 		$UI/Main/Coins.visible = true
 	open_bag()
 	update_rod_list()
 	update_catalog()
+	update_baits()
 
 func _hide_ui() -> void:
 	$UI/Main/Joystick.visible = false
+	$UI/Main/Bait.visible = false
 	$"UI/Main/Inventory Button".visible = false
 	$UI/Main/Buttons/TouchScreenButton.visible = false
 	$UI/Main/Buttons/TouchScreenButton2.visible = false
@@ -153,6 +225,7 @@ func _show_ui() -> void:
 	$UI/Main/Buttons/TouchScreenButton2.visible = true
 	$"UI/Main/Inventory Button".visible = true
 	$"UI/Main/Item Log".visible = true
+	$UI/Main/Bait.visible = true
 	$UI/Main/Coins.visible = true
 
 func fish() -> void:
@@ -163,6 +236,8 @@ func fish() -> void:
 func _fishing_timer() -> void:
 	var odds = randi_range(250, 750)
 	var your_odds = 0
+	if Inventories.bait_bag.equipped != null:
+		your_odds += Inventories.bait_bag.equipped.bonus_fishing_speed
 	print("Fishing timer started...")
 	_hide_ui()
 	$"UI/Main/Buttons/TouchScreenButton".visible = true
@@ -171,7 +246,7 @@ func _fishing_timer() -> void:
 		print("Odds: " + str(odds) + " | Your Odds: " + str(your_odds))
 		if your_odds >= odds:
 			Input.vibrate_handheld(500)
-			var fish = Items.fish_roll(FishingRods.equipped.added_weight)
+			var fish = Items.fish_roll(Inventories.fishing_rods.equipped.added_weight)
 			bobber_fish = fish_object.instantiate()
 			bobber_fish.set_type(fish.id)
 			bobber_fish.set_sprite(fish.atlas_region_x, fish.atlas_region_y, fish.atlas_region_w, fish.atlas_region_h)
@@ -182,7 +257,7 @@ func _fishing_timer() -> void:
 			#$Lightbulb.visible = true
 			reeling_back_fish = true
 			print(fish.reel_difficulty)
-			var modifier = (FishingRods.equipped.deerraticness * 0.01) 
+			var modifier = (Inventories.fishing_rods.equipped.deerraticness * 0.01) 
 			if fish.reel_difficulty == "" or fish.reel_difficulty == "EASY":
 				add_fish(30 - (modifier * 15), 80 - (modifier * 25), 3 + (modifier * 0.5), 3 + (modifier * 1.5))
 			elif fish.reel_difficulty == "MEDIUM":
@@ -213,7 +288,7 @@ func get_rod_tip() -> Vector2:
 
 
 func use() -> void:
-	print("Hmm...")	
+	print("Using this! ..Whatver it is!")	
 	if len($Area2D.get_overlapping_areas()) > 0:
 		for area in $Area2D.get_overlapping_areas():
 			if area.is_in_group("shop"):
@@ -244,12 +319,12 @@ func _update_sell() -> void:
 		children.queue_free()
 	var count = 0
 	var total: float
-	for item in FishingBag.list:
+	for item in Inventories.fishing_bag.list:
 		total += item.type.sell_price * item.amount
 	$UI/Vender/TabContainer/Sell/Panel/Sell.text = "Sell" + "\t" + "...................." + "$" + buck_fiddy(total)
 	#print(Inventory.max_capacity)
 	#print(Items.fish_list.size())
-	for i in FishingBag.list:
+	for i in Inventories.fishing_bag.list:
 		#print(str(i.amount) + " " + i.type.name)
 		var object = inventory_item_object.instantiate()
 		object.scale = Vector2(2.2, 2.2)
@@ -299,8 +374,6 @@ func _on_body_animation_finished() -> void:
 				pulling_back = false
 				play_idle_animation()
 
-
-
 func play_idle_animation() -> void:
 	$Body.play("char1_idle_" + last_direction)
 
@@ -321,17 +394,25 @@ var catches = 0
 
 func get_game_data() -> Dictionary:
 	return {
-		"bag": FishingBag.to_list(),
-		"bag_max_capacity": FishingBag.max_capacity,
+		"bag": Inventories.fishing_bag.to_list(),
 		"coins": Coins.balance,
 		"pos_x": position.x,
 		"pos_y": position.y,
 		"whiffs": whiffs,
 		"catches": catches,
-		"fishing_rod": FishingRods.equipped.id,
-		"rods": FishingRods.to_list(),
-		"catalog": FishingBag.collected
+		"fishing_rod": Inventories.fishing_rods.equipped.id,
+		"rods": Inventories.fishing_rods.to_list(),
+		"catalog": Inventories.fishing_bag.collected,
+		"baits": Inventories.bait_bag.to_list(),
+		"selected_bait": get_bait_id(),
+		"upgrade_list": Inventories.upgrade_bag.to_list()
 	}
+
+func get_bait_id() -> Variant:
+	if Inventories.bait_bag.equipped != null:
+		return Inventories.bait_bag.equipped.id
+	else:
+		return null
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
@@ -361,10 +442,8 @@ func load_game():
 		
 		var data = json.get_data()
 		if data.has("bag"):
-			FishingBag.set_list_from_save(data["bag"])
+			Inventories.fishing_bag.set_list_from_save(data["bag"])
 		Coins.balance = data["coins"]
-		if data.has("bag_max_capacity"):
-			FishingBag.max_capacity = data["bag_max_capacity"] 
 		if data.has("pos_x"):
 			position.x = data["pos_x"]
 		if data.has("pos_y"):
@@ -375,11 +454,18 @@ func load_game():
 			catches = data["catches"]
 		if data.has("fishing_rod"):
 			#print(data["fishing_rod"])
-			FishingRods.equipped = Items.get_rod_from_id(data["fishing_rod"])
+			Inventories.fishing_rods.equipped = Items.get_rod_from_id(data["fishing_rod"])
 		if data.has("rods"):
-			FishingRods.set_list_from_save(data["rods"])
+			Inventories.fishing_rods.set_list_from_save(data["rods"])
 		if data.has("catalog"):
-			FishingBag.collected = data["catalog"]
+			Inventories.fishing_bag.collected = data["catalog"]
+		if data.has("baits"):
+			Inventories.bait_bag.set_list_from_save(data["baits"])
+		if data.has("upgrade_list"):
+			Inventories.upgrade_bag.set_list_from_save(data["upgrade_list"])
+		if data.has("selected_bait"):
+			if data["selected_bait"] != null:
+				Inventories.bait_bag.equipped = Items.get_bait_from_id(data["selected_bait"])
 	print("Loaded the game.")
 	$"UI/Main/Item Log".add_text("Loaded the game.")
 
@@ -425,9 +511,9 @@ func _process_input(delta) -> void:
 			
 		# Adjust Value
 		if (len($"UI/Main/BobberProgress/Hook/Area2D".get_overlapping_areas()) > 0):
-			var modifier = (FishingRods.equipped.deerraticness * 0.01) 
+			var modifier = (Inventories.fishing_rods.equipped.deerraticness * 0.01) 
 			$UI/Main/BobberProgress/Progress.value += 145 * delta + (modifier * 5)
-			Input.vibrate_handheld(20)
+			Input.vibrate_handheld(10)
 			if ($UI/Main/BobberProgress/Progress.value >= 999):
 				reeling = true
 				reeling_back_fish = false
@@ -524,12 +610,28 @@ var tween: Tween
 func _physics_process(delta) -> void:
 	# Process player input
 	_process_input(delta)
-	if $"UI/Main/Inventory/TabContainer/Fishing Rod/Name".text != FishingRods.equipped.name:
+	if $"UI/Main/Inventory/TabContainer/Fishing Rod/Name".text != Inventories.fishing_rods.equipped.name:
 		update_rod_list()
+	if Inventories.bait_bag.equipped != null:
+		if $"UI/Main/Inventory/TabContainer/Bait/Name".text != Inventories.bait_bag.equipped.name:
+			update_baits()
+	elif $"UI/Main/Inventory/TabContainer/Bait/Name".text != "No bait selected!":
+		update_baits()
+	if Inventories.fishing_rods.equipped.baitable == false or Inventories.bait_bag.equipped == null:
+		$UI/Main/Bait.visible = false
+	if Inventories.bait_bag.equipped != null:
+		#print(Inventories.bait_bag.equipped)
+		for bait in Inventories.bait_bag.list:
+			if bait.type.id == Inventories.bait_bag.equipped.id and $UI/Main/Bait/Panel/HBoxContainer/Label.text != "x" + str(bait.amount):
+				$UI/Main/Bait/Panel/HBoxContainer/Label.text = "x" + str(bait.amount)
+				var atlas = AtlasTexture.new()
+				atlas.atlas = bait_textures
+				atlas.region = Rect2(bait.type.atlas_region_x, bait.type.atlas_region_y, bait.type.atlas_region_w, bait.type.atlas_region_h)
+				$UI/Main/Bait/Panel/HBoxContainer/TextureRect.texture = atlas
 
 	var atlas = AtlasTexture.new()
 	atlas.atlas = rod_textures
-	atlas.region = Rect2(FishingRods.equipped.atlas_region_x, FishingRods.equipped.atlas_region_y, FishingRods.equipped.atlas_region_w, FishingRods.equipped.atlas_region_h)
+	atlas.region = Rect2(Inventories.fishing_rods.equipped.atlas_region_x, Inventories.fishing_rods.equipped.atlas_region_y, Inventories.fishing_rods.equipped.atlas_region_w, Inventories.fishing_rods.equipped.atlas_region_h)
 	$"UI/Main/Buttons/TouchScreenButton/Fish Button".icon = atlas
 	$Notifications.visible = false
 	if len($Area2D.get_overlapping_areas()) > 0:
@@ -544,7 +646,7 @@ func _physics_process(delta) -> void:
 	
 	# Update UI
 	$UI/Main/Coins/PanelContainer/HBoxContainer/Label.text = "$" + buck_fiddy(Coins.balance)
-	$"UI/Main/Inventory Button/TouchScreenButton/Button".text = str(FishingBag.size()) + "/" + str(FishingBag.max_capacity)
+	$"UI/Main/Inventory Button/TouchScreenButton/Button".text = str(Inventories.fishing_bag.size()) + "/" + str(Inventories.fishing_bag.get_max_capacity())
 	
 	if bobber != null and fishing == false:
 		bobber.queue_free()
@@ -569,19 +671,37 @@ func _physics_process(delta) -> void:
 			reeling = false
 			reeling_back_fish = false
 			var item = ItemStack.new()
-			item.amount = 1
+			var drops = 1 + calculate_drop_multiplier(calculate_blessing())
 			item.type = Items.get_fish_from_id(bobber_fish.type)
-			if FishingBag.is_full():
+			
+			var available_space = Inventories.fishing_bag.max_capacity - Inventories.fishing_bag.size()
+			var drops_to_add = min(drops, available_space)
+			if drops_to_add < 1 and available_space >= 1:
+				drops_to_add = 1
+			drops_to_add = min(drops_to_add, available_space)
+			item.amount = drops_to_add
+			
+			if drops_to_add <= 0:
 				$"UI/Main/Item Log".add_text("Your inventory is full.")
 				print("Inventory is too full to add item.")
 			else:
 				$"UI/Main/Item Log".add_text("x" + str(item.amount) + " " + str(item.type.name))
-				FishingBag.add_item(item)
+				Inventories.fishing_bag.add_item(item)
 				print("Added item to inventory.")
 			save_game(get_game_data(), "action")
 			bobber_fish.queue_free()
 			bobber_fish = null
 			play_idle_animation()
+			if Inventories.bait_bag.equipped != null:
+				var index = 0
+				for bait in Inventories.bait_bag.list:
+					if bait.type.id == Inventories.bait_bag.equipped.id:
+						bait.amount -= 1
+						Inventories.bait_bag.list[index] = bait
+						if bait.amount <= 0:
+							Inventories.bait_bag.list.erase(bait)
+							Inventories.bait_bag.equipped = null
+					index += 1
 
 	# While the bobber still exists, draw a line to it and the tip of the player's rod
 	if bobber != null: 
@@ -595,6 +715,27 @@ func _physics_process(delta) -> void:
 	else:
 		$Camera2D.global_position = lerp($Camera2D.global_position, global_position, 0.05)
 		$Camera2D.zoom = lerp($Camera2D.zoom, Vector2(1.2, 1.2), 0.05)
+
+func calculate_blessing() -> int:
+	var blessing = 0
+	for item in Inventories.upgrade_bag.list:
+		if item.type.id == 2:
+			blessing += 25
+		if item.type.id == 3:
+			blessing += 25
+	blessing += Inventories.fishing_rods.equipped.blessing
+	if Inventories.bait_bag.equipped != null:
+		blessing += Inventories.bait_bag.equipped.bonus_blessing
+	return blessing
+
+func calculate_drop_multiplier(blessing: int) -> int:
+	var guaranteed_multiplier: int = blessing / 100
+	var next_drop_chance = (blessing % 100) / 100.0
+	var random_value = randf()
+	if random_value < next_drop_chance:
+		return guaranteed_multiplier + 1
+	else:
+		return guaranteed_multiplier
 
 func _on_save_timer_timeout() -> void:
 	save_game(get_game_data(), "auto")

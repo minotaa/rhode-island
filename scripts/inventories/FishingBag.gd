@@ -1,8 +1,14 @@
-extends Node
-#class_name Inventory
+extends Bag
+class_name FishingBag
 
-var list = []
-var max_capacity = 10
+func get_max_capacity() -> int:
+	var base = 10
+	for item in Inventories.upgrade_bag.list:
+		if item.type.id == 0:
+			base = 25
+		if item.type.id == 1:
+			base = 50
+	return base
 var collected = {}
 
 func sell_items() -> void:
@@ -11,13 +17,6 @@ func sell_items() -> void:
 		total += i.type.sell_price * i.amount
 	list = []
 	Coins.balance += total
-
-
-func size() -> int:
-	var size = 0
-	for item in list:
-		size += item.amount
-	return size
 	
 func set_list_from_save(_list: Array):
 	for value in _list:
@@ -34,12 +33,9 @@ func to_list() -> Array:
 			"amount": (value as ItemStack).amount
 		})
 	return _list
-
-func get_item(index: int) -> ItemStack:
-	return list[index]
 	
 func is_full() -> bool:
-	return size() >= max_capacity
+	return size() >= get_max_capacity()
 
 func add_item(item: ItemStack) -> void:
 	if collected.has(item.type.id):
@@ -53,5 +49,3 @@ func add_item(item: ItemStack) -> void:
 			return
 	list.append(item)
 
-func remove_item(item: ItemStack) -> void:
-	list.erase(item)

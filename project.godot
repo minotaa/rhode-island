@@ -14,16 +14,19 @@ config/name="Beachside Tactics"
 config/version="1.0.0"
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
-boot_splash/show_image=false
-boot_splash/use_filter=false
-config/icon="res://icon.svg"
+boot_splash/image="res://assets/art/bigger splash screen.png"
+config/icon="res://assets/art/icon.png"
+boot_splash/minimum_display_time=3000
 
 [autoload]
 
 Items="*res://scripts/inventories/Items.gd"
-FishingBag="*res://scripts/inventories/FishingBag.gd"
 Coins="*res://scripts/Coins.gd"
-FishingRods="*res://scripts/inventories/FishingRods.gd"
+Inventories="*res://scripts/inventories/Inventories.gd"
+
+[debug]
+
+file_logging/enable_file_logging=true
 
 [display]
 
@@ -31,6 +34,7 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/per_pixel_transparency/allowed=true
 
 [editor_plugins]
 

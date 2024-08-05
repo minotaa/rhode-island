@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/shop_item_entity.gd" id="1_yiw8a"]
 [ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram.ttf" id="2_ckuno"]
-[ext_resource type="Texture2D" uid="uid://dweeegoe5hn47" path="res://assets/tiles/inv_items.png" id="3_afbui"]
+[ext_resource type="Texture2D" uid="uid://c3lvepchhqyq8" path="res://assets/tiles/bait.png" id="3_6lp2r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ci8br"]
 bg_color = Color(0.0313726, 0.0313726, 0.0313726, 0.596078)
@@ -36,8 +36,8 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_le7wm"]
-atlas = ExtResource("3_afbui")
-region = Rect2(16, 32, 16, 16)
+atlas = ExtResource("3_6lp2r")
+region = Rect2(2.08165e-12, 2.08165e-12, 16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_i4y8i"]
 font = ExtResource("2_ckuno")
@@ -114,7 +114,6 @@ grow_horizontal = 2
 text = "Plaice"
 label_settings = SubResource("LabelSettings_i4y8i")
 horizontal_alignment = 1
-autowrap_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
 layout_mode = 1

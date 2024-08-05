@@ -13,7 +13,7 @@ corner_radius_bottom_left = 40
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o5618"]
 atlas = ExtResource("2_wctil")
-region = Rect2(0, 0, 16, 16)
+region = Rect2(112, 144, 16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_nbjqk"]
 font = ExtResource("3_grgy7")
@@ -24,13 +24,17 @@ auto_translate_mode = 1
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
+offset_right = 192.0
+offset_bottom = 200.0
+mouse_filter = 1
 script = ExtResource("1_7cpxo")
 
 [node name="Panel" type="Panel" parent="."]
 auto_translate_mode = 1
-layout_mode = 0
+layout_mode = 1
 offset_right = 192.0
 offset_bottom = 200.0
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_22e66")
 
 [node name="TextureRect" type="TextureRect" parent="Panel"]

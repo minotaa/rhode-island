@@ -4,6 +4,9 @@ var rod_textures = preload("res://assets/tiles/inv_items.png")
 var fishing_rod: FishingRod = Items.get_rod_from_id(0)
 
 func set_rod(rod: FishingRod):
+	if rod == null: 
+		queue_free()
+		return
 	fishing_rod = rod
 	var atlas = AtlasTexture.new()
 	atlas.atlas = rod_textures
@@ -11,4 +14,4 @@ func set_rod(rod: FishingRod):
 	$Button.icon = atlas
 
 func _on_button_pressed() -> void:
-	FishingRods.equipped = fishing_rod 
+	Inventories.fishing_rods.equipped = fishing_rod 

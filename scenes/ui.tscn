@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=80 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/buttons/TouchScreenButton.gd" id="2_lpp3g"]
@@ -13,8 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://i1wrfpokwkrv" path="res://assets/other icons/Coin2.png" id="11_y52ah"]
 [ext_resource type="Texture2D" uid="uid://0qwcp00oep1c" path="res://assets/other icons/Fishing-Column.png" id="13_jhfam"]
 [ext_resource type="PackedScene" uid="uid://c0p4fv026gsg4" path="res://scenes/rod.tscn" id="13_x66uw"]
-[ext_resource type="PackedScene" uid="uid://bgqkcvatt3eul" path="res://scenes/catalog_fish.tscn" id="14_bpdd7"]
 [ext_resource type="Texture2D" uid="uid://bq8v5ythff5pk" path="res://assets/other icons/Progress-Empty.png" id="14_cdgpj"]
+[ext_resource type="Texture2D" uid="uid://bup08n33d4gbh" path="res://assets/other icons/Power.png" id="15_4ed6o"]
 [ext_resource type="Texture2D" uid="uid://bfu0lohs641p0" path="res://assets/other icons/Progress-Bar.png" id="15_83dsy"]
 [ext_resource type="Texture2D" uid="uid://bn032jb1ii5ru" path="res://assets/other icons/Hook.png" id="16_ggv0v"]
 [ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram.ttf" id="17_g0huu"]
@@ -22,7 +22,22 @@
 [ext_resource type="Texture2D" uid="uid://tucn4nuiys57" path="res://assets/other icons/FlowerPot.png" id="18_e8xvv"]
 [ext_resource type="PackedScene" uid="uid://cbacbq6j3kvfp" path="res://scenes/shop_item.tscn" id="18_lxinn"]
 [ext_resource type="Script" path="res://scripts/buttons/x_button.gd" id="18_q4fv6"]
-[ext_resource type="Texture2D" uid="uid://c3lvepchhqyq8" path="res://assets/things/worm.png" id="19_bqi5g"]
+[ext_resource type="Texture2D" uid="uid://c3lvepchhqyq8" path="res://assets/tiles/bait.png" id="19_bqi5g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jtexw"]
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.658824)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+expand_margin_left = 12.0
+expand_margin_top = 12.0
+expand_margin_right = 12.0
+expand_margin_bottom = 8.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_jgk3m"]
+font = ExtResource("17_g0huu")
+font_size = 48
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f8oh1"]
 
@@ -131,17 +146,6 @@ expand_margin_top = 12.0
 expand_margin_right = 12.0
 expand_margin_bottom = 12.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jtexw"]
-bg_color = Color(0.101961, 0.101961, 0.101961, 0.658824)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-expand_margin_left = 12.0
-expand_margin_top = 12.0
-expand_margin_right = 12.0
-expand_margin_bottom = 12.0
-
 [sub_resource type="LabelSettings" id="LabelSettings_bqygk"]
 font = ExtResource("17_g0huu")
 font_size = 72
@@ -200,6 +204,10 @@ font_size = 48
 [sub_resource type="LabelSettings" id="LabelSettings_fj0gr"]
 font = ExtResource("17_g0huu")
 font_size = 36
+
+[sub_resource type="LabelSettings" id="LabelSettings_f04n0"]
+font = ExtResource("17_g0huu")
+font_size = 54
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gbr1f"]
 size = Vector2(82, 34)
@@ -306,6 +314,10 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
+[sub_resource type="LabelSettings" id="LabelSettings_yo2it"]
+font = ExtResource("17_g0huu")
+font_size = 84
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2gthc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mcnxq"]
@@ -348,6 +360,45 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Bait" type="Control" parent="Main"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -128.0
+offset_top = 168.0
+offset_right = -56.0
+offset_bottom = 208.0
+grow_horizontal = 0
+
+[node name="Panel" type="PanelContainer" parent="Main/Bait"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.275
+anchor_right = 1.0
+anchor_bottom = 0.675
+offset_top = 11.0
+offset_bottom = -11.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jtexw")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/Bait/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TextureRect" type="TextureRect" parent="Main/Bait/Panel/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("19_bqi5g")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="Main/Bait/Panel/HBoxContainer"]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_jgk3m")
+vertical_alignment = 1
 
 [node name="Joystick" type="Control" parent="Main"]
 auto_translate_mode = 1
@@ -617,7 +668,7 @@ theme_override_styles/tab_selected = SubResource("StyleBoxFlat_djtna")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_gfyfq")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_rkivi")
 tab_alignment = 1
-current_tab = 2
+current_tab = 3
 
 [node name="Your Bag" type="Panel" parent="Main/Inventory/TabContainer"]
 visible = false
@@ -819,6 +870,124 @@ layout_mode = 2
 [node name="Rod4" parent="Main/Inventory/TabContainer/Fishing Rod/ScrollContainer/GridContainer" instance=ExtResource("13_x66uw")]
 layout_mode = 2
 
+[node name="Bait" type="Panel" parent="Main/Inventory/TabContainer"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Main/Inventory/TabContainer/Bait"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -321.0
+offset_top = 128.0
+offset_right = -89.0
+offset_bottom = 365.0
+grow_horizontal = 0
+texture = ExtResource("15_4ed6o")
+
+[node name="Name" type="Label" parent="Main/Inventory/TabContainer/Bait"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -372.0
+offset_top = 365.0
+offset_right = -16.0
+offset_bottom = 426.0
+grow_horizontal = 0
+text = "No bait selected!"
+label_settings = SubResource("LabelSettings_f04n0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DescriptionContainer" type="ScrollContainer" parent="Main/Inventory/TabContainer/Bait"]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -464.0
+offset_top = -160.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Description" type="Label" parent="Main/Inventory/TabContainer/Bait/DescriptionContainer"]
+auto_translate_mode = 1
+custom_minimum_size = Vector2(430, 2.08165e-12)
+layout_mode = 2
+text = "You haven't selected a bait yet! Buy some bait in the shop."
+label_settings = SubResource("LabelSettings_bohx7")
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory/TabContainer/Bait"]
+position = Vector2(1168, 65)
+shape = SubResource("RectangleShape2D_21cbf")
+script = ExtResource("8_dm5ih")
+
+[node name="Close Button" type="Button" parent="Main/Inventory/TabContainer/Bait/TouchScreenButton"]
+auto_translate_mode = 1
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -36.0
+offset_right = 36.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 12
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_s8ee3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dn5yn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dq7gx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jtexw")
+icon = ExtResource("8_otfdw")
+expand_icon = true
+
+[node name="Meta" type="Label" parent="Main/Inventory/TabContainer/Bait"]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 177.0
+offset_top = 36.0
+offset_right = 485.0
+offset_bottom = 100.0
+grow_horizontal = 2
+text = "Bonus Fishing Speed: 0
+Bonus Blessing: 0"
+label_settings = SubResource("LabelSettings_fj0gr")
+horizontal_alignment = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Main/Inventory/TabContainer/Bait"]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 40.0
+offset_top = 45.0
+offset_right = 744.0
+offset_bottom = 557.0
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="Main/Inventory/TabContainer/Bait/ScrollContainer"]
+auto_translate_mode = 1
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+theme_override_constants/h_separation = 195
+theme_override_constants/v_separation = 170
+columns = 3
+
 [node name="Catalog" type="Panel" parent="Main/Inventory/TabContainer"]
 layout_mode = 2
 
@@ -831,19 +1000,16 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -576.0
 offset_top = -189.5
-offset_right = 576.0
+offset_right = 600.0
 offset_bottom = 258.5
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="GridContainer" type="GridContainer" parent="Main/Inventory/TabContainer/Catalog/ScrollContainer"]
 layout_mode = 2
-theme_override_constants/h_separation = 240
+theme_override_constants/h_separation = 235
 theme_override_constants/v_separation = 220
 columns = 5
-
-[node name="Catalog Fish" parent="Main/Inventory/TabContainer/Catalog/ScrollContainer/GridContainer" instance=ExtResource("14_bpdd7")]
-layout_mode = 2
 
 [node name="Title" type="Label" parent="Main/Inventory/TabContainer/Catalog"]
 auto_translate_mode = 1
@@ -861,7 +1027,8 @@ label_settings = SubResource("LabelSettings_a8nlh")
 horizontal_alignment = 1
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory/TabContainer/Catalog"]
-position = Vector2(1168, 65)
+position = Vector2(1176, 57)
+scale = Vector2(0.85, 0.85)
 shape = SubResource("RectangleShape2D_21cbf")
 script = ExtResource("8_dm5ih")
 
@@ -1184,6 +1351,25 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_2vedd")
 theme_override_styles/normal = SubResource("StyleBoxFlat_5gnjs")
 text = "Go back"
 
+[node name="Empty" type="Label" parent="Vender/TabContainer/Buy/Catalog"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -140.0
+offset_right = 576.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "This catalogue is empty! Check again later."
+label_settings = SubResource("LabelSettings_yo2it")
+horizontal_alignment = 1
+autowrap_mode = 2
+
 [node name="Sell" type="Control" parent="Vender/TabContainer"]
 visible = false
 texture_filter = 1
@@ -1288,6 +1474,8 @@ script = ExtResource("18_q4fv6")
 [connection signal="released" from="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" to="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" method="_on_released"]
 [connection signal="pressed" from="Main/Inventory/TabContainer/Fishing Rod/TouchScreenButton" to="Main/Inventory/TabContainer/Fishing Rod/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory/TabContainer/Fishing Rod/TouchScreenButton" to="Main/Inventory/TabContainer/Fishing Rod/TouchScreenButton" method="_on_released"]
+[connection signal="pressed" from="Main/Inventory/TabContainer/Bait/TouchScreenButton" to="Main/Inventory/TabContainer/Bait/TouchScreenButton" method="_on_pressed"]
+[connection signal="released" from="Main/Inventory/TabContainer/Bait/TouchScreenButton" to="Main/Inventory/TabContainer/Bait/TouchScreenButton" method="_on_released"]
 [connection signal="pressed" from="Main/Inventory/TabContainer/Catalog/TouchScreenButton" to="Main/Inventory/TabContainer/Catalog/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory/TabContainer/Catalog/TouchScreenButton" to="Main/Inventory/TabContainer/Catalog/TouchScreenButton" method="_on_released"]
 [connection signal="button_down" from="Vender/TabContainer/Buy/Button" to="Vender/TabContainer/Buy/Button" method="_on_button_down"]

@@ -1,12 +1,11 @@
 extends ItemType
-class_name FishingRod
+class_name Bait
 
-var baitable: bool = false
-var deerraticness: int = 0
-var added_weight: int = 0
-var blessing: int = 0
+var bonus_fishing_speed = 0
+var bonus_blessing = 0
 
 var atlas_region_x: float = 0
 var atlas_region_y: float = 0
 var atlas_region_w: float = 16.0
 var atlas_region_h: float = 16.0
+

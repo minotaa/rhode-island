@@ -1,0 +1,86 @@
+[gd_scene load_steps=11 format=3 uid="uid://b300epxx4n84s"]
+
+[ext_resource type="Script" path="res://scripts/bait.gd" id="1_ne0pf"]
+[ext_resource type="Texture2D" uid="uid://bup08n33d4gbh" path="res://assets/other icons/Power.png" id="2_xwde3"]
+[ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram.ttf" id="3_qi6xh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1x0g1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0jx53"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1kn5x"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hjjkn"]
+content_margin_left = 12.0
+content_margin_top = 24.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.403922, 0.403922, 0.403922, 0.65098)
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iqi6k"]
+content_margin_left = 12.0
+content_margin_top = 24.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.74902, 0.74902, 0.74902, 0.615686)
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xkhm4"]
+content_margin_left = 12.0
+content_margin_top = 24.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 0.803922)
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+
+[sub_resource type="LabelSettings" id="LabelSettings_f5icu"]
+font = ExtResource("3_qi6xh")
+font_size = 48
+
+[node name="Bait" type="Control"]
+layout_mode = 3
+anchor_right = 0.125
+anchor_bottom = 0.222
+offset_bottom = 0.159987
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ne0pf")
+
+[node name="Button" type="Button" parent="."]
+auto_translate_mode = 1
+texture_filter = 1
+offset_right = 158.0
+offset_bottom = 160.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1x0g1")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0jx53")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_1kn5x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hjjkn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iqi6k")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xkhm4")
+action_mode = 0
+icon = ExtResource("2_xwde3")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 24.0
+offset_top = 112.0
+offset_right = 128.0
+offset_bottom = 150.0
+label_settings = SubResource("LabelSettings_f5icu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
