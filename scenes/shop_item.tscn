@@ -41,7 +41,7 @@ region = Rect2(2.08165e-12, 2.08165e-12, 16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_i4y8i"]
 font = ExtResource("2_ckuno")
-font_size = 52
+font_size = 50
 
 [sub_resource type="LabelSettings" id="LabelSettings_2fw6s"]
 font = ExtResource("2_ckuno")
