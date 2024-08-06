@@ -4,3 +4,5 @@ var fishing_bag = FishingBag.new()
 var fishing_rods = FishingRods.new()
 var bait_bag = BaitBag.new()
 var upgrade_bag = UpgradeBag.new()
+var clothing_bag = ClothesBag.new()
+

@@ -23,9 +23,10 @@ font_size = 32
 auto_translate_mode = 1
 texture_filter = 1
 layout_mode = 3
-anchors_preset = 0
-offset_right = 192.0
-offset_bottom = 200.0
+anchor_right = 0.156
+anchor_bottom = 0.278
+offset_right = -7.68
+offset_bottom = -0.160019
 mouse_filter = 1
 script = ExtResource("1_7cpxo")
 

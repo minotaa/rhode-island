@@ -4,6 +4,7 @@ var fish_list = []
 var rods_list = []
 var bait_list = []
 var upgrade_list = []
+var clothing_list = []
 
 func fish_roll(weight: int) -> Fish:
 	var totalWeight = 0
@@ -17,6 +18,12 @@ func fish_roll(weight: int) -> Fish:
 		currentWeight += item.reel_weight
 		if randomValue < currentWeight:
 			return item
+	return null
+
+func get_clothing_from_id(id: int) -> Clothing:
+	for clothing in clothing_list:
+		if clothing.id == id:
+			return clothing
 	return null
 
 func get_upgrade_from_id(id: int) -> Upgrade:
@@ -112,9 +119,9 @@ func add_fish() -> void:
 	sea_horse.name = "Sea Horse"
 	sea_horse.id = 5
 	sea_horse.description = "Unique fish with horse-like heads and curled tails, found in shallow waters worldwide."
-	sea_horse.cost = 50.0
+	sea_horse.cost = 500.0
 	sea_horse.reel_difficulty = "HARD"
-	sea_horse.sell_price = 25.0
+	sea_horse.sell_price = 225.0
 	sea_horse.reel_weight = 15
 	sea_horse.reel_location = "beach"
 	sea_horse.atlas_region_x = 80.0
@@ -332,7 +339,7 @@ func add_fish() -> void:
 	stingray.description = "A flat, cartilaginous fish with wide, wing-like pectoral fins and a long, venomous tail spine. Found in tropical and subtropical waters, stingrays are known for their graceful swimming and potentially painful stings."
 	stingray.id = 23
 	stingray.cost = 150.0
-	stingray.sell_price = 125.0
+	stingray.sell_price = 225.0
 	sea_horse.reel_difficulty = "HARD"
 	stingray.reel_location = "beach"
 	stingray.reel_weight = 2
@@ -381,8 +388,8 @@ func add_fish() -> void:
 	black_drum.name = "Black Drum"
 	black_drum.description = "A large, robust fish found in western Atlantic coastal waters, recognized by its dark coloration and ability to produce deep, drum-like sounds. Valued for its firm flesh, black drum is often sought after by both sport and commercial fishers."
 	black_drum.id = 27
-	black_drum.cost = 65.0
-	black_drum.sell_price = 45.0
+	black_drum.cost = 265.0
+	black_drum.sell_price = 145.0
 	sea_horse.reel_difficulty = "HARD"
 	black_drum.reel_location = "beach"
 	black_drum.reel_weight = 25
@@ -407,8 +414,8 @@ func add_fish() -> void:
 	pompano.name = "Pompano"
 	pompano.description = "A prized fish known for its delicious taste."
 	pompano.id = 29
-	pompano.cost = 50.0
-	pompano.sell_price = 35.0
+	pompano.cost = 250.0
+	pompano.sell_price = 135.0
 	pompano.reel_difficulty = "HARD"
 	pompano.reel_location = "beach"
 	pompano.reel_weight = 15
@@ -446,8 +453,8 @@ func add_fish() -> void:
 	red_snapper.name = "Red Snapper"
 	red_snapper.description = "A popular fish known for its vibrant color and taste."
 	red_snapper.id = 32
-	red_snapper.cost = 60.0
-	red_snapper.sell_price = 40.0
+	red_snapper.cost = 260.0
+	red_snapper.sell_price = 175.0
 	red_snapper.reel_difficulty = "HARD"
 	red_snapper.reel_location = "beach"
 	red_snapper.reel_weight = 25
@@ -459,8 +466,8 @@ func add_fish() -> void:
 	salmon.name = "Salmon"
 	salmon.description = "A highly valued fish for its rich flavor."
 	salmon.id = 33
-	salmon.cost = 80.0
-	salmon.sell_price = 55.0
+	salmon.cost = 9800.0
+	salmon.sell_price = 1500.0
 	salmon.reel_difficulty = "IMPOSSIBLE"
 	salmon.reel_location = "beach"
 	salmon.reel_weight = 12
@@ -511,8 +518,8 @@ func add_fish() -> void:
 	dumbo_octopus.name = "Dumbo Octopus"
 	dumbo_octopus.description = "A deep-sea octopus known for its distinctive ear-like fins."
 	dumbo_octopus.id = 37
-	dumbo_octopus.cost = 40.0
-	dumbo_octopus.sell_price = 30.0
+	dumbo_octopus.cost = 140.0
+	dumbo_octopus.sell_price = 130.0
 	dumbo_octopus.reel_difficulty = "HARD"
 	dumbo_octopus.reel_location = "beach"
 	dumbo_octopus.reel_weight = 15
@@ -537,8 +544,8 @@ func add_fish() -> void:
 	lobster.name = "Lobster"
 	lobster.description = "A large, predatory crustacean with powerful pincers."
 	lobster.id = 39
-	lobster.cost = 50.0
-	lobster.sell_price = 38.0
+	lobster.cost = 151.0
+	lobster.sell_price = 150.0
 	lobster.reel_difficulty = "HARD"
 	lobster.reel_location = "beach"
 	lobster.reel_weight = 20
@@ -563,8 +570,8 @@ func add_fish() -> void:
 	turtle.name = "Turtle"
 	turtle.description = "A slow-moving reptile known for its hard shell and long lifespan."
 	turtle.id = 41
-	turtle.cost = 80.0
-	turtle.sell_price = 60.0
+	turtle.cost = 8000.0
+	turtle.sell_price = 1000.0
 	turtle.reel_difficulty = "IMPOSSIBLE"
 	turtle.reel_location = "beach"
 	turtle.reel_weight = 8
@@ -576,8 +583,8 @@ func add_fish() -> void:
 	octopus.name = "Octopus"
 	octopus.description = "A highly intelligent cephalopod with eight arms."
 	octopus.id = 42
-	octopus.cost = 65.0
-	octopus.sell_price = 50.0
+	octopus.cost = 165.0
+	octopus.sell_price = 150.0
 	octopus.reel_difficulty = "HARD"
 	octopus.reel_location = "beach"
 	octopus.reel_weight = 18
@@ -810,8 +817,8 @@ func add_fish() -> void:
 	char.name = "Char"
 	char.description = "A cold-water fish with a distinctive forked tail and vibrant coloration."
 	char.id = 60
-	char.cost = 65.0
-	char.sell_price = 50.0
+	char.cost = 165.0
+	char.sell_price = 150.0
 	char.reel_difficulty = "HARD"
 	char.reel_location = "beach"
 	char.reel_weight = 15
@@ -836,8 +843,8 @@ func add_fish() -> void:
 	king_salmon.name = "King Salmon"
 	king_salmon.description = "A large and powerful salmon known for its impressive size and strength."
 	king_salmon.id = 62
-	king_salmon.cost = 80.0
-	king_salmon.sell_price = 60.0
+	king_salmon.cost = 8000.0
+	king_salmon.sell_price = 100.0
 	king_salmon.reel_difficulty = "IMPOSSIBLE"
 	king_salmon.reel_location = "beach"
 	king_salmon.reel_weight = 10
@@ -862,8 +869,8 @@ func add_fish() -> void:
 	piranha.name = "Piranha"
 	piranha.description = "A fierce and aggressive freshwater fish known for its sharp teeth."
 	piranha.id = 64
-	piranha.cost = 60.0
-	piranha.sell_price = 45.0
+	piranha.cost = 160.0
+	piranha.sell_price = 145.0
 	piranha.reel_difficulty = "HARD"
 	piranha.reel_location = "beach"
 	piranha.reel_weight = 12
@@ -953,8 +960,8 @@ func add_fish() -> void:
 	catfish.name = "Catfish"
 	catfish.description = "A large, bottom-dwelling fish known for its whisker-like barbels."
 	catfish.id = 71
-	catfish.cost = 60.0
-	catfish.sell_price = 45.0
+	catfish.cost = 160.0
+	catfish.sell_price = 245.0
 	catfish.reel_difficulty = "HARD"
 	catfish.reel_location = "beach"
 	catfish.reel_weight = 15
@@ -1005,8 +1012,8 @@ func add_fish() -> void:
 	largemouth_bass.name = "Largemouth Bass"
 	largemouth_bass.description = "A large and powerful freshwater fish known for its aggressive behavior."
 	largemouth_bass.id = 75
-	largemouth_bass.cost = 70.0
-	largemouth_bass.sell_price = 55.0
+	largemouth_bass.cost = 170.0
+	largemouth_bass.sell_price = 155.0
 	largemouth_bass.reel_difficulty = "HARD"
 	largemouth_bass.reel_location = "beach"
 	largemouth_bass.reel_weight = 12
@@ -1044,8 +1051,8 @@ func add_fish() -> void:
 	snake.name = "Snake"
 	snake.description = "A long, slithering reptile found in both freshwater and saltwater environments."
 	snake.id = 78
-	snake.cost = 70.0
-	snake.sell_price = 50.0
+	snake.cost = 170.0
+	snake.sell_price = 350.0
 	snake.reel_difficulty = "HARD"
 	snake.reel_location = "beach"
 	snake.reel_weight = 15
@@ -1096,8 +1103,8 @@ func add_fish() -> void:
 	grass_carp.name = "Grass Carp"
 	grass_carp.description = "A large freshwater fish known for its herbivorous diet and strong swimming ability."
 	grass_carp.id = 82
-	grass_carp.cost = 50.0
-	grass_carp.sell_price = 40.0
+	grass_carp.cost = 150.0
+	grass_carp.sell_price = 140.0
 	grass_carp.reel_difficulty = "HARD"
 	grass_carp.reel_location = "beach"
 	grass_carp.reel_weight = 12
@@ -1149,7 +1156,7 @@ func add_fish() -> void:
 	red_shiner.description = "A small, colorful fish with a bright red stripe running along its body."
 	red_shiner.id = 86
 	red_shiner.cost = 20.0
-	red_shiner.sell_price = 15.0
+	red_shiner.sell_price = 25.0
 	red_shiner.reel_difficulty = "EASY"
 	red_shiner.reel_location = "beach"
 	red_shiner.reel_weight = 30
@@ -1161,8 +1168,8 @@ func add_fish() -> void:
 	pumpkin_seed_fish.name = "Pumpkin Seed Fish"
 	pumpkin_seed_fish.description = "A small, colorful freshwater fish with distinctive orange and yellow spots."
 	pumpkin_seed_fish.id = 87
-	pumpkin_seed_fish.cost = 30.0
-	pumpkin_seed_fish.sell_price = 22.0
+	pumpkin_seed_fish.cost = 50.0
+	pumpkin_seed_fish.sell_price = 40.0
 	pumpkin_seed_fish.reel_difficulty = "EASY"
 	pumpkin_seed_fish.reel_location = "beach"
 	pumpkin_seed_fish.reel_weight = 28
@@ -1174,8 +1181,8 @@ func add_fish() -> void:
 	goby.name = "Goby"
 	goby.description = "A small, bottom-dwelling fish often found in freshwater and brackish habitats."
 	goby.id = 88
-	goby.cost = 25.0
-	goby.sell_price = 18.0
+	goby.cost = 75.0
+	goby.sell_price = 45.0
 	goby.reel_difficulty = "EASY"
 	goby.reel_location = "beach"
 	goby.reel_weight = 30
@@ -1187,8 +1194,8 @@ func add_fish() -> void:
 	shubukin.name = "Shubukin"
 	shubukin.description = "A decorative goldfish similar to the koi but with a more varied color pattern."
 	shubukin.id = 89
-	shubukin.cost = 40.0
-	shubukin.sell_price = 30.0
+	shubukin.cost = 90.0
+	shubukin.sell_price = 60.0
 	shubukin.reel_difficulty = "MEDIUM"
 	shubukin.reel_location = "beach"
 	shubukin.reel_weight = 22
@@ -1200,8 +1207,8 @@ func add_fish() -> void:
 	fancy_goldfish.name = "Fancy Goldfish"
 	fancy_goldfish.description = "A decorative variety of goldfish with vibrant colors and flowing fins."
 	fancy_goldfish.id = 90
-	fancy_goldfish.cost = 50.0
-	fancy_goldfish.sell_price = 40.0
+	fancy_goldfish.cost = 150.0
+	fancy_goldfish.sell_price = 75.0
 	fancy_goldfish.reel_difficulty = "MEDIUM"
 	fancy_goldfish.reel_location = "beach"
 	fancy_goldfish.reel_weight = 20
@@ -1213,8 +1220,8 @@ func add_fish() -> void:
 	high_fin_banded_shark.name = "High Fin Banded Shark"
 	high_fin_banded_shark.description = "A sleek, banded shark known for its distinctive high dorsal fin and aggressive behavior."
 	high_fin_banded_shark.id = 91
-	high_fin_banded_shark.cost = 75.0
-	high_fin_banded_shark.sell_price = 55.0
+	high_fin_banded_shark.cost = 750.0
+	high_fin_banded_shark.sell_price = 325.0
 	high_fin_banded_shark.reel_difficulty = "HARD"
 	high_fin_banded_shark.reel_location = "beach"
 	high_fin_banded_shark.reel_weight = 12
@@ -1226,8 +1233,8 @@ func add_fish() -> void:
 	paradise_fish.name = "Paradise Fish"
 	paradise_fish.description = "A vibrant, tropical fish known for its striking colors and flowing fins."
 	paradise_fish.id = 92
-	paradise_fish.cost = 40.0
-	paradise_fish.sell_price = 30.0
+	paradise_fish.cost = 50.0
+	paradise_fish.sell_price = 45.0
 	paradise_fish.reel_difficulty = "MEDIUM"
 	paradise_fish.reel_location = "beach"
 	paradise_fish.reel_weight = 18
@@ -1240,7 +1247,7 @@ func add_fish() -> void:
 	gizzard_shad.description = "A small, schooling fish with a silver body and high fins."
 	gizzard_shad.id = 93
 	gizzard_shad.cost = 25.0
-	gizzard_shad.sell_price = 18.0
+	gizzard_shad.sell_price = 55.0
 	gizzard_shad.reel_difficulty = "EASY"
 	gizzard_shad.reel_location = "beach"
 	gizzard_shad.reel_weight = 30
@@ -1252,8 +1259,8 @@ func add_fish() -> void:
 	rosette.name = "Rosette"
 	rosette.description = "A small, colorful fish with a delicate, floral pattern on its scales."
 	rosette.id = 94
-	rosette.cost = 30.0
-	rosette.sell_price = 22.0
+	rosette.cost = 300.0
+	rosette.sell_price = 50.0
 	rosette.reel_difficulty = "EASY"
 	rosette.reel_location = "beach"
 	rosette.reel_weight = 28
@@ -1265,8 +1272,8 @@ func add_fish() -> void:
 	golden_tench.name = "Golden Tench"
 	golden_tench.description = "A freshwater fish with a golden hue and a calm demeanor."
 	golden_tench.id = 95
-	golden_tench.cost = 45.0
-	golden_tench.sell_price = 35.0
+	golden_tench.cost = 450.0
+	golden_tench.sell_price = 125.0
 	golden_tench.reel_difficulty = "MEDIUM"
 	golden_tench.reel_location = "beach"
 	golden_tench.reel_weight = 20
@@ -1278,8 +1285,8 @@ func add_fish() -> void:
 	molly.name = "Molly"
 	molly.description = "A small, colorful fish often found in tropical freshwater environments."
 	molly.id = 96
-	molly.cost = 35.0
-	molly.sell_price = 25.0
+	molly.cost = 350.0
+	molly.sell_price = 100.0
 	molly.reel_difficulty = "MEDIUM"
 	molly.reel_location = "beach"
 	molly.reel_weight = 22
@@ -1291,8 +1298,8 @@ func add_fish() -> void:
 	frog.name = "Frog"
 	frog.description = "A small amphibian with smooth skin and strong hind legs for jumping."
 	frog.id = 97
-	frog.cost = 75.0
-	frog.sell_price = 60.0
+	frog.cost = 7500.0
+	frog.sell_price = 5000.0
 	frog.reel_difficulty = "SUPREME"
 	frog.reel_location = "beach"
 	frog.reel_weight = 10
@@ -1304,8 +1311,8 @@ func add_fish() -> void:
 	tadpole.name = "Tadpole"
 	tadpole.description = "The larval stage of a frog, characterized by its aquatic life and tail."
 	tadpole.id = 98
-	tadpole.cost = 60.0
-	tadpole.sell_price = 50.0
+	tadpole.cost = 10000.0
+	tadpole.sell_price = 6000.0
 	tadpole.reel_difficulty = "SUPREME"
 	tadpole.reel_location = "beach"
 	tadpole.reel_weight = 12
@@ -1317,8 +1324,8 @@ func add_fish() -> void:
 	axolotl.name = "Axolotl"
 	axolotl.description = "A fascinating aquatic salamander known for its external gills and regenerative abilities."
 	axolotl.id = 99
-	axolotl.cost = 100.0
-	axolotl.sell_price = 80.0
+	axolotl.cost = 10000.0
+	axolotl.sell_price = 5000.0
 	axolotl.reel_difficulty = "SUPREME"
 	axolotl.reel_location = "beach"
 	axolotl.reel_weight = 8
@@ -1344,18 +1351,99 @@ func add_rods() -> void:
 	bamboo_rod.added_weight = 75
 	bamboo_rod.baitable = true
 	bamboo_rod.deerraticness = 20
+	bamboo_rod.blessing = 25
 	bamboo_rod.atlas_region_x = 16.0
 	bamboo_rod.atlas_region_y = 96.0
 	rods_list.append(bamboo_rod)
 	
+	var pink_rod = FishingRod.new()
+	pink_rod.name = "Cute Fishing Rod"
+	pink_rod.description = "A cute pink fishing rod designed for a fun and cheerful fishing experience."
+	pink_rod.id = 2
+	pink_rod.cost = 2500
+	pink_rod.added_weight = 250
+	pink_rod.baitable = true
+	pink_rod.deerraticness = 85
+	pink_rod.blessing = 125
+	pink_rod.atlas_region_x = 16.0
+	pink_rod.atlas_region_y = 80.0
+	rods_list.append(pink_rod)
+	
+	var luxury_rod = FishingRod.new()
+	luxury_rod.name = "Luxury Fishing Rod"
+	luxury_rod.description = "An elegant fishing rod crafted from premium materials for a refined fishing experience."
+	luxury_rod.id = 3
+	luxury_rod.cost = 12500
+	luxury_rod.added_weight = 500
+	luxury_rod.baitable = true
+	luxury_rod.deerraticness = 125
+	luxury_rod.blessing = 225
+	luxury_rod.atlas_region_x = 16.0
+	luxury_rod.atlas_region_y = 64.0
+	rods_list.append(luxury_rod)
+	
+	var honed_rod = FishingRod.new()
+	honed_rod.name = "Superior Fishing Rod"
+	honed_rod.description = "A finely-tuned fishing rod with precision craftsmanship for enhanced performance and accuracy."
+	honed_rod.id = 4
+	honed_rod.cost = 50000
+	honed_rod.added_weight = 1000
+	honed_rod.baitable = true
+	honed_rod.deerraticness = 750
+	honed_rod.blessing = 750
+	honed_rod.atlas_region_x = 16.0
+	honed_rod.atlas_region_y = 48.0
+	rods_list.append(honed_rod)
+	
 func add_bait() -> void:
 	var worm = Bait.new()
+	worm.id = 0
 	worm.name = "Worm"
 	worm.description = "A common and effective bait used to attract a variety of fish."
 	worm.bonus_blessing = 35
 	worm.bonus_fishing_speed = 150
-	worm.cost = 25.0
+	worm.cost = 10.0
 	bait_list.append(worm)
+	
+	var snail = Bait.new()
+	snail.id = 1
+	snail.name = "Snail"
+	snail.description = "A bait made from snails, providing a natural and enticing option for fish, particularly those fond of slow-moving prey."
+	snail.bonus_blessing = 75
+	snail.bonus_fishing_speed = 350
+	snail.atlas_region_x = 16.0
+	snail.cost = 50.0
+	bait_list.append(snail)
+	
+	var peanut = Bait.new()
+	peanut.id = 2
+	peanut.name = "Peanut"
+	peanut.description = "A quirky bait option, surprisingly effective at attracting curious fish with its nutty aroma."
+	peanut.bonus_blessing = 125
+	peanut.atlas_region_x = 32.0
+	peanut.bonus_fishing_speed = 400
+	peanut.cost = 150.0
+	bait_list.append(peanut)
+	
+	var minnow = Bait.new()
+	minnow.id = 3
+	minnow.name = "Minnow"
+	minnow.description = "A lifelike bait that mimics the movements of small fish, ideal for attracting larger predatory species."
+	minnow.bonus_blessing = 350
+	minnow.atlas_region_x = 48.0
+	minnow.bonus_fishing_speed = 500
+	minnow.cost = 235.0
+	bait_list.append(minnow)
+	
+	var oyster_meat = Bait.new()
+	oyster_meat.id = 4
+	oyster_meat.name = "Oyster Meat"
+	oyster_meat.description = "The superior of all bait. Tender and flavorful bait, perfect for luring in fish with a taste for shellfish."
+	oyster_meat.bonus_blessing = 1000
+	oyster_meat.atlas_region_x = 64.0
+	oyster_meat.bonus_fishing_speed = 1000
+	oyster_meat.cost = 450.0
+	bait_list.append(oyster_meat)
 
 func add_upgrades() -> void:
 	var bag_upgrade_one = Upgrade.new()

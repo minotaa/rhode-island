@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=81 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/buttons/TouchScreenButton.gd" id="2_lpp3g"]
@@ -290,6 +290,10 @@ corner_radius_top_left = 36
 corner_radius_top_right = 36
 corner_radius_bottom_right = 36
 corner_radius_bottom_left = 36
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5hmm"]
+atlas = ExtResource("19_bqi5g")
+region = Rect2(16, 2.08165e-12, 16, 16)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h0fga"]
 
@@ -668,10 +672,9 @@ theme_override_styles/tab_selected = SubResource("StyleBoxFlat_djtna")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_gfyfq")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_rkivi")
 tab_alignment = 1
-current_tab = 3
+current_tab = 0
 
 [node name="Your Bag" type="Panel" parent="Main/Inventory/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory/TabContainer/Your Bag"]
@@ -961,9 +964,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 177.0
+offset_left = 169.0
 offset_top = 36.0
-offset_right = 485.0
+offset_right = 477.0
 offset_bottom = 100.0
 grow_horizontal = 2
 text = "Bonus Fishing Speed: 0
@@ -989,6 +992,7 @@ theme_override_constants/v_separation = 170
 columns = 3
 
 [node name="Catalog" type="Panel" parent="Main/Inventory/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Main/Inventory/TabContainer/Catalog"]
@@ -1290,7 +1294,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_4a8ix")
 theme_override_styles/normal = SubResource("StyleBoxFlat_kgqoc")
 text = "Bait
 "
-icon = ExtResource("19_bqi5g")
+icon = SubResource("AtlasTexture_s5hmm")
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true

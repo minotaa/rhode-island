@@ -606,7 +606,7 @@ func buck_fiddy(float_number: float) -> String:
 	return formatted_string
 
 var tween: Tween
-
+var equipped_bait: Bait = Inventories.bait_bag.equipped
 func _physics_process(delta) -> void:
 	# Process player input
 	_process_input(delta)
@@ -622,13 +622,13 @@ func _physics_process(delta) -> void:
 	if Inventories.bait_bag.equipped != null:
 		#print(Inventories.bait_bag.equipped)
 		for bait in Inventories.bait_bag.list:
-			if bait.type.id == Inventories.bait_bag.equipped.id and $UI/Main/Bait/Panel/HBoxContainer/Label.text != "x" + str(bait.amount):
+			if bait.type.id == Inventories.bait_bag.equipped.id and equipped_bait != Inventories.bait_bag.equipped:
 				$UI/Main/Bait/Panel/HBoxContainer/Label.text = "x" + str(bait.amount)
 				var atlas = AtlasTexture.new()
 				atlas.atlas = bait_textures
 				atlas.region = Rect2(bait.type.atlas_region_x, bait.type.atlas_region_y, bait.type.atlas_region_w, bait.type.atlas_region_h)
 				$UI/Main/Bait/Panel/HBoxContainer/TextureRect.texture = atlas
-
+				equipped_bait = Inventories.bait_bag.equipped
 	var atlas = AtlasTexture.new()
 	atlas.atlas = rod_textures
 	atlas.region = Rect2(Inventories.fishing_rods.equipped.atlas_region_x, Inventories.fishing_rods.equipped.atlas_region_y, Inventories.fishing_rods.equipped.atlas_region_w, Inventories.fishing_rods.equipped.atlas_region_h)
@@ -674,7 +674,7 @@ func _physics_process(delta) -> void:
 			var drops = 1 + calculate_drop_multiplier(calculate_blessing())
 			item.type = Items.get_fish_from_id(bobber_fish.type)
 			
-			var available_space = Inventories.fishing_bag.max_capacity - Inventories.fishing_bag.size()
+			var available_space = Inventories.fishing_bag.get_max_capacity() - Inventories.fishing_bag.size()
 			var drops_to_add = min(drops, available_space)
 			if drops_to_add < 1 and available_space >= 1:
 				drops_to_add = 1
