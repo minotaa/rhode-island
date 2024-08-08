@@ -160,9 +160,9 @@ func update_rod_list() -> void:
 	$"UI/Main/Inventory/TabContainer/Fishing Rod/DescriptionContainer/Description".text = Inventories.fishing_rods.equipped.description
 	$"UI/Main/Inventory/TabContainer/Fishing Rod/TextureRect".texture = atlas
 	if Inventories.fishing_rods.equipped.baitable:
-		$"UI/Main/Inventory/TabContainer/Fishing Rod/Meta".text = "Baitable?: Yes\nDerraticness: " + str(Inventories.fishing_rods.equipped.deerraticness) + "\nBonus Weight: " + str(Inventories.fishing_rods.equipped.added_weight)
+		$"UI/Main/Inventory/TabContainer/Fishing Rod/Meta".text = "Baitable?: Yes\nDeerraticness: " + str(Inventories.fishing_rods.equipped.deerraticness) + "\nBonus Weight: " + str(Inventories.fishing_rods.equipped.added_weight)
 	else:
-		$"UI/Main/Inventory/TabContainer/Fishing Rod/Meta".text = "Baitable?: No\nDerraticness: " + str(Inventories.fishing_rods.equipped.deerraticness) + "\nBonus Weight: " + str(Inventories.fishing_rods.equipped.added_weight)
+		$"UI/Main/Inventory/TabContainer/Fishing Rod/Meta".text = "Baitable?: No\nDeerraticness: " + str(Inventories.fishing_rods.equipped.deerraticness) + "\nBonus Weight: " + str(Inventories.fishing_rods.equipped.added_weight)
 	
 
 func open_bag():
@@ -256,18 +256,20 @@ func _fishing_timer() -> void:
 			bobber.set_emitting(true)
 			#$Lightbulb.visible = true
 			reeling_back_fish = true
-			print(fish.reel_difficulty)
+			#print(fish.reel_difficulty)
 			var modifier = (Inventories.fishing_rods.equipped.deerraticness * 0.01) 
+			#print(modifier)
 			if fish.reel_difficulty == "" or fish.reel_difficulty == "EASY":
-				add_fish(30 - (modifier * 15), 80 - (modifier * 25), 3 + (modifier * 0.5), 3 + (modifier * 1.5))
+				add_fish(30 - (modifier * 5), 80 - (modifier * 5), 3 + (modifier * 0.5), 3 + (modifier * 1.5))
 			elif fish.reel_difficulty == "MEDIUM":
-				add_fish(40 - (modifier * 15), 100 - (modifier * 25), 2 + (modifier * 0.5), 2 + (modifier * 1.5))
+				add_fish(40 - (modifier * 5), 100 - (modifier * 5), 2 + (modifier * 0.5), 2 + (modifier * 1.5))
 			elif fish.reel_difficulty == "HARD":
-				add_fish(60 - (modifier * 15), 140 - (modifier * 25), 1 + (modifier * 0.5), 1.25 + (modifier * 1.5))   
+				add_fish(60 - (modifier * 5), 140 - (modifier * 5), 1 + (modifier * 0.5), 1.25 + (modifier * 1.5))   
 			elif fish.reel_difficulty == "IMPOSSIBLE":
-				add_fish(80 - (modifier * 15), 160 - (modifier * 25), 0.5 + (modifier * 0.5), 0.75 + (modifier * 1.5))  
+				add_fish(80 - (modifier * 5), 160 - (modifier * 5), 0.5 + (modifier * 0.5), 0.75 + (modifier * 1.5))  
 			elif fish.reel_difficulty == "SUPREME":
-				add_fish(100 - (modifier * 7.5), 180 - (modifier * 22.5), 0.25 + (modifier * 0.5), 0.1 + (modifier * 1.5))  
+				add_fish(100 - (modifier * 2.5), 180 - (modifier * 2.5), 0.25 + (modifier * 0.5), 0.05 + (modifier * 1.5))  
+			print("ending loop")
 			return
 		if randi_range(0, 10) <= 2:
 			bobber.set_emitting(true)
@@ -284,8 +286,6 @@ func get_rod_tip() -> Vector2:
 	elif last_direction == "down":
 		return Vector2(global_position.x, global_position.y + 67)
 	return global_position
-
-
 
 func use() -> void:
 	print("Using this! ..Whatver it is!")	
@@ -378,17 +378,18 @@ func play_idle_animation() -> void:
 	$Body.play("char1_idle_" + last_direction)
 
 func add_fish(min_d, max_d, move_speed, move_time):
+	print("adding fish with " + str(min_d) + " " + str(max_d) + " " + str(move_speed) + " " + str(move_time))
+
 	var f = hook_object.instantiate()
 	f.position = Vector2(0, 0)
 	
-	f.min_distance = min_d
-	f.max_distance = max_d
-	f.movement_speed = move_speed
-	f.movement_time = move_time
+	f.min_distance = abs(min_d)
+	f.max_distance = abs(max_d)
+	f.movement_speed = abs(move_speed)
+	f.movement_time = abs(move_time)
 	
 	$UI/Main/BobberProgress/FishingColumn.add_child(f)
 	$UI/Main/BobberProgress/Progress.value = 200
-
 var whiffs = 0
 var catches = 0 
 
@@ -512,7 +513,7 @@ func _process_input(delta) -> void:
 		# Adjust Value
 		if (len($"UI/Main/BobberProgress/Hook/Area2D".get_overlapping_areas()) > 0):
 			var modifier = (Inventories.fishing_rods.equipped.deerraticness * 0.01) 
-			$UI/Main/BobberProgress/Progress.value += 145 * delta + (modifier * 5)
+			$UI/Main/BobberProgress/Progress.value += 145 * delta + (modifier * 1.5)
 			Input.vibrate_handheld(10)
 			if ($UI/Main/BobberProgress/Progress.value >= 999):
 				reeling = true
@@ -695,12 +696,14 @@ func _physics_process(delta) -> void:
 			if Inventories.bait_bag.equipped != null:
 				var index = 0
 				for bait in Inventories.bait_bag.list:
+					print(Inventories.bait_bag.equipped)
 					if bait.type.id == Inventories.bait_bag.equipped.id:
 						bait.amount -= 1
 						Inventories.bait_bag.list[index] = bait
 						if bait.amount <= 0:
 							Inventories.bait_bag.list.erase(bait)
 							Inventories.bait_bag.equipped = null
+							return
 					index += 1
 
 	# While the bobber still exists, draw a line to it and the tip of the player's rod
@@ -726,6 +729,7 @@ func calculate_blessing() -> int:
 	blessing += Inventories.fishing_rods.equipped.blessing
 	if Inventories.bait_bag.equipped != null:
 		blessing += Inventories.bait_bag.equipped.bonus_blessing
+	print(blessing)
 	return blessing
 
 func calculate_drop_multiplier(blessing: int) -> int:

@@ -41,7 +41,7 @@ region = Rect2(2.08165e-12, 2.08165e-12, 16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_i4y8i"]
 font = ExtResource("2_ckuno")
-font_size = 50
+font_size = 46
 
 [sub_resource type="LabelSettings" id="LabelSettings_2fw6s"]
 font = ExtResource("2_ckuno")
@@ -76,9 +76,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -144.0
-offset_top = -80.0
+offset_top = -72.0
 offset_right = 144.0
-offset_bottom = -24.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("2_ckuno")
@@ -107,13 +107,14 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -104.0
-offset_top = 176.0
+offset_top = 168.0
 offset_right = 112.0
-offset_bottom = 224.0
+offset_bottom = 216.0
 grow_horizontal = 2
 text = "Plaice"
 label_settings = SubResource("LabelSettings_i4y8i")
 horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
 layout_mode = 1
@@ -122,10 +123,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -152.0
-offset_top = 12.0
-offset_right = 152.0
-offset_bottom = 124.0
+offset_left = -158.0
+offset_top = 36.0
+offset_right = 158.0
+offset_bottom = 148.0
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
