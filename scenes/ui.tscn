@@ -1264,6 +1264,7 @@ expand_icon = true
 
 [node name="Clothes" type="Button" parent="Vender/TabContainer/Buy/GridContainer"]
 auto_translate_mode = 1
+visible = false
 layout_mode = 2
 focus_mode = 1
 mouse_filter = 1
