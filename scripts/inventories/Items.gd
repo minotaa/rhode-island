@@ -1482,8 +1482,203 @@ func add_upgrades() -> void:
 	blessing_upgrade_two.texture = load("res://assets/other icons/blessing.png")
 	upgrade_list.append(blessing_upgrade_two)
 
+var skin_tone_1_texture = preload("res://assets/character sprites/Skin Tone 1.png")
+var skin_tone_2_texture = preload("res://assets/character sprites/Skin Tone 2.png")
+var skin_tone_3_texture = preload("res://assets/character sprites/Skin Tone 3.png")
+var skin_tone_4_texture = preload("res://assets/character sprites/Skin Tone 4.png")
+
+var skin_tone_5_texture = preload("res://assets/character sprites/Skin Tone 5.png")
+var skin_tone_6_texture = preload("res://assets/character sprites/Skin Tone 6.png")
+var skin_tone_7_texture = preload("res://assets/character sprites/Skin Tone 7.png")
+var skin_tone_8_texture = preload("res://assets/character sprites/Skin Tone 8.png")
+
+func add_clothes() -> void:
+	var skin_tone_1 = Clothing.new()
+	skin_tone_1.id = 0
+	skin_tone_1.st_reference = "char1"
+	skin_tone_1.display = skin_tone_1_texture
+	skin_tone_1.description = "Adopt a new skin tone for your character!"
+	skin_tone_1.cost = 0.0
+	skin_tone_1.sell_price = 0.0
+	skin_tone_1.visible_in_shop = false
+	skin_tone_1.description = "lol"
+	skin_tone_1.type = "SKIN_TONE"
+	clothing_list.append(skin_tone_1)
+	
+	var skin_tone_2 = Clothing.new()
+	skin_tone_2.id = 1
+	skin_tone_2.name = "Skin Tone 2"
+	skin_tone_2.display = skin_tone_2_texture
+	skin_tone_2.description = "Adopt a new skin tone for your character!"
+	skin_tone_2.st_reference = "char2"
+	skin_tone_2.one_time_buy = true
+	skin_tone_2.cost = 250.0
+	skin_tone_2.sell_price = 0.0
+	skin_tone_2.type = "SKIN_TONE"
+	clothing_list.append(skin_tone_2)
+
+	var skin_tone_3 = Clothing.new()
+	skin_tone_3.id = 2
+	skin_tone_3.name = "Skin Tone 3"
+	skin_tone_3.display = skin_tone_3_texture
+	skin_tone_3.description = "Adopt a new skin tone for your character!"
+	skin_tone_3.st_reference = "char3"
+	skin_tone_3.one_time_buy = true
+	skin_tone_3.cost = 250.0
+	skin_tone_3.sell_price = 0.0
+	skin_tone_3.type = "SKIN_TONE"
+	clothing_list.append(skin_tone_3)
+
+	var skin_tone_4 = Clothing.new()
+	skin_tone_4.id = 3
+	skin_tone_4.name = "Skin Tone 4"
+	skin_tone_4.display = skin_tone_4_texture
+	skin_tone_4.description = "Adopt a new skin tone for your character!"
+	skin_tone_4.st_reference = "char4"
+	skin_tone_4.one_time_buy = true
+	skin_tone_4.cost = 250.0
+	skin_tone_4.sell_price = 0.0
+	skin_tone_4.type = "SKIN_TONE"
+	clothing_list.append(skin_tone_4)
+
+	var skin_tone_5 = Clothing.new()
+	skin_tone_5.id = 4
+	skin_tone_5.name = "Skin Tone 5"
+	skin_tone_5.display = skin_tone_5_texture
+	skin_tone_5.description = "Adopt a new skin tone for your character!"
+	skin_tone_5.st_reference = "char5"
+	skin_tone_5.one_time_buy = true
+	skin_tone_5.cost = 250.0
+	skin_tone_5.sell_price = 0.0
+	skin_tone_5.type = "SKIN_TONE"
+	clothing_list.append(skin_tone_5)
+	
+	var skin_tone_6 = Clothing.new()
+	skin_tone_6.id = 5
+	skin_tone_6.name = "Skin Tone 6"
+	skin_tone_6.display = skin_tone_6_texture
+	skin_tone_6.description = "Adopt a new skin tone for your character!"
+	skin_tone_6.st_reference = "char6"
+	skin_tone_6.cost = 250.0
+	skin_tone_6.one_time_buy = true
+	skin_tone_6.sell_price = 0.0
+	skin_tone_6.type = "SKIN_TONE"
+	clothing_list.append(skin_tone_6)
+
+	var skin_tone_7 = Clothing.new()
+	skin_tone_7.id = 6
+	skin_tone_7.name = "Skin Tone 7"
+	skin_tone_7.display = skin_tone_7_texture
+	skin_tone_7.description = "Adopt a new skin tone for your character!"
+	skin_tone_7.st_reference = "char7"
+	skin_tone_7.cost = 250.0
+	skin_tone_7.one_time_buy = true
+	skin_tone_7.sell_price = 0.0
+	skin_tone_7.type = "SKIN_TONE"
+	clothing_list.append(skin_tone_7)
+
+	var skin_tone_8 = Clothing.new()
+	skin_tone_8.id = 7
+	skin_tone_8.name = "Skin Tone 8"
+	skin_tone_8.display = skin_tone_8_texture
+	skin_tone_8.description = "Adopt a new skin tone for your character!"
+	skin_tone_8.one_time_buy = true
+	skin_tone_8.st_reference = "char8"
+	skin_tone_8.cost = 250.0
+	skin_tone_8.sell_price = 0.0
+	skin_tone_8.type = "SKIN_TONE"
+	clothing_list.append(skin_tone_8)
+	
+	var curly = Clothing.new()
+	curly.id = 8
+	curly.name = "Curly Hair"
+	var atlas = AtlasTexture.new()
+	atlas.atlas = load("res://assets/character sprites/curly_fish.png")
+	atlas.region = Rect2(0.0, 0.0, 32.0, 32.0)
+	curly.display = atlas
+	curly.description = "Allows you to pick curly hair for your character."
+	curly.one_time_buy = true
+	curly.cost = 500.0
+	curly.sell_price = 0.0
+	curly.type = "ACCESSORY"
+	curly.sprite_sheet_fishing = load("res://assets/character sprites/curly_fish.png")
+	curly.sprite_sheet_walking = load("res://assets/character sprites/curly_walk.png")
+	clothing_list.append(curly)
+	
+	var hairstyles = [
+		"wavy",
+		"spacebuns",
+		"ponytail",
+		"midiwave",
+		"long_straight",
+		"gentleman",
+		"french_curl",
+		"extra_long",
+		"emo",
+		"buzzcut",
+		"braids",
+		"bob"
+	]
+
+	# Starting ID
+	var start_id = 9
+
+	# Iterate through each hairstyle and create Clothing objects
+	for i in range(hairstyles.size()):
+		var hairstyle_name = hairstyles[i]
+
+		var hairstyle_clothing = Clothing.new()
+		hairstyle_clothing.id = start_id + i
+		hairstyle_clothing.name = hairstyle_name.capitalize() + " Hair"
+
+		var atlas_fishing = AtlasTexture.new()
+		atlas_fishing.atlas = load("res://assets/character sprites/" + hairstyle_name + "_fish.png")
+		atlas_fishing.region = Rect2(0.0, 0.0, 32.0, 32.0)
+		hairstyle_clothing.display = atlas_fishing
+
+		hairstyle_clothing.description = "Allows you to pick " + hairstyle_name + " hair for your character."
+		hairstyle_clothing.one_time_buy = true
+		hairstyle_clothing.cost = 725.0
+		hairstyle_clothing.sell_price = 0.0
+		hairstyle_clothing.type = "ACCESSORY"
+
+		hairstyle_clothing.sprite_sheet_fishing = load("res://assets/character sprites/" + hairstyle_name + "_fish.png")
+		hairstyle_clothing.sprite_sheet_walking = load("res://assets/character sprites/" + hairstyle_name + "_walk.png")
+
+		clothing_list.append(hairstyle_clothing)
+
+	var outfits = [
+		"witch", "suit", "spooky", "overalls"
+	]
+	
+	start_id = 21
+	for i in range(outfits.size()):
+		var outfit_name = outfits[i]
+
+		var outfit_clothing = Clothing.new()
+		outfit_clothing.id = start_id + i
+		outfit_clothing.name = outfit_name.capitalize() + " Outfit"
+
+		var atlas_fishing = AtlasTexture.new()
+		atlas_fishing.atlas = load("res://assets/character sprites/" + outfit_name + "_fish.png")
+		atlas_fishing.region = Rect2(0.0, 0.0, 32.0, 32.0)
+		outfit_clothing.display = atlas_fishing
+
+		outfit_clothing.description = "Allows you to pick the " + outfit_name + " outfit for your character."
+		outfit_clothing.one_time_buy = true
+		outfit_clothing.cost = 1500.0
+		outfit_clothing.sell_price = 0.0
+		outfit_clothing.type = "OUTFIT"
+
+		outfit_clothing.sprite_sheet_fishing = load("res://assets/character sprites/" + outfit_name + "_fish.png")
+		outfit_clothing.sprite_sheet_walking = load("res://assets/character sprites/" + outfit_name + "_walk.png")
+
+		clothing_list.append(outfit_clothing)
+
 func _init():
 	add_fish()
 	add_rods()
 	add_bait()
 	add_upgrades()
+	add_clothes()
+	#print(clothing_list)
