@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cbacbq6j3kvfp"]
+[gd_scene load_steps=11 format=3 uid="uid://cbacbq6j3kvfp"]
 
 [ext_resource type="Script" path="res://scripts/shop_item_entity.gd" id="1_yiw8a"]
 [ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram.ttf" id="2_ckuno"]
@@ -35,10 +35,6 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_le7wm"]
-atlas = ExtResource("3_6lp2r")
-region = Rect2(2.08165e-12, 2.08165e-12, 16, 16)
-
 [sub_resource type="LabelSettings" id="LabelSettings_i4y8i"]
 font = ExtResource("2_ckuno")
 font_size = 46
@@ -48,11 +44,12 @@ font = ExtResource("2_ckuno")
 font_size = 28
 
 [node name="Shop Item" type="Control"]
-custom_minimum_size = Vector2(352, 456)
+custom_minimum_size = Vector2(352, 360)
 layout_mode = 3
 anchor_right = 0.275
 anchor_bottom = 0.633
-offset_bottom = 0.239988
+offset_right = 40.0
+offset_bottom = -85.76
 mouse_filter = 1
 script = ExtResource("1_yiw8a")
 
@@ -61,8 +58,8 @@ auto_translate_mode = 1
 layout_mode = 1
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 344.0
-offset_bottom = 448.0
+offset_right = 384.0
+offset_bottom = 352.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ci8br")
 
@@ -93,11 +90,11 @@ text = "Buy $"
 auto_translate_mode = 1
 texture_filter = 1
 layout_mode = 1
-offset_left = 112.0
-offset_top = 40.0
-offset_right = 232.0
-offset_bottom = 160.0
-texture = SubResource("AtlasTexture_le7wm")
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 144.0
+offset_bottom = 144.0
+texture = ExtResource("3_6lp2r")
 
 [node name="Name" type="Label" parent="Panel"]
 auto_translate_mode = 1
@@ -106,29 +103,28 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -104.0
-offset_top = 168.0
-offset_right = 112.0
-offset_bottom = 216.0
+offset_left = -28.0
+offset_top = 32.0
+offset_right = 172.0
+offset_bottom = 128.0
 grow_horizontal = 2
-text = "Plaice"
 label_settings = SubResource("LabelSettings_i4y8i")
-horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -158.0
-offset_top = 36.0
-offset_right = 158.0
-offset_bottom = 148.0
+anchor_bottom = 1.0
+offset_left = -156.0
+offset_top = -192.0
+offset_right = 164.0
+offset_bottom = -80.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 horizontal_scroll_mode = 0
 
 [node name="Description" type="Label" parent="Panel/ScrollContainer"]
@@ -137,7 +133,7 @@ texture_filter = 1
 custom_minimum_size = Vector2(308, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 0
-text = "This is a test description for a non-existent item, so, yeah, hi, hello, hope you're having a nice time."
 label_settings = SubResource("LabelSettings_2fw6s")
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2

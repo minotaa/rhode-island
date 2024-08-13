@@ -15,6 +15,7 @@ func sell_items() -> void:
 	var total = 0.0
 	for i in list:
 		total += i.type.sell_price * i.amount
+		Inventories.items_sold += i.amount
 	list = []
 	Coins.balance += total
 	
@@ -48,4 +49,3 @@ func add_item(item: ItemStack) -> void:
 			prev.amount += item.amount
 			return
 	list.append(item)
-

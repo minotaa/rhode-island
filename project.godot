@@ -11,13 +11,10 @@ config_version=5
 [application]
 
 config/name="Beachside Tactics"
-config/version="1.0.7"
+config/version="1.0.8"
 run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
-boot_splash/show_image=false
-boot_splash/image="res://assets/art/splash screen.png"
 config/icon="res://assets/art/icon.png"
-boot_splash/minimum_display_time=3000
 
 [autoload]
 
@@ -45,6 +42,7 @@ enabled=PackedStringArray("res://addons/virtual_joystick/plugin.cfg")
 
 shop="Area2D for a shop"
 sell=""
+leaderboards=""
 
 [input]
 

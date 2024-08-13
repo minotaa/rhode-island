@@ -31,21 +31,135 @@ var hookDeceleration = .2
 var maxVelocity = 6.0;
 var bounce = .6
 
+var game_center
+
 func _ready() -> void:
+	if Engine.has_singleton("GameCenter"):
+		game_center = Engine.get_singleton("GameCenter")
+		print("Authenticating on GameCenter...")
+		game_center.authenticate()
+		print("Authenticated on GameCenter!")
+	else:
+		print("iOS Game Center plugin is not available on this platform.")
 	$"UI/Main/Inventory/TabContainer".connect("tab_selected", _inventory_tab_selected)
 	$UI/Vender/TabContainer.connect("tab_selected", _shop_tab_selected)
 	$UI/Vender/TabContainer/Buy/Catalog/Back.connect("pressed", _shop_back_button)
 	$"UI/Vender/TabContainer/Buy/GridContainer/Fishing Rods".connect("pressed", _shop_fishing_rods_button_pressed)
 	$"UI/Vender/TabContainer/Buy/GridContainer/Bait".connect("pressed", _shop_bait_button_pressed)
 	$"UI/Vender/TabContainer/Buy/GridContainer/Upgrades".connect("pressed", _shop_upgrades_button_pressed)
+	$"UI/Vender/TabContainer/Buy/GridContainer/Clothes".connect("pressed", _shop_clothes_button_pressed)
+	$UI/Vender/TabContainer/Buy/X.connect("pressed", _shop_x_button)
+	$"UI/Main/Inventory/TabContainer/Appearance/Skin Tone/Left".connect("pressed", _appearance_skin_tone_left)
+	$"UI/Main/Inventory/TabContainer/Appearance/Skin Tone/Right".connect("pressed", _appearance_skin_tone_right)
+	$UI/Main/Inventory/TabContainer/Appearance/Accessory/Left.connect("pressed", _appearance_accessory_left)
+	$UI/Main/Inventory/TabContainer/Appearance/Accessory/Right.connect("pressed", _appearance_accessory_right)
+	$UI/Main/Inventory/TabContainer/Appearance/Outfit/Left.connect("pressed", _appearance_outfit_left)
+	$UI/Main/Inventory/TabContainer/Appearance/Outfit/Right.connect("pressed", _appearance_outfit_right)
+	
+	
 	load_game()
+	_add_animations()
+	play_idle_animation()
 	#print(Items.fish_list.size())
+
+func gcd(a: int, b: int) -> int:
+	return a if b == 0.0 else gcd(b, a % b)
+
+var anim_directions = {
+	"down": 0.0,
+	"up": 32.0,
+	"right": 64.0,
+	"left": 96.0
+}
+
+var anim_variations = [
+	"walk",
+	"fish",
+	"idle"
+]
+
+func _add_animations() -> void:
+	for clothing in Items.clothing_list:
+		if clothing.type == "ACCESSORY":
+			for dir in anim_directions.keys():
+				#print(dir)
+				for variation in anim_variations:
+					#print(variation)
+					$Accessory.sprite_frames.add_animation(str(clothing.id) + "_" + variation + "_" + dir)
+					#print("added animation")
+					$Accessory.sprite_frames.set_animation_speed(str(clothing.id) + "_" + variation + "_" + dir, 10.0)
+					$Accessory.sprite_frames.set_animation_loop(str(clothing.id) + "_" + variation + "_" + dir, false)
+					for i in 5:
+						var texture = AtlasTexture.new()
+						if variation == "walk":
+							texture.atlas = clothing.sprite_sheet_walking
+						elif variation == "fish":
+							texture.atlas = clothing.sprite_sheet_fishing
+						elif variation == "idle":
+							texture.atlas = clothing.sprite_sheet_walking
+						#print(variation + ", " + dir)
+						#print(str(32.0 * i) + ", " + str(anim_directions[dir]))
+						texture.region = Rect2(32.0 * i, anim_directions[dir], 32.0, 32.0)
+						$Accessory.sprite_frames.add_frame(str(clothing.id) + "_" + variation + "_" + dir, texture)
+						#print("addded frame")
+						if variation == "idle":
+							break
+		if clothing.type == "OUTFIT":
+			for dir in anim_directions.keys():
+				#print(dir)
+				for variation in anim_variations:
+					#print(variation)
+					$Outfit.sprite_frames.add_animation(str(clothing.id) + "_" + variation + "_" + dir)
+					#print("added animation")
+					$Outfit.sprite_frames.set_animation_speed(str(clothing.id) + "_" + variation + "_" + dir, 10.0)
+					$Outfit.sprite_frames.set_animation_loop(str(clothing.id) + "_" + variation + "_" + dir, false)
+					for i in 5:
+						var texture = AtlasTexture.new()
+						if variation == "walk":
+							texture.atlas = clothing.sprite_sheet_walking
+						elif variation == "fish":
+							texture.atlas = clothing.sprite_sheet_fishing
+						elif variation == "idle":
+							texture.atlas = clothing.sprite_sheet_walking
+						#print(variation + ", " + dir)
+						#print(str(32.0 * i) + ", " + str(anim_directions[dir]))
+						texture.region = Rect2(32.0 * i, anim_directions[dir], 32.0, 32.0)
+						$Outfit.sprite_frames.add_frame(str(clothing.id) + "_" + variation + "_" + dir, texture)
+						#print("addded frame")
+						if variation == "idle":
+							break	
+			#print($Accessory.sprite_frames.get_animation_names())
+			
+
+func _shop_x_button() -> void:
+	use()
 
 func _shop_back_button() -> void:
 	$UI/Vender/TabContainer/Buy/Catalog.visible = false
 	$UI/Vender/TabContainer/Buy/GridContainer.visible = true
 	
 	pass
+
+func _shop_clothes_button_pressed() -> void:
+	$UI/Vender/TabContainer/Buy/Catalog/Empty.visible = false
+	for children in $UI/Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children():
+		children.queue_free()
+	$UI/Vender/TabContainer/Buy/GridContainer.visible = false
+	$UI/Vender/TabContainer/Buy/Catalog.visible = true
+	for clothing in Items.clothing_list:
+		if clothing.visible_in_shop == true:
+			var already_has_it = false
+			if clothing.one_time_buy == true:
+				for item in Inventories.clothing_bag.list:
+					if item.type.id == clothing.id:
+						already_has_it = true
+			if already_has_it == false:
+				var shop_object = shop_item_object.instantiate()
+				shop_object.set_clothing(clothing)
+				$UI/Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.add_child(shop_object)
+	await get_tree().create_timer(0.1).timeout
+	if $UI/Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children().size() == 0:
+		$UI/Vender/TabContainer/Buy/Catalog/Empty.visible = true
 
 func _shop_upgrades_button_pressed() -> void:
 	$UI/Vender/TabContainer/Buy/Catalog/Empty.visible = false
@@ -64,7 +178,7 @@ func _shop_upgrades_button_pressed() -> void:
 				var shop_object = shop_item_object.instantiate()
 				shop_object.set_upgrade(upgrade)
 				$UI/Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.add_child(shop_object)
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.1).timeout
 	if $UI/Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children().size() == 0:
 		$UI/Vender/TabContainer/Buy/Catalog/Empty.visible = true
 
@@ -97,18 +211,118 @@ var rod_button = preload("res://scenes/rod.tscn")
 var catalog_item = preload("res://scenes/catalog_fish.tscn")
 
 func _inventory_tab_selected(tab: int) -> void:
-	if tab == 0:
-		open_bag()
-	if tab == 1:
-		update_rod_list()
-	if tab == 3:
-		update_catalog()
-	if tab == 2:
-		update_baits()
+	open_bag()
+	update_rod_list()
+	update_catalog()
+	update_baits()
+	update_appearance()
 
 var bait_inv = preload("res://scenes/bait.tscn")
 var bait_textures = preload("res://assets/tiles/bait.png")
 var null_s = preload("res://assets/other icons/Power.png")
+
+func _appearance_skin_tone_left() -> void:
+	var skin_tones = []
+	for clothing in Inventories.clothing_bag.list:
+		if clothing.type.type == "SKIN_TONE":
+			skin_tones.append(clothing)
+	if skin_tones.size() != 0:	
+		Inventories.clothing_bag.equipped_skin_tone = Inventories.clothing_bag.get_previous_skin_tone(Inventories.clothing_bag.equipped_skin_tone).id
+		$"UI/Main/Inventory/TabContainer/Appearance/Skin Tone/TextureRect".texture = Items.get_clothing_from_id(Inventories.clothing_bag.equipped_skin_tone).display
+	play_idle_animation()
+	
+func _appearance_skin_tone_right() -> void:
+	var skin_tones = []
+	#print(Inventories.clothing_bag.list)
+	for clothing in Inventories.clothing_bag.list:
+		if clothing.type.type == "SKIN_TONE":
+			skin_tones.append(clothing)
+	#print(skin_tones)
+	#print(skin_tones)
+	if skin_tones.size() != 0:	
+		Inventories.clothing_bag.equipped_skin_tone = Inventories.clothing_bag.get_next_skin_tone(Inventories.clothing_bag.equipped_skin_tone).id
+	$"UI/Main/Inventory/TabContainer/Appearance/Skin Tone/TextureRect".texture = Items.get_clothing_from_id(Inventories.clothing_bag.equipped_skin_tone).display
+	play_idle_animation()
+	
+func _appearance_accessory_right() -> void:
+	var accessories = []
+	#print(Inventories.clothing_bag.list)
+	for clothing in Inventories.clothing_bag.list:
+		if clothing.type.type == "ACCESSORY":
+			accessories.append(clothing)
+	#print(skin_tones)
+	if accessories.size() != 0:	
+		if Inventories.clothing_bag.equipped_acc != null:
+			#print(Inventories.clothing_bag.get_next_accessory(Inventories.clothing_bag.equipped_acc).id)
+			Inventories.clothing_bag.equipped_acc = Inventories.clothing_bag.get_next_accessory(Inventories.clothing_bag.equipped_acc).id
+		else:
+			#print("this")
+			Inventories.clothing_bag.equipped_acc = Inventories.clothing_bag.get_next_accessory(accessories[0].type.id).id
+	$"UI/Main/Inventory/TabContainer/Appearance/Accessory/TextureRect".texture = Items.get_clothing_from_id(Inventories.clothing_bag.equipped_acc).display
+	play_idle_animation()
+	
+func _appearance_accessory_left() -> void:
+	var accessories = []
+	#print(Inventories.clothing_bag.list)
+	for clothing in Inventories.clothing_bag.list:
+		if clothing.type.type == "ACCESSORY":
+			accessories.append(clothing)
+	#print(skin_tones)
+	#print(accessories)
+	if accessories.size() != 0:	
+		if Inventories.clothing_bag.equipped_acc != null:
+			Inventories.clothing_bag.equipped_acc = Inventories.clothing_bag.get_next_accessory(Inventories.clothing_bag.equipped_acc).id
+		else:
+			Inventories.clothing_bag.equipped_acc = Inventories.clothing_bag.get_next_accessory(accessories[0].type.id).id
+	$"UI/Main/Inventory/TabContainer/Appearance/Accessory/TextureRect".texture = Items.get_clothing_from_id(Inventories.clothing_bag.equipped_acc).display
+	play_idle_animation()
+
+func _appearance_outfit_right() -> void:
+	var outfits = []
+	#print(Inventories.clothing_bag.list)
+	for clothing in Inventories.clothing_bag.list:
+		if clothing.type.type == "OUTFIT":
+			outfits.append(clothing)
+	#print(skin_tones)
+	if outfits.size() != 0:	
+		if Inventories.clothing_bag.equipped_clothes != null:
+			#print(Inventories.clothing_bag.get_next_accessory(Inventories.clothing_bag.equipped_acc).id)
+			Inventories.clothing_bag.equipped_clothes = Inventories.clothing_bag.get_next_outfit(Inventories.clothing_bag.equipped_clothes).id
+		else:
+			#print("this")
+			Inventories.clothing_bag.equipped_clothes = Inventories.clothing_bag.get_next_outfit(outfits[0].type.id).id
+	$"UI/Main/Inventory/TabContainer/Appearance/Outfit/TextureRect".texture = Items.get_clothing_from_id(Inventories.clothing_bag.equipped_clothes).display
+	play_idle_animation()
+	
+func _appearance_outfit_left() -> void:
+	var outfits = []
+	#print(Inventories.clothing_bag.list)
+	for clothing in Inventories.clothing_bag.list:
+		if clothing.type.type == "OUTFIT":
+			outfits.append(clothing)
+	#print(skin_tones)
+	#print(accessories)
+	if outfits.size() != 0:	
+		if Inventories.clothing_bag.equipped_clothes != null:
+			Inventories.clothing_bag.equipped_clothes = Inventories.clothing_bag.get_previous_outfit(Inventories.clothing_bag.equipped_clothes).id
+		else:
+			Inventories.clothing_bag.equipped_clothes = Inventories.clothing_bag.get_previous_outfit(outfits[0].type.id).id
+	$"UI/Main/Inventory/TabContainer/Appearance/Outfit/TextureRect".texture = Items.get_clothing_from_id(Inventories.clothing_bag.equipped_clothes).display
+	play_idle_animation()
+
+func update_appearance() -> void:
+	#print("running")
+	if Inventories.clothing_bag.equipped_skin_tone == null or Inventories.clothing_bag.list.size() == 0:
+		Inventories.clothing_bag.equipped_skin_tone = Items.get_clothing_from_id(0).id
+		if Inventories.clothing_bag.list.size() == 0:
+			var item = ItemStack.new()
+			item.type = Items.get_clothing_from_id(0)
+			item.amount = 1
+			Inventories.clothing_bag.list.append(item)
+	if Inventories.clothing_bag.equipped_acc != null:
+		$UI/Main/Inventory/TabContainer/Appearance/Accessory/TextureRect.texture = Items.get_clothing_from_id(Inventories.clothing_bag.equipped_acc).display
+	$"UI/Main/Inventory/TabContainer/Appearance/Skin Tone/TextureRect".texture = Items.get_clothing_from_id(Inventories.clothing_bag.equipped_skin_tone).display
+	pass
 
 func update_baits() -> void:
 	for children in $UI/Main/Inventory/TabContainer/Bait/ScrollContainer/GridContainer.get_children():
@@ -188,6 +402,8 @@ func open_bag():
 		$"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer".add_child(object)
 	$"UI/Main/Inventory/TabContainer/Your Bag/ScrollContainer/GridContainer".custom_minimum_size = Vector2(1000, count * 80)
 
+
+
 func open_inventory() -> void:
 	print("Opening the inventory")
 	$UI/Main/Inventory.visible = !$UI/Main/Inventory.visible
@@ -209,6 +425,7 @@ func open_inventory() -> void:
 	update_rod_list()
 	update_catalog()
 	update_baits()
+	update_appearance()
 
 func _hide_ui() -> void:
 	$UI/Main/Joystick.visible = false
@@ -231,8 +448,11 @@ func _show_ui() -> void:
 func fish() -> void:
 	reeling = false
 	reeling_back_fish = false
-	$Body.play("char1_fish_" + last_direction)
-
+	$Body.play(get_character() + "_fish_" + last_direction)
+	if Inventories.clothing_bag.equipped_acc != null:
+		$Accessory.play(str(Inventories.clothing_bag.equipped_acc) + "_fish_" + last_direction)
+	if Inventories.clothing_bag.equipped_clothes != null:
+		$Outfit.play(str(Inventories.clothing_bag.equipped_clothes) + "_fish_" + last_direction)
 func _fishing_timer() -> void:
 	var odds = randi_range(250, 750)
 	var your_odds = 0
@@ -299,6 +519,9 @@ func use() -> void:
 					$UI/Main.visible = false
 					$UI/Vender.visible = true
 					$UI/Vender/TabContainer.current_tab = 0
+			if area.is_in_group("leaderboards"):
+				if game_center != null:
+					game_center.show_game_center({ "view": "leaderboards" })
 			if area.is_in_group("sell"):
 				if $UI/Vender.visible == true:
 					$UI/Main.visible = true 
@@ -362,9 +585,9 @@ func _on_body_animation_finished() -> void:
 			return
 		if bobber != null:
 			bobber.sleeping = true
-			var tile_map = get_parent().get_node("TileMap") as TileMap
+			var tile_map = get_parent().get_node("ground") as TileMapLayer
 			var bobber_position = tile_map.to_local(bobber.global_position)
-			var data = tile_map.get_cell_tile_data(0, tile_map.local_to_map(bobber_position))
+			var data = tile_map.get_cell_tile_data(tile_map.local_to_map(bobber_position))
 			if data and data.get_custom_data("fishable") == true:
 				print("Valid tile to fish on, starting timer")
 				_fishing_timer()
@@ -375,7 +598,13 @@ func _on_body_animation_finished() -> void:
 				play_idle_animation()
 
 func play_idle_animation() -> void:
-	$Body.play("char1_idle_" + last_direction)
+	$Body.play(get_character() + "_idle_" + last_direction)
+	await get_tree().create_timer(0.1).timeout
+	if Inventories.clothing_bag.equipped_acc != null:
+		$Accessory.play(str(Inventories.clothing_bag.equipped_acc) + "_idle_" + last_direction)
+	if Inventories.clothing_bag.equipped_clothes != null:
+		$Outfit.play(str(Inventories.clothing_bag.equipped_clothes) + "_idle_" + last_direction)
+	#print("running")
 
 func add_fish(min_d, max_d, move_speed, move_time):
 	print("adding fish with " + str(min_d) + " " + str(max_d) + " " + str(move_speed) + " " + str(move_time))
@@ -390,10 +619,35 @@ func add_fish(min_d, max_d, move_speed, move_time):
 	
 	$UI/Main/BobberProgress/FishingColumn.add_child(f)
 	$UI/Main/BobberProgress/Progress.value = 200
+
 var whiffs = 0
 var catches = 0 
+var highest_balance = Coins.balance
 
 func get_game_data() -> Dictionary:
+	if Coins.balance > highest_balance:
+		highest_balance = Coins.balance
+	if game_center != null:
+		game_center.post_score({
+			"score": highest_balance * 100.0,
+			"category": "highest_balance"
+		})
+		game_center.post_score({
+			"score": catches,
+			"category": "fish_caught"
+		})
+		game_center.post_score({
+			"score": whiffs,
+			"category": "fish_lost"
+		})
+		game_center.post_score({
+			"score": Inventories.items_bought,
+			"category": "items_bought"
+		})
+		game_center.post_score({
+			"score": Inventories.items_sold,
+			"category": "items_sold"
+		})
 	return {
 		"bag": Inventories.fishing_bag.to_list(),
 		"coins": Coins.balance,
@@ -406,7 +660,16 @@ func get_game_data() -> Dictionary:
 		"catalog": Inventories.fishing_bag.collected,
 		"baits": Inventories.bait_bag.to_list(),
 		"selected_bait": get_bait_id(),
-		"upgrade_list": Inventories.upgrade_bag.to_list()
+		"upgrade_list": Inventories.upgrade_bag.to_list(),
+		"highest_balance": highest_balance,
+		"items_bought": Inventories.items_bought,
+		"items_sold": Inventories.items_sold,
+		"clothing_bag": Inventories.clothing_bag.to_list(),
+		"equipped_clothes": Inventories.clothing_bag.equipped_clothes,
+		"equipped_skin_tone": Inventories.clothing_bag.equipped_skin_tone,
+		"equipped_shoes": Inventories.clothing_bag.equipped_shoes,
+		"equipped_pants": Inventories.clothing_bag.equipped_pants,
+		"equipped_acc": Inventories.clothing_bag.equipped_acc
 	}
 
 func get_bait_id() -> Variant:
@@ -464,13 +727,38 @@ func load_game():
 			Inventories.bait_bag.set_list_from_save(data["baits"])
 		if data.has("upgrade_list"):
 			Inventories.upgrade_bag.set_list_from_save(data["upgrade_list"])
+		if data.has("clothing_bag"):
+			Inventories.clothing_bag.set_list_from_save(data["clothing_bag"])
+		if data.has("highest_balance"):
+			highest_balance = data["highest_balance"]
+		if data.has("items_bought"):
+			Inventories.items_bought = data["items_bought"]
+		if data.has("items_sold"):
+			Inventories.items_sold = data["items_sold"]
+		if data.has("equipped_clothes"):
+			if data["equipped_clothes"] != null:
+				Inventories.clothing_bag.equipped_clothes = data["equipped_clothes"]
+		if data.has("equipped_skin_tone"):
+			if data["equipped_skin_tone"] != null:
+				Inventories.clothing_bag.equipped_skin_tone = data["equipped_skin_tone"]
+		if data.has("equipped_shoes"):
+			if data["equipped_shoes"] != null:
+				Inventories.clothing_bag.equipped_shoes = data["equipped_shoes"]
+		if data.has("equipped_pants"):
+			if data["equipped_pants"] != null:
+				Inventories.clothing_bag.equipped_pants = data["equipped_pants"]
+		if data.has("equipped_acc"):
+			if data["equipped_acc"] != null:
+				Inventories.clothing_bag.equipped_acc = data["equipped_acc"]
 		if data.has("selected_bait"):
 			if data["selected_bait"] != null:
 				Inventories.bait_bag.equipped = Items.get_bait_from_id(data["selected_bait"])
 	print("Loaded the game.")
+	print(Inventories.clothing_bag.list)
 	$"UI/Main/Item Log".add_text("Loaded the game.")
 
-
+func get_character() -> String:
+	return Items.get_clothing_from_id(Inventories.clothing_bag.equipped_skin_tone).st_reference
 
 func _process_input(delta) -> void:
 	if reeling_back_fish == false and reeling == false:
@@ -555,8 +843,11 @@ func _process_input(delta) -> void:
 					this_is_stupid_and_just_straight_up_bad_code = true
 		else:
 			pulling_back = true
-			$Body.play_backwards("char1_fish_" + last_direction)
-			
+			$Body.play_backwards(get_character() + "_fish_" + last_direction)
+			if Inventories.clothing_bag.equipped_acc != null:
+				$Accessory.play_backwards(str(Inventories.clothing_bag.equipped_acc) + "_fish_" + last_direction)
+			if Inventories.clothing_bag.equipped_clothes != null:
+				$Outfit.play_backwards(str(Inventories.clothing_bag.equipped_clothes) + "_fish_" + last_direction)
 	# Actually fish when you release the button.
 	if Input.is_action_just_released("fish") and reeling_back_fish == false and reeling == false and pulling_back == false:
 		fish()
@@ -564,35 +855,71 @@ func _process_input(delta) -> void:
 		$UI/Main/FishProgressBar.visible = false
 	
 	if round(velocity.x) == 1 and round(velocity.y) == 1:
-		$Body.play("char1_walk_right")
+		$Body.play(get_character() + "_walk_right")
 		last_direction = "right"
+		if Inventories.clothing_bag.equipped_acc != null:
+			$Accessory.play(str(Inventories.clothing_bag.equipped_acc) + "_walk_" + last_direction)
+		if Inventories.clothing_bag.equipped_clothes != null:
+			$Outfit.play(str(Inventories.clothing_bag.equipped_clothes) + "_walk_" + last_direction)
 	elif round(velocity.x) == 1 and round(velocity.y) == -1:
-		$Body.play("char1_walk_right")
+		$Body.play(get_character() + "_walk_right")
 		last_direction = "right"
+		if Inventories.clothing_bag.equipped_acc != null:
+			$Accessory.play(str(Inventories.clothing_bag.equipped_acc) + "_walk_" + last_direction)
+		if Inventories.clothing_bag.equipped_clothes != null:
+			$Outfit.play(str(Inventories.clothing_bag.equipped_clothes) + "_walk_" + last_direction)
 	elif round(velocity.x) == -1 and round(velocity.y) == -1:
-		$Body.play("char1_walk_left")
+		$Body.play(get_character() + "_walk_left")
 		last_direction = "left"
+		if Inventories.clothing_bag.equipped_acc != null:
+			$Accessory.play(str(Inventories.clothing_bag.equipped_acc) + "_walk_" + last_direction)
+		if Inventories.clothing_bag.equipped_clothes != null:
+			$Outfit.play(str(Inventories.clothing_bag.equipped_clothes) + "_walk_" + last_direction)
 	elif round(velocity.x) == -1 and round(velocity.y) == 1:
-		$Body.play("char1_walk_left")
+		$Body.play(get_character() + "_walk_left")
 		last_direction = "left"	
+		if Inventories.clothing_bag.equipped_acc != null:
+			$Accessory.play(str(Inventories.clothing_bag.equipped_acc) + "_walk_" + last_direction)
+		if Inventories.clothing_bag.equipped_clothes != null:
+			$Outfit.play(str(Inventories.clothing_bag.equipped_clothes) + "_walk_" + last_direction)
 	elif round(velocity.x) == -1:
-		$Body.play("char1_walk_left")
+		$Body.play(get_character() + "_walk_left")
 		last_direction = "left"
+		if Inventories.clothing_bag.equipped_acc != null:
+			$Accessory.play(str(Inventories.clothing_bag.equipped_acc) + "_walk_" + last_direction)
+		if Inventories.clothing_bag.equipped_clothes != null:
+			$Outfit.play(str(Inventories.clothing_bag.equipped_clothes) + "_walk_" + last_direction)
 	elif round(velocity.x) == 1:
-		$Body.play("char1_walk_right")
+		$Body.play(get_character() + "_walk_right")
 		last_direction = "right"
+		if Inventories.clothing_bag.equipped_acc != null:
+			$Accessory.play(str(Inventories.clothing_bag.equipped_acc) + "_walk_" + last_direction)
+		if Inventories.clothing_bag.equipped_clothes != null:
+			$Outfit.play(str(Inventories.clothing_bag.equipped_clothes) + "_walk_" + last_direction)
 	elif round(velocity.y) == -1:
-		$Body.play("char1_walk_up")
+		$Body.play(get_character() + "_walk_up")
 		last_direction = "up"
+		if Inventories.clothing_bag.equipped_acc != null:
+			$Accessory.play(str(Inventories.clothing_bag.equipped_acc) + "_walk_" + last_direction)
+		if Inventories.clothing_bag.equipped_clothes != null:
+			$Outfit.play(str(Inventories.clothing_bag.equipped_clothes) + "_walk_" + last_direction)
 	elif round(velocity.y) == 1:
-		$Body.play("char1_walk_down")
+		$Body.play(get_character() + "_walk_down")
 		last_direction = "down"
+		if Inventories.clothing_bag.equipped_acc != null:
+			$Accessory.play(str(Inventories.clothing_bag.equipped_acc) + "_walk_" + last_direction)
+		if Inventories.clothing_bag.equipped_clothes != null:
+			$Outfit.play(str(Inventories.clothing_bag.equipped_clothes) + "_walk_" + last_direction)
 
 	# Multiply velocity by speed
 	velocity *= SPEED
 	if velocity.x == 0 and velocity.y == 0:
-		if $Body.animation == "char1_walk_left" or $Body.animation == "char1_walk_up" or $Body.animation == "char1_walk_down" or $Body.animation == "char1_walk_right":
-			$Body.play("char1_idle_" + last_direction)	
+		if $Body.animation == get_character() + "_walk_left" or $Body.animation == get_character() + "_walk_up" or $Body.animation == get_character() + "_walk_down" or $Body.animation == get_character() + "_walk_right":
+			$Body.play(get_character() + "_idle_" + last_direction)	
+			if Inventories.clothing_bag.equipped_acc != null:
+				$Accessory.play(str(Inventories.clothing_bag.equipped_acc) + "_idle_" + last_direction)
+			if Inventories.clothing_bag.equipped_clothes != null:
+				$Outfit.play(str(Inventories.clothing_bag.equipped_clothes) + "_idle_" + last_direction)
 	else:
 		fishing = false
 	
@@ -643,6 +970,9 @@ func _physics_process(delta) -> void:
 			if area.is_in_group("sell"):
 				$Notifications.visible = true
 				$Notifications/Panel/Label.text = "Sell Bag"
+			if area.is_in_group("leaderboards"):
+				$Notifications.visible = true
+				$Notifications/Panel/Label.text = "Leaderboards"
 	
 	
 	# Update UI
@@ -743,3 +1073,9 @@ func calculate_drop_multiplier(blessing: int) -> int:
 
 func _on_save_timer_timeout() -> void:
 	save_game(get_game_data(), "auto")
+
+
+func _on_label_pressed() -> void:
+	print("yes")
+	Input.action_press("use")
+	Input.action_release("use")

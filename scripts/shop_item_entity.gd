@@ -25,6 +25,16 @@ func _buy_pressed() -> void:
 		item.type = type
 		item.amount = 1 
 		Inventories.upgrade_bag.add_item(item)
+		if type.one_time_buy == true:
+			queue_free()
+	if type is Clothing:
+		var item = ItemStack.new()
+		item.type = type
+		item.amount = 1
+		Inventories.clothing_bag.add_item(item)
+		if type.one_time_buy == true:
+			queue_free()
+	Inventories.items_bought += 1
 
 func set_upgrade(upgrade: Upgrade):
 	price = upgrade.cost
@@ -55,6 +65,15 @@ func set_rod(rod: FishingRod):
 	$Panel/Name.text = rod.name
 	$Panel/Button.text = "Buy $" + str(rod.cost)
 	$Panel/ScrollContainer/Description.text = rod.description
+
+func set_clothing(clothing: Clothing):
+	price = clothing.cost
+	type = clothing
+	if clothing.display != null:
+		$Panel/TextureRect.texture = clothing.display
+	$Panel/Name.text = clothing.name
+	$Panel/Button.text = "Buy $" + str(clothing.cost)
+	$Panel/ScrollContainer/Description.text = clothing.description
 
 func _process(delta: float) -> void:
 	if Coins.balance < price:

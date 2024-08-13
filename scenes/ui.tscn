@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=89 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/buttons/TouchScreenButton.gd" id="2_lpp3g"]
@@ -178,8 +178,39 @@ content_margin_left = 16.0
 content_margin_right = 16.0
 bg_color = Color(0.141176, 0.141176, 0.141176, 0.635294)
 
+[sub_resource type="LabelSettings" id="LabelSettings_f04n0"]
+font = ExtResource("17_g0huu")
+font_size = 72
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21cbf"]
 size = Vector2(115, 115)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_syvvl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jao7m"]
+bg_color = Color(0.2757, 0.2757, 0.275699, 1)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8mc2q"]
+bg_color = Color(0.849621, 0.849621, 0.849621, 1)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cow2h"]
+bg_color = Color(0.113049, 0.113049, 0.113049, 1)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_0ffgm"]
+font = ExtResource("17_g0huu")
+font_size = 48
 
 [sub_resource type="LabelSettings" id="LabelSettings_a8nlh"]
 font = ExtResource("17_g0huu")
@@ -204,10 +235,6 @@ font_size = 48
 [sub_resource type="LabelSettings" id="LabelSettings_fj0gr"]
 font = ExtResource("17_g0huu")
 font_size = 36
-
-[sub_resource type="LabelSettings" id="LabelSettings_f04n0"]
-font = ExtResource("17_g0huu")
-font_size = 54
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gbr1f"]
 size = Vector2(82, 34)
@@ -236,16 +263,6 @@ corner_radius_bottom_left = 48
 [sub_resource type="LabelSettings" id="LabelSettings_8axal"]
 font = ExtResource("17_g0huu")
 font_size = 84
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5esi8"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_it2rl"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nnw54"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sxdeh"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cebw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgqoc"]
 content_margin_left = 48.0
@@ -322,6 +339,12 @@ corner_radius_bottom_left = 16
 font = ExtResource("17_g0huu")
 font_size = 84
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ddobc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h83yr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_301sv"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2gthc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mcnxq"]
@@ -353,6 +376,16 @@ corner_radius_bottom_left = 16
 expand_margin_left = 12.0
 expand_margin_right = 12.0
 shadow_offset = Vector2(1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5esi8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_it2rl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nnw54"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sxdeh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cebw"]
 
 [node name="UI" type="CanvasLayer"]
 
@@ -642,7 +675,6 @@ label_settings = SubResource("LabelSettings_0jr5a")
 vertical_alignment = 1
 
 [node name="Inventory" type="Control" parent="Main"]
-visible = false
 custom_minimum_size = Vector2(2.08165e-12, 128)
 layout_mode = 1
 anchors_preset = 15
@@ -674,8 +706,272 @@ theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_rkivi")
 tab_alignment = 1
 current_tab = 0
 
-[node name="Your Bag" type="Panel" parent="Main/Inventory/TabContainer"]
+[node name="Appearance" type="Panel" parent="Main/Inventory/TabContainer"]
+texture_filter = 1
 layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Name" type="Label" parent="Main/Inventory/TabContainer/Appearance"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -178.0
+offset_top = 16.0
+offset_right = 178.0
+offset_bottom = 77.0
+grow_horizontal = 2
+text = "Your Appearance"
+label_settings = SubResource("LabelSettings_f04n0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory/TabContainer/Appearance"]
+position = Vector2(1168, 65)
+shape = SubResource("RectangleShape2D_21cbf")
+script = ExtResource("8_dm5ih")
+
+[node name="Close Button" type="Button" parent="Main/Inventory/TabContainer/Appearance/TouchScreenButton"]
+auto_translate_mode = 1
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -36.0
+offset_right = 36.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 12
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_s8ee3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dn5yn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dq7gx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jtexw")
+icon = ExtResource("8_otfdw")
+expand_icon = true
+
+[node name="Skin Tone" type="Control" parent="Main/Inventory/TabContainer/Appearance"]
+texture_filter = 1
+anchors_preset = 0
+offset_left = 40.0
+offset_top = 109.0
+offset_right = 360.0
+offset_bottom = 365.0
+
+[node name="TextureRect" type="TextureRect" parent="Main/Inventory/TabContainer/Appearance/Skin Tone"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Left" type="Button" parent="Main/Inventory/TabContainer/Appearance/Skin Tone"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = -72.0
+offset_right = 88.0
+offset_bottom = 72.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_syvvl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jao7m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8mc2q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_cow2h")
+text = "<"
+
+[node name="Right" type="Button" parent="Main/Inventory/TabContainer/Appearance/Skin Tone"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -72.0
+offset_right = -32.0
+offset_bottom = 72.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_syvvl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jao7m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8mc2q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_cow2h")
+text = ">"
+
+[node name="Title" type="Label" parent="Main/Inventory/TabContainer/Appearance/Skin Tone"]
+layout_mode = 1
+offset_left = 40.0
+offset_right = 202.0
+offset_bottom = 38.0
+text = "Skin Tone"
+label_settings = SubResource("LabelSettings_0ffgm")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Accessory" type="Control" parent="Main/Inventory/TabContainer/Appearance"]
+texture_filter = 1
+anchors_preset = 0
+offset_left = 360.0
+offset_top = 109.0
+offset_right = 680.0
+offset_bottom = 365.0
+
+[node name="TextureRect" type="TextureRect" parent="Main/Inventory/TabContainer/Appearance/Accessory"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Left" type="Button" parent="Main/Inventory/TabContainer/Appearance/Accessory"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = -72.0
+offset_right = 88.0
+offset_bottom = 72.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_syvvl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jao7m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8mc2q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_cow2h")
+text = "<"
+
+[node name="Right" type="Button" parent="Main/Inventory/TabContainer/Appearance/Accessory"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -72.0
+offset_right = -32.0
+offset_bottom = 72.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_syvvl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jao7m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8mc2q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_cow2h")
+text = ">"
+
+[node name="Title" type="Label" parent="Main/Inventory/TabContainer/Appearance/Accessory"]
+layout_mode = 1
+offset_left = 40.0
+offset_right = 202.0
+offset_bottom = 38.0
+text = "Accessory"
+label_settings = SubResource("LabelSettings_0ffgm")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Outfit" type="Control" parent="Main/Inventory/TabContainer/Appearance"]
+texture_filter = 1
+anchors_preset = 0
+offset_left = 680.0
+offset_top = 109.0
+offset_right = 1000.0
+offset_bottom = 365.0
+
+[node name="TextureRect" type="TextureRect" parent="Main/Inventory/TabContainer/Appearance/Outfit"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Left" type="Button" parent="Main/Inventory/TabContainer/Appearance/Outfit"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = -72.0
+offset_right = 88.0
+offset_bottom = 72.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_syvvl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jao7m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8mc2q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_cow2h")
+text = "<"
+
+[node name="Right" type="Button" parent="Main/Inventory/TabContainer/Appearance/Outfit"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -72.0
+offset_right = -32.0
+offset_bottom = 72.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_syvvl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jao7m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8mc2q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_cow2h")
+text = ">"
+
+[node name="Title" type="Label" parent="Main/Inventory/TabContainer/Appearance/Outfit"]
+layout_mode = 1
+offset_left = 40.0
+offset_right = 202.0
+offset_bottom = 38.0
+text = "Outfit"
+label_settings = SubResource("LabelSettings_0ffgm")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Your Bag" type="Panel" parent="Main/Inventory/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory/TabContainer/Your Bag"]
 position = Vector2(1168, 65)
@@ -751,6 +1047,7 @@ autowrap_mode = 3
 [node name="Fishing Rod" type="Panel" parent="Main/Inventory/TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 2
 
 [node name="Name" type="Label" parent="Main/Inventory/TabContainer/Fishing Rod"]
 layout_mode = 1
@@ -877,6 +1174,7 @@ layout_mode = 2
 visible = false
 texture_filter = 1
 layout_mode = 2
+metadata/_tab_index = 3
 
 [node name="TextureRect" type="TextureRect" parent="Main/Inventory/TabContainer/Bait"]
 layout_mode = 1
@@ -994,6 +1292,7 @@ columns = 3
 [node name="Catalog" type="Panel" parent="Main/Inventory/TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 4
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Main/Inventory/TabContainer/Catalog"]
 layout_mode = 1
@@ -1011,8 +1310,8 @@ grow_vertical = 2
 
 [node name="GridContainer" type="GridContainer" parent="Main/Inventory/TabContainer/Catalog/ScrollContainer"]
 layout_mode = 2
-theme_override_constants/h_separation = 235
-theme_override_constants/v_separation = 220
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 15
 columns = 5
 
 [node name="Title" type="Label" parent="Main/Inventory/TabContainer/Catalog"]
@@ -1172,6 +1471,7 @@ current_tab = 0
 
 [node name="Buy" type="Control" parent="Vender/TabContainer"]
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Label" type="Label" parent="Vender/TabContainer/Buy"]
 texture_filter = 1
@@ -1187,28 +1487,6 @@ grow_horizontal = 2
 text = "Shop"
 label_settings = SubResource("LabelSettings_8axal")
 horizontal_alignment = 1
-
-[node name="Button" type="Button" parent="Vender/TabContainer/Buy"]
-texture_filter = 1
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -88.0
-offset_top = 16.0
-offset_right = -16.0
-offset_bottom = 88.0
-grow_horizontal = 0
-theme_override_fonts/font = ExtResource("17_g0huu")
-theme_override_font_sizes/font_size = 84
-theme_override_styles/focus = SubResource("StyleBoxEmpty_5esi8")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_it2rl")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_nnw54")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_sxdeh")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_5cebw")
-text = "X
-"
-script = ExtResource("18_q4fv6")
 
 [node name="GridContainer" type="GridContainer" parent="Vender/TabContainer/Buy"]
 texture_filter = 1
@@ -1264,7 +1542,6 @@ expand_icon = true
 
 [node name="Clothes" type="Button" parent="Vender/TabContainer/Buy/GridContainer"]
 auto_translate_mode = 1
-visible = false
 layout_mode = 2
 focus_mode = 1
 mouse_filter = 1
@@ -1375,10 +1652,31 @@ label_settings = SubResource("LabelSettings_yo2it")
 horizontal_alignment = 1
 autowrap_mode = 2
 
+[node name="X" type="Button" parent="Vender/TabContainer/Buy"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -96.0
+offset_top = 16.0
+offset_right = -24.0
+offset_bottom = 83.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 84
+theme_override_styles/focus = SubResource("StyleBoxEmpty_h0fga")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ddobc")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_h83yr")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_301sv")
+action_mode = 0
+text = "X"
+
 [node name="Sell" type="Control" parent="Vender/TabContainer"]
 visible = false
 texture_filter = 1
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Panel" type="Control" parent="Vender/TabContainer/Sell"]
 layout_mode = 2
@@ -1475,6 +1773,8 @@ script = ExtResource("18_q4fv6")
 [connection signal="pressed" from="Main/Inventory Button/TouchScreenButton" to="Main/Inventory Button/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory Button/TouchScreenButton" to="Main/Inventory Button/TouchScreenButton" method="_on_released"]
 [connection signal="tab_selected" from="Main/Inventory/TabContainer" to="Main/Joystick/Virtual Joystick" method="_on_tab_container_tab_selected"]
+[connection signal="pressed" from="Main/Inventory/TabContainer/Appearance/TouchScreenButton" to="Main/Inventory/TabContainer/Appearance/TouchScreenButton" method="_on_pressed"]
+[connection signal="released" from="Main/Inventory/TabContainer/Appearance/TouchScreenButton" to="Main/Inventory/TabContainer/Appearance/TouchScreenButton" method="_on_released"]
 [connection signal="pressed" from="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" to="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" to="Main/Inventory/TabContainer/Your Bag/TouchScreenButton" method="_on_released"]
 [connection signal="pressed" from="Main/Inventory/TabContainer/Fishing Rod/TouchScreenButton" to="Main/Inventory/TabContainer/Fishing Rod/TouchScreenButton" method="_on_pressed"]
@@ -1483,9 +1783,6 @@ script = ExtResource("18_q4fv6")
 [connection signal="released" from="Main/Inventory/TabContainer/Bait/TouchScreenButton" to="Main/Inventory/TabContainer/Bait/TouchScreenButton" method="_on_released"]
 [connection signal="pressed" from="Main/Inventory/TabContainer/Catalog/TouchScreenButton" to="Main/Inventory/TabContainer/Catalog/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory/TabContainer/Catalog/TouchScreenButton" to="Main/Inventory/TabContainer/Catalog/TouchScreenButton" method="_on_released"]
-[connection signal="button_down" from="Vender/TabContainer/Buy/Button" to="Vender/TabContainer/Buy/Button" method="_on_button_down"]
-[connection signal="button_up" from="Vender/TabContainer/Buy/Button" to="Vender/TabContainer/Buy/Button" method="_on_button_up"]
-[connection signal="pressed" from="Vender/TabContainer/Buy/Button" to="Vender/TabContainer/Buy/Button" method="_on_pressed"]
 [connection signal="pressed" from="Vender/TabContainer/Sell/Panel/Sell" to="Vender/TabContainer/Sell/Panel/Sell" method="_on_pressed"]
 [connection signal="button_down" from="Vender/TabContainer/Sell/Panel/Button" to="Vender/TabContainer/Sell/Panel/Button" method="_on_button_down"]
 [connection signal="button_up" from="Vender/TabContainer/Sell/Panel/Button" to="Vender/TabContainer/Sell/Panel/Button" method="_on_button_up"]
