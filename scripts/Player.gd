@@ -144,6 +144,8 @@ func _add_animations() -> void:
 							texture.atlas = clothing.sprite_sheet_fishing
 						elif variation == "idle":
 							texture.atlas = clothing.sprite_sheet_walking
+						elif variation == "pickup":
+							texture.atlas = clothing.sprite_sheet_pickup
 						#print(variation + ", " + dir)
 						#print(str(32.0 * i) + ", " + str(anim_directions[dir]))
 						texture.region = Rect2(32.0 * i, anim_directions[dir], 32.0, 32.0)
@@ -171,6 +173,8 @@ func _add_animations() -> void:
 							texture.atlas = clothing.sprite_sheet_fishing
 						elif variation == "idle":
 							texture.atlas = clothing.sprite_sheet_walking
+						elif variation == "pickup":
+							texture.atlas = clothing.sprite_sheet_pickup
 						#print(variation + ", " + dir)
 						#print(str(32.0 * i) + ", " + str(anim_directions[dir]))
 						texture.region = Rect2(32.0 * i, anim_directions[dir], 32.0, 32.0)
@@ -198,6 +202,8 @@ func _add_animations() -> void:
 							texture.atlas = clothing.sprite_sheet_fishing
 						elif variation == "idle":
 							texture.atlas = clothing.sprite_sheet_walking
+						elif variation == "pickup":
+							texture.atlas = clothing.sprite_sheet_pickup
 						#print(variation + ", " + dir)
 						#print(str(32.0 * i) + ", " + str(anim_directions[dir]))
 						texture.region = Rect2(32.0 * i, anim_directions[dir], 32.0, 32.0)
@@ -225,6 +231,8 @@ func _add_animations() -> void:
 							texture.atlas = clothing.sprite_sheet_fishing
 						elif variation == "idle":
 							texture.atlas = clothing.sprite_sheet_walking
+						elif variation == "pickup":
+							texture.atlas = clothing.sprite_sheet_pickup
 						#print(variation + ", " + dir)
 						#print(str(32.0 * i) + ", " + str(anim_directions[dir]))
 						texture.region = Rect2(32.0 * i, anim_directions[dir], 32.0, 32.0)

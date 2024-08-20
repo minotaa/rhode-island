@@ -1603,6 +1603,7 @@ func add_clothes() -> void:
 	curly.type = "ACCESSORY"
 	curly.sprite_sheet_fishing = load("res://assets/character sprites/curly_fish.png")
 	curly.sprite_sheet_walking = load("res://assets/character sprites/curly_walk.png")
+	curly.sprite_sheet_pickup = load("res://assets/character sprites/curly_pickup.png")
 	clothing_list.append(curly)
 	
 	var hairstyles = [
@@ -1644,6 +1645,7 @@ func add_clothes() -> void:
 
 		hairstyle_clothing.sprite_sheet_fishing = load("res://assets/character sprites/" + hairstyle_name + "_fish.png")
 		hairstyle_clothing.sprite_sheet_walking = load("res://assets/character sprites/" + hairstyle_name + "_walk.png")
+		hairstyle_clothing.sprite_sheet_pickup = load("res://assets/character sprites/" + hairstyle_name + "_pickup.png")
 
 		clothing_list.append(hairstyle_clothing)
 
@@ -1674,6 +1676,7 @@ func add_clothes() -> void:
 
 		outfit_clothing.sprite_sheet_fishing = load("res://assets/character sprites/" + outfit_name + "_fish.png")
 		outfit_clothing.sprite_sheet_walking = load("res://assets/character sprites/" + outfit_name + "_walk.png")
+		outfit_clothing.sprite_sheet_pickup = load("res://assets/character sprites/" + outfit_name + "_pickup.png")
 
 		clothing_list.append(outfit_clothing)
 		#print(start_id + i)
@@ -1704,6 +1707,7 @@ func add_clothes() -> void:
 
 		pants_clothing.sprite_sheet_fishing = load("res://assets/character sprites/" + pants_name + "_fish.png")
 		pants_clothing.sprite_sheet_walking = load("res://assets/character sprites/" + pants_name + "_walk.png")
+		pants_clothing.sprite_sheet_pickup = load("res://assets/character sprites/" + pants_name + "_pickup.png")
 
 		clothing_list.append(pants_clothing)
 
@@ -1724,6 +1728,7 @@ func add_clothes() -> void:
 
 	shoes.sprite_sheet_fishing = load("res://assets/character sprites/" + "shoes" + "_fish.png")
 	shoes.sprite_sheet_walking = load("res://assets/character sprites/" + "shoes" + "_walk.png")
+	shoes.sprite_sheet_pickup = load("res://assets/character sprites/" + "shoes" + "_pickup.png")
 
 	clothing_list.append(shoes)
 
