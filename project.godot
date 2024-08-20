@@ -19,8 +19,9 @@ config/icon="res://assets/art/icon.png"
 [autoload]
 
 Items="*res://scripts/inventories/Items.gd"
-Coins="*res://scripts/Coins.gd"
 Inventories="*res://scripts/inventories/Inventories.gd"
+GameCenter="*res://scripts/GameCenter.gd"
+Game="*res://scripts/Game.gd"
 
 [debug]
 

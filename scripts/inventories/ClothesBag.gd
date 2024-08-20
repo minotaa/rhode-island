@@ -62,10 +62,54 @@ func get_next_outfit(current_id: int) -> Clothing:
 	return outfits[next_index]
 
 
-func get_previous_outfits(current_id: int) -> Clothing:
+func get_previous_outfit(current_id: int) -> Clothing:
 	var outfits = []
 	for clothing in list:
 		if clothing.type.type == "OUTFIT":
+			outfits.append(clothing.type)
+	var list_size = outfits.size()
+	var current_index = outfits.find(Items.get_clothing_from_id(current_id))
+	var previous_index = (current_index - 1 + list_size) % list_size
+	return outfits[previous_index]
+
+func get_next_pants(current_id: int) -> Clothing:
+	# Filter the list to include only accessories
+	var outfits = []
+	for clothing in list:
+		if clothing.type.type == "PANTS":
+			outfits.append(clothing.type)
+	var list_size = outfits.size()
+	var current_index = outfits.find(Items.get_clothing_from_id(current_id))
+	var next_index = (current_index + 1) % list_size
+	return outfits[next_index]
+
+
+func get_previous_pants(current_id: int) -> Clothing:
+	var outfits = []
+	for clothing in list:
+		if clothing.type.type == "PANTS":
+			outfits.append(clothing.type)
+	var list_size = outfits.size()
+	var current_index = outfits.find(Items.get_clothing_from_id(current_id))
+	var previous_index = (current_index - 1 + list_size) % list_size
+	return outfits[previous_index]
+
+func get_next_shoes(current_id: int) -> Clothing:
+	# Filter the list to include only accessories
+	var outfits = []
+	for clothing in list:
+		if clothing.type.type == "SHOES":
+			outfits.append(clothing.type)
+	var list_size = outfits.size()
+	var current_index = outfits.find(Items.get_clothing_from_id(current_id))
+	var next_index = (current_index + 1) % list_size
+	return outfits[next_index]
+
+
+func get_previous_shoes(current_id: int) -> Clothing:
+	var outfits = []
+	for clothing in list:
+		if clothing.type.type == "SHOES":
 			outfits.append(clothing.type)
 	var list_size = outfits.size()
 	var current_index = outfits.find(Items.get_clothing_from_id(current_id))

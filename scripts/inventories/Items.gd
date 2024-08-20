@@ -813,18 +813,18 @@ func add_fish() -> void:
 	yellow_perch.atlas_region_y = 80.0
 	fish_list.append(yellow_perch)
 	
-	var char = Fish.new()
-	char.name = "Char"
-	char.description = "A cold-water fish with a distinctive forked tail and vibrant coloration."
-	char.id = 60
-	char.cost = 165.0
-	char.sell_price = 150.0
-	char.reel_difficulty = "HARD"
-	char.reel_location = "beach"
-	char.reel_weight = 15
-	char.atlas_region_x = 0.0
-	char.atlas_region_y = 96.0
-	fish_list.append(char)
+	var char_fish = Fish.new()
+	char_fish.name = "Char"
+	char_fish.description = "A cold-water fish with a distinctive forked tail and vibrant coloration."
+	char_fish.id = 60
+	char_fish.cost = 165.0
+	char_fish.sell_price = 150.0
+	char_fish.reel_difficulty = "HARD"
+	char_fish.reel_location = "beach"
+	char_fish.reel_weight = 15
+	char_fish.atlas_region_x = 0.0
+	char_fish.atlas_region_y = 96.0
+	fish_list.append(char_fish)
 
 	var guppy = Fish.new()
 	guppy.name = "Guppy"
@@ -1648,7 +1648,9 @@ func add_clothes() -> void:
 		clothing_list.append(hairstyle_clothing)
 
 	var outfits = [
-		"witch", "suit", "spooky", "overalls"
+		"witch", "suit", "spooky", "overalls",
+		"spaghetti", "sailor", "floral", "clown",
+		"basic", "dress", "skull", "stripe"
 	]
 	
 	start_id = 21
@@ -1674,6 +1676,56 @@ func add_clothes() -> void:
 		outfit_clothing.sprite_sheet_walking = load("res://assets/character sprites/" + outfit_name + "_walk.png")
 
 		clothing_list.append(outfit_clothing)
+		#print(start_id + i)
+		
+	start_id = 33 
+	
+	var pants = [
+		"pants",
+		"skirt"
+	]
+	for i in range(pants.size()):
+		var pants_name = pants[i]
+
+		var pants_clothing = Clothing.new()
+		pants_clothing.id = start_id + i
+		pants_clothing.name = pants_name.capitalize()
+
+		var atlas_fishing = AtlasTexture.new()
+		atlas_fishing.atlas = load("res://assets/character sprites/" + pants_name + "_fish.png")
+		atlas_fishing.region = Rect2(0.0, 0.0, 32.0, 32.0)
+		pants_clothing.display = atlas_fishing
+
+		pants_clothing.description = "Allows you to pick the " + pants_name + " pants for your character."
+		pants_clothing.one_time_buy = true
+		pants_clothing.cost = 1500.0
+		pants_clothing.sell_price = 0.0
+		pants_clothing.type = "PANTS"
+
+		pants_clothing.sprite_sheet_fishing = load("res://assets/character sprites/" + pants_name + "_fish.png")
+		pants_clothing.sprite_sheet_walking = load("res://assets/character sprites/" + pants_name + "_walk.png")
+
+		clothing_list.append(pants_clothing)
+
+	var shoes = Clothing.new()
+	shoes.id = 35
+	shoes.name = "Shoes"
+
+	var atlas_fishing = AtlasTexture.new()
+	atlas_fishing.atlas = load("res://assets/character sprites/" + "shoes" + "_fish.png")
+	atlas_fishing.region = Rect2(0.0, 0.0, 32.0, 32.0)
+	shoes.display = atlas_fishing
+
+	shoes.description = "Allows you to pick shoes for your character."
+	shoes.one_time_buy = true
+	shoes.cost = 1500.0
+	shoes.sell_price = 0.0
+	shoes.type = "SHOES"
+
+	shoes.sprite_sheet_fishing = load("res://assets/character sprites/" + "shoes" + "_fish.png")
+	shoes.sprite_sheet_walking = load("res://assets/character sprites/" + "shoes" + "_walk.png")
+
+	clothing_list.append(shoes)
 
 func _init():
 	add_fish()

@@ -9,7 +9,7 @@ func _ready() -> void:
 	$Panel/Button.connect("pressed", _buy_pressed)
 	
 func _buy_pressed() -> void:
-	Coins.balance -= price
+	Game.balance -= price
 	if type is FishingRod:
 		var item = ItemStack.new()
 		item.type = type 
@@ -76,7 +76,7 @@ func set_clothing(clothing: Clothing):
 	$Panel/ScrollContainer/Description.text = clothing.description
 
 func _process(delta: float) -> void:
-	if Coins.balance < price:
+	if Game.balance < price:
 		$Panel/Button.disabled = true
 	else:
 		$Panel/Button.disabled = false

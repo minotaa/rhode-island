@@ -1,4 +1,4 @@
-extends Area2D
+extends Node
 
 var fish = preload("res://assets/tiles/fish_all.png")
 var type: int
