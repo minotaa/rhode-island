@@ -1,4 +1,4 @@
-[gd_scene load_steps=481 format=3 uid="uid://c6ks3rmomuq0v"]
+[gd_scene load_steps=485 format=3 uid="uid://c6ks3rmomuq0v"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_k6cpm"]
 [ext_resource type="PackedScene" uid="uid://cmqbp2xl2jup3" path="res://scenes/ui.tscn" id="2_j65o3"]
@@ -3664,6 +3664,14 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="Animation" id="Animation_elkbw"]
+resource_name = "walk"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m0rqr"]
+_data = {
+"walk": SubResource("Animation_elkbw")
+}
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_uekwb"]
 resource_local_to_scene = true
 animations = [{
@@ -3672,6 +3680,10 @@ animations = [{
 "name": &"default",
 "speed": 10.0
 }]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1ey32"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s5f3q"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xpi7b"]
 
@@ -3732,15 +3744,30 @@ texture = ExtResource("3_tpiwy")
 texture_filter = 1
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_aokf5")
-animation = &"char1_walk_down"
+animation = &"char8_idle_up"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_m0rqr")
+}
 
 [node name="Accessory" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, -5)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_uekwb")
 
+[node name="Shoes" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_1ey32")
+
+[node name="Pants" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_s5f3q")
+
 [node name="Outfit" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_xpi7b")
 

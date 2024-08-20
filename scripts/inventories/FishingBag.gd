@@ -17,7 +17,7 @@ func sell_items() -> void:
 		total += i.type.sell_price * i.amount
 		Inventories.items_sold += i.amount
 	list = []
-	Coins.balance += total
+	Game.balance += total
 	
 func set_list_from_save(_list: Array):
 	for value in _list:
