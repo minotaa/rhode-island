@@ -11,6 +11,7 @@ var shop_item_object = preload("res://scenes/shop_item.tscn")
 var fish_object = preload("res://scenes/fish.tscn")
 var hook_object = preload("res://scenes/BobberFish.tscn")
 
+var fish_textures = preload("res://assets/tiles/fish_all.png")
 var rod_textures = preload("res://assets/tiles/inv_items.png")
 var rod_button = preload("res://scenes/rod.tscn")
 
@@ -303,16 +304,37 @@ func update_baits() -> void:
 		$Main/Inventory/TabContainer/Bait/Meta.text = "Bonus Fishing Speed: 0\nBonus Blessing: 0"
 
 func update_catalog() -> void:
-	for children in $Main/Inventory/TabContainer/Catalog/ScrollContainer/GridContainer.get_children():
+	for children in $Main/Inventory/TabContainer/Catalog/Gallery/ScrollContainer/GridContainer.get_children():
 		children.queue_free()
-	$Main/Inventory/TabContainer/Catalog/Title.text = "Your Catalog (" + str(Inventories.fishing_bag.collected.keys().size()) + "/" + str(Items.fish_list.size()) + ")"
+	$Main/Inventory/TabContainer/Catalog/Gallery/Title.text = "Your Catalog (" + str(Inventories.fishing_bag.collected.keys().size()) + "/" + str(Items.fish_list.size()) + ")"
 	for fish in Inventories.fishing_bag.collected.keys():
 		var catalog_item_object = catalog_item.instantiate()
 		var actual = Items.get_fish_from_id(fish as int)
 		catalog_item_object.set_sprite(actual.atlas_region_x, actual.atlas_region_y, actual.atlas_region_w, actual.atlas_region_h)
 		catalog_item_object.set_fish_name(actual.name)
+		catalog_item_object.type = actual
 		catalog_item_object.set_amount(Inventories.fishing_bag.collected[fish])
-		$Main/Inventory/TabContainer/Catalog/ScrollContainer/GridContainer.add_child(catalog_item_object)
+		$Main/Inventory/TabContainer/Catalog/Gallery/ScrollContainer/GridContainer.add_child(catalog_item_object)
+		catalog_item_object.get_button().connect("pressed", _catalog_pressed.bind(actual))
+
+
+
+func _catalog_pressed(type: Fish):
+	$Main/Inventory/TabContainer/Catalog/Gallery.visible = false
+	$Main/Inventory/TabContainer/Catalog/Info.visible = true
+	$Main/Inventory/TabContainer/Catalog/Info/Name.text = type.name
+	var atlas = AtlasTexture.new()
+	atlas.atlas = fish_textures
+	atlas.region = Rect2(type.atlas_region_x, type.atlas_region_y, type.atlas_region_w, type.atlas_region_h)
+	$Main/Inventory/TabContainer/Catalog/Info/TextureRect.texture = atlas
+	var meta_data = "Description: " + str(type.description) + "\nID: " + str(type.id) + "\nDifficulty: " + str(type.reel_difficulty) + "\nWeight: " + str(type.reel_weight) + "\nSell Price: $" + buck_fiddy(type.sell_price)
+	$Main/Inventory/TabContainer/Catalog/Info/ScrollContainer.scroll_vertical = 0
+	$Main/Inventory/TabContainer/Catalog/Info/ScrollContainer/Meta.text = meta_data
+
+func _on_catalog_fish_back_pressed() -> void:
+	$Main/Inventory/TabContainer/Catalog/Gallery.visible = true
+	$Main/Inventory/TabContainer/Catalog/Info.visible = false
+
 func update_rod_list() -> void:
 	for children in $"Main/Inventory/TabContainer/Fishing Rod/ScrollContainer/GridContainer".get_children():
 		children.queue_free()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=92 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/UI.gd" id="1_ysy3v"]
@@ -237,6 +237,37 @@ font_size = 48
 font = ExtResource("17_g0huu")
 font_size = 36
 
+[sub_resource type="LabelSettings" id="LabelSettings_fps5w"]
+font = ExtResource("17_g0huu")
+font_size = 84
+
+[sub_resource type="LabelSettings" id="LabelSettings_7r4ne"]
+font = ExtResource("17_g0huu")
+font_size = 48
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h0fga"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hvxih"]
+bg_color = Color(0.378294, 0.428731, 0.478782, 0.74902)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2vedd"]
+bg_color = Color(0.707164, 0.749855, 0.792592, 0.74902)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5gnjs"]
+bg_color = Color(0.0980392, 0.117647, 0.137255, 0.819608)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gbr1f"]
 size = Vector2(82, 34)
 
@@ -312,29 +343,6 @@ corner_radius_bottom_left = 36
 [sub_resource type="AtlasTexture" id="AtlasTexture_s5hmm"]
 atlas = ExtResource("19_bqi5g")
 region = Rect2(16, 2.08165e-12, 16, 16)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h0fga"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hvxih"]
-bg_color = Color(0.378294, 0.428731, 0.478782, 0.74902)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2vedd"]
-bg_color = Color(0.707164, 0.749855, 0.792592, 0.74902)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5gnjs"]
-bg_color = Color(0.0980392, 0.117647, 0.137255, 0.819608)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
 
 [sub_resource type="LabelSettings" id="LabelSettings_yo2it"]
 font = ExtResource("17_g0huu")
@@ -1456,40 +1464,118 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 4
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Main/Inventory/TabContainer/Catalog"]
+[node name="Gallery" type="Control" parent="Main/Inventory/TabContainer/Catalog"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Main/Inventory/TabContainer/Catalog/Gallery"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -576.0
-offset_top = -189.5
-offset_right = 600.0
-offset_bottom = 258.5
+offset_left = 20.0
+offset_top = 89.0
+offset_right = 1196.0
+offset_bottom = 537.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GridContainer" type="GridContainer" parent="Main/Inventory/TabContainer/Catalog/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="Main/Inventory/TabContainer/Catalog/Gallery/ScrollContainer"]
 layout_mode = 2
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 15
 columns = 5
 
-[node name="Title" type="Label" parent="Main/Inventory/TabContainer/Catalog"]
+[node name="Title" type="Label" parent="Main/Inventory/TabContainer/Catalog/Gallery"]
 auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -120.0
+offset_left = 327.5
 offset_top = 24.0
-offset_right = 123.0
+offset_right = 867.5
 offset_bottom = 81.0
 grow_horizontal = 2
-text = "Your Catalog (0/91)"
+text = "Your Catalog (0/100)"
 label_settings = SubResource("LabelSettings_a8nlh")
 horizontal_alignment = 1
+
+[node name="Info" type="Control" parent="Main/Inventory/TabContainer/Catalog"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Name" type="Label" parent="Main/Inventory/TabContainer/Catalog/Info"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -448.0
+offset_top = 200.0
+offset_right = 448.0
+offset_bottom = 277.0
+grow_horizontal = 2
+text = "MORE, MORE MOREEEEE"
+label_settings = SubResource("LabelSettings_fps5w")
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Main/Inventory/TabContainer/Catalog/Info"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -296.0
+offset_right = 320.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_scroll_mode = 0
+
+[node name="Meta" type="Label" parent="Main/Inventory/TabContainer/Catalog/Info/ScrollContainer"]
+custom_minimum_size = Vector2(640, 0)
+layout_mode = 2
+text = "We don't know anything about We don't know anything about We don't know anything about We don't know anything about We don't know anything about We don't know anything about "
+label_settings = SubResource("LabelSettings_7r4ne")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Main/Inventory/TabContainer/Catalog/Info"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 536.0
+offset_top = -269.5
+offset_right = 680.0
+offset_bottom = -125.5
+grow_vertical = 2
+
+[node name="Back" type="Button" parent="Main/Inventory/TabContainer/Catalog/Info"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 28.0
+offset_right = 240.0
+offset_bottom = 84.0
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_h0fga")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hvxih")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2vedd")
+theme_override_styles/normal = SubResource("StyleBoxFlat_5gnjs")
+text = "Go back"
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory/TabContainer/Catalog"]
 position = Vector2(1176, 57)
@@ -1953,6 +2039,7 @@ script = ExtResource("18_q4fv6")
 [connection signal="released" from="Main/Inventory/TabContainer/Fishing Rod/TouchScreenButton" to="Main/Inventory/TabContainer/Fishing Rod/TouchScreenButton" method="_on_released"]
 [connection signal="pressed" from="Main/Inventory/TabContainer/Bait/TouchScreenButton" to="Main/Inventory/TabContainer/Bait/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory/TabContainer/Bait/TouchScreenButton" to="Main/Inventory/TabContainer/Bait/TouchScreenButton" method="_on_released"]
+[connection signal="pressed" from="Main/Inventory/TabContainer/Catalog/Info/Back" to="." method="_on_catalog_fish_back_pressed"]
 [connection signal="pressed" from="Main/Inventory/TabContainer/Catalog/TouchScreenButton" to="Main/Inventory/TabContainer/Catalog/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory/TabContainer/Catalog/TouchScreenButton" to="Main/Inventory/TabContainer/Catalog/TouchScreenButton" method="_on_released"]
 [connection signal="tab_selected" from="Vender/TabContainer" to="." method="_shop_tab_selected"]
