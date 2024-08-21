@@ -7,7 +7,7 @@ var atlas_region_w: float = 16.0
 var atlas_region_h: float = 16.0
 var reel_weight: int
 var reel_location: String
-var reel_difficulty: String # Should be only EASY, MEDIUM, HARD, IMPOSSIBLE, SUPREME
+var reel_difficulty: String = "EASY" # Should be only EASY, MEDIUM, HARD, IMPOSSIBLE, SUPREME
 
 func get_texture() -> Texture: 
 	return Texture.new()

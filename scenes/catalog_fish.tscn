@@ -1,15 +1,31 @@
-[gd_scene load_steps=7 format=3 uid="uid://bgqkcvatt3eul"]
+[gd_scene load_steps=10 format=3 uid="uid://bgqkcvatt3eul"]
 
 [ext_resource type="Script" path="res://scripts/catalog_fish.gd" id="1_7cpxo"]
 [ext_resource type="Texture2D" uid="uid://cw0cwhkewx1jk" path="res://assets/character sprites/overalls_walk.png" id="2_3sg1e"]
 [ext_resource type="FontFile" uid="uid://bme4hmnvjn66d" path="res://assets/fonts/Monogram.ttf" id="3_grgy7"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_22e66"]
-bg_color = Color(0.12549, 0.12549, 0.12549, 0.980392)
-corner_radius_top_left = 40
-corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eyac7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4jl23"]
+bg_color = Color(0.345946, 0.345946, 0.345946, 0.772549)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k267w"]
+bg_color = Color(0.925353, 0.925353, 0.925353, 0.772549)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ooogf"]
+bg_color = Color(0.0316549, 0.0316549, 0.0316549, 0.772549)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o5618"]
 atlas = ExtResource("2_3sg1e")
@@ -31,7 +47,7 @@ offset_bottom = 23.84
 mouse_filter = 1
 script = ExtResource("1_7cpxo")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Button" parent="."]
 auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 8
@@ -46,7 +62,10 @@ offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_22e66")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_eyac7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4jl23")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_k267w")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ooogf")
 
 [node name="TextureRect" type="TextureRect" parent="Panel"]
 auto_translate_mode = 1
@@ -62,6 +81,7 @@ offset_right = 48.0
 offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = SubResource("AtlasTexture_o5618")
 
 [node name="Amount" type="Label" parent="Panel"]
