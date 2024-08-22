@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bnhjc44wh5uu2"]
+[gd_scene load_steps=27 format=3 uid="uid://bnhjc44wh5uu2"]
 
 [ext_resource type="Texture2D" uid="uid://cc3uaixye35pw" path="res://assets/art/bigger splash screen.png" id="1_2hy3d"]
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_wqmbu"]
@@ -58,14 +58,14 @@ corner_radius_bottom_left = 32
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4gv27"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2tmqr"]
-bg_color = Color(0.777323, 0.0515812, 3.47268e-07, 1)
+bg_color = Color(0, 0.84774, 0.00427517, 1)
 corner_radius_top_left = 32
 corner_radius_top_right = 32
 corner_radius_bottom_right = 32
 corner_radius_bottom_left = 32
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s1k3s"]
-bg_color = Color(0.945506, 0.298079, 0.277298, 1)
+bg_color = Color(0.437929, 1, 0.306231, 1)
 corner_radius_top_left = 32
 corner_radius_top_right = 32
 corner_radius_bottom_right = 32
@@ -110,6 +110,21 @@ font_size = 52
 line_spacing = 8.0
 font = ExtResource("2_eg32d")
 font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_d3o3c"]
+font = ExtResource("2_eg32d")
+font_size = 52
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vm3jg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwtdm"]
+content_margin_left = 24.0
+content_margin_right = 24.0
+bg_color = Color(0.270222, 0.270222, 0.270222, 0.603922)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
 
 [node name="main_menu" type="Node2D"]
 script = ExtResource("1_wqmbu")
@@ -203,9 +218,9 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 40.0
-offset_top = -248.0
+offset_top = -328.0
 offset_right = 440.0
-offset_bottom = -128.0
+offset_bottom = -208.0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("2_eg32d")
 theme_override_font_sizes/font_size = 72
@@ -233,6 +248,25 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_p53lv")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_dkc1e")
 theme_override_styles/normal = SubResource("StyleBoxFlat_pqqku")
 text = "How To Play"
+
+[node name="Connect to Multiplayer" type="Button" parent="CanvasLayer/Main/Buttons"]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -192.0
+offset_right = 440.0
+offset_bottom = -120.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_eg32d")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/focus = SubResource("StyleBoxEmpty_atuw3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_p53lv")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dkc1e")
+theme_override_styles/normal = SubResource("StyleBoxFlat_pqqku")
+text = "Play Multiplayer"
 
 [node name="Settings" type="Button" parent="CanvasLayer/Main/Buttons"]
 auto_translate_mode = 1
@@ -357,8 +391,148 @@ how 2 access inventory:
 label_settings = SubResource("LabelSettings_y6lyp")
 autowrap_mode = 3
 
+[node name="Multiplayer" type="Control" parent="CanvasLayer/Main"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Main/Multiplayer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -296.0
+offset_right = 576.0
+offset_bottom = 280.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_t642k")
+
+[node name="Title" type="Label" parent="CanvasLayer/Main/Multiplayer/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -338.0
+offset_top = 32.0
+offset_right = 338.0
+offset_bottom = 101.0
+grow_horizontal = 2
+text = "Multiplayer"
+label_settings = SubResource("LabelSettings_d3o3c")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Status" type="Label" parent="CanvasLayer/Main/Multiplayer/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -338.0
+offset_top = -34.5
+offset_right = 338.0
+offset_bottom = 34.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Connecting to server..."
+label_settings = SubResource("LabelSettings_d3o3c")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Go Back" type="Button" parent="CanvasLayer/Main/Multiplayer/Panel"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 288.0
+offset_bottom = 96.0
+theme_override_fonts/font = ExtResource("2_eg32d")
+theme_override_font_sizes/font_size = 44
+theme_override_styles/focus = SubResource("StyleBoxEmpty_pj0iw")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3mqwu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5qo01")
+theme_override_styles/normal = SubResource("StyleBoxFlat_tbljc")
+text = "Go back"
+
+[node name="IP Address" type="LineEdit" parent="CanvasLayer/Main/Multiplayer/Panel"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -448.0
+offset_top = -112.0
+offset_right = 448.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_eg32d")
+theme_override_font_sizes/font_size = 42
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vm3jg")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwtdm")
+placeholder_text = "IP Address (in IPv4 format, like 127.0.0.1:1213)"
+alignment = 1
+clear_button_enabled = true
+
+[node name="Username" type="LineEdit" parent="CanvasLayer/Main/Multiplayer/Panel"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -448.0
+offset_right = 448.0
+offset_bottom = 88.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_eg32d")
+theme_override_font_sizes/font_size = 42
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vm3jg")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwtdm")
+placeholder_text = "Username (defaults to Player)"
+alignment = 1
+clear_button_enabled = true
+
+[node name="Join Server" type="Button" parent="CanvasLayer/Main/Multiplayer/Panel"]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -136.0
+offset_right = 200.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_eg32d")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4gv27")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2tmqr")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s1k3s")
+theme_override_styles/normal = SubResource("StyleBoxFlat_pqqku")
+text = "Join Server"
+
 [connection signal="pressed" from="CanvasLayer/Main/Buttons/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main/Buttons/How To Play" to="." method="_on_how_to_play_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/Buttons/Connect to Multiplayer" to="." method="_on_connect_to_multiplayer_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main/Buttons/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main/Buttons/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main/Tutorial/Panel/Go Back" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/Multiplayer/Panel/Go Back" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/Multiplayer/Panel/Join Server" to="." method="_on_join_server_pressed"]

@@ -16,8 +16,7 @@ var rod_textures = preload("res://assets/tiles/inv_items.png")
 var rod_button = preload("res://scenes/rod.tscn")
 
 func _shop_tab_selected(tab: int):
-	if tab == 1:
-		$UI._update_sell()
+	_update_sell()
 
 func _appearance_skin_tone_left() -> void:
 	var skin_tones = []

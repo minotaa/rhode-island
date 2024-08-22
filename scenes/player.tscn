@@ -1,4 +1,4 @@
-[gd_scene load_steps=653 format=3 uid="uid://c6ks3rmomuq0v"]
+[gd_scene load_steps=654 format=3 uid="uid://c6ks3rmomuq0v"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_k6cpm"]
 [ext_resource type="PackedScene" uid="uid://cmqbp2xl2jup3" path="res://scenes/ui.tscn" id="2_j65o3"]
@@ -5005,10 +5005,46 @@ font_size = 32
 [sub_resource type="CircleShape2D" id="CircleShape2D_wpl1x"]
 radius = 84.0
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4k644"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Body:animation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Accessory:animation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Shoes:animation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("Pants:animation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("Outfit:animation")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("Body:frame")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("Accessory:frame")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("Shoes:frame")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("Pants:frame")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("Outfit:frame")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 4095
 position = Vector2(96, 1120)
 scale = Vector2(1.5, 1.5)
+collision_mask = 0
 script = ExtResource("1_k6cpm")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
@@ -5069,6 +5105,7 @@ process_callback = 0
 position_smoothing_speed = 4.5
 
 [node name="Notifications" type="Control" parent="."]
+visible = false
 z_index = 4096
 layout_mode = 3
 anchors_preset = 0
@@ -5114,6 +5151,9 @@ shape = SubResource("CircleShape2D_wpl1x")
 [node name="SaveTimer" type="Timer" parent="."]
 wait_time = 30.0
 autostart = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_4k644")
 
 [connection signal="animation_finished" from="Body" to="." method="_on_body_animation_finished"]
 [connection signal="pressed" from="Notifications/Panel/Label" to="." method="_on_label_pressed"]
