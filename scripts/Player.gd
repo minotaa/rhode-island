@@ -57,14 +57,20 @@ func play_animation(name: String, backwards: bool = false) -> void:
 			$Shoes.play_backwards(str(Inventories.clothing_bag.equipped_shoes) + "_" + name)
 
 func _ready() -> void:
-	
+	if multiplayer.has_multiplayer_peer():
+		set_multiplayer_authority(name.to_int())
+	if not is_multiplayer_authority():
+		$UI.visible = false
+		return
+	else:
+		$Camera2D.make_current()
 	Game.load_game()
 	position.x = Game.pos_x
 	position.y = Game.pos_y
 	_add_animations()
-	await get_tree().create_timer(0.1).timeout 
+	await get_tree().process_frame
 	play_idle_animation()
-	await get_tree().create_timer(1.0).timeout 
+	await get_tree().process_frame
 	$Camera2D.position_smoothing_enabled = true
 	if is_player_stuck():
 		reposition_player_to_safe_area()
@@ -72,6 +78,12 @@ func _ready() -> void:
 	#print(Items.fish_list.size())
 
 const MOVE_DISTANCE = 10
+
+@rpc("authority", "call_local", "reliable")
+func stop_fucking_up() -> void:
+	if is_player_stuck():
+		reposition_player_to_safe_area()
+		$"UI/Main/Item Log".add_text("Whoops! Sorry about that!")
 
 func is_player_stuck() -> bool:
 	var directions = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
@@ -401,6 +413,8 @@ func add_fish(min_d, max_d, move_speed, move_time):
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
+		if not is_multiplayer_authority():
+			return
 		Game.save_game(Game.get_game_data(), "went to background")
 
 func get_character() -> String:
@@ -416,6 +430,9 @@ func get_character() -> String:
 	return Items.get_clothing_from_id(Inventories.clothing_bag.equipped_skin_tone).st_reference
 
 func _process_input(delta) -> void:
+	if not is_multiplayer_authority():
+		return
+	#print("got it")
 	if reeling_back_fish == false and reeling == false:
 		velocity.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 		velocity.y = Input.get_action_strength("down") - Input.get_action_strength("up")  
@@ -539,7 +556,6 @@ func _process_input(delta) -> void:
 		fishing = false
 
 	move_and_slide()
-	
 
 func buck_fiddy(float_number: float) -> String:
 	var rounded_value = round(float_number * 100) / 100.0
@@ -550,6 +566,8 @@ var tween: Tween
 
 
 func _physics_process(delta) -> void:
+	if not is_multiplayer_authority():
+		return
 	Game.pos_x = position.x
 	Game.pos_y = position.y
 	if $Outfit.frame == $Body.frame and $Accessory.frame == $Outfit.frame:
@@ -657,4 +675,5 @@ func _physics_process(delta) -> void:
 		$Camera2D.zoom = lerp($Camera2D.zoom, Vector2(1.2, 1.2), 0.05)
 
 func _on_save_timer_timeout() -> void:
-	Game.save_game(Game.get_game_data(), "auto")
+	if is_multiplayer_authority():
+		Game.save_game(Game.get_game_data(), "auto")
