@@ -8,6 +8,11 @@ func _ready() -> void:
 func _on_play_pressed() -> void:
 	multiplayer.multiplayer_peer = null
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
+
+func _process(delta: float) -> void:
+	if Input.is_key_pressed(KEY_TAB):
+		$"CanvasLayer/Main/Multiplayer/Panel/HBoxContainer/Join Server".visible = true
+		$"CanvasLayer/Main/Multiplayer/Panel/IP Address".visible = true
 	
 func _on_quit_pressed() -> void:
 	get_tree().quit()
