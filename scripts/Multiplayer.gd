@@ -11,6 +11,10 @@ signal update_players(players)
 signal player_quit(peer_id)
 
 func _ready():
+	var arguments = OS.get_cmdline_args()
+	for arg in arguments:
+		if arg.split("=")[0] == "--port":
+			PORT = arg.split("=")[1].to_int()
 	if DisplayServer.get_name() == "headless":
 		print("Detected client is using a headless version of the game, loading the game...")
 		get_tree().change_scene_to_packed(main)
@@ -20,7 +24,7 @@ func _ready():
 		if error == OK:
 			print("Created server with IP " + DEFAULT_SERVER_IP + " with port " + str(PORT))
 		else:
-			print(error)
+			printerr(error)
 			return
 		multiplayer.multiplayer_peer = peer
 		multiplayer.peer_connected.connect(_player_joined)
@@ -97,8 +101,10 @@ func join_server(address: String, username: String = "Player") -> bool:
 		return false
 	else:
 		valid_address = split_address[0]
-		port = split_address[1]
+		port = split_address[1].to_int()
 	var peer = ENetMultiplayerPeer.new()
+	print(valid_address)
+	print(port)
 	var error = peer.create_client(valid_address, port)
 	if error:
 		print(error)

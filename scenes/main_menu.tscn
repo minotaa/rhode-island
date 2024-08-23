@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bnhjc44wh5uu2"]
+[gd_scene load_steps=28 format=3 uid="uid://bnhjc44wh5uu2"]
 
 [ext_resource type="Texture2D" uid="uid://cc3uaixye35pw" path="res://assets/art/bigger splash screen.png" id="1_2hy3d"]
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_wqmbu"]
@@ -58,6 +58,8 @@ corner_radius_bottom_left = 32
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4gv27"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2tmqr"]
+content_margin_left = 32.0
+content_margin_right = 32.0
 bg_color = Color(0, 0.84774, 0.00427517, 1)
 corner_radius_top_left = 32
 corner_radius_top_right = 32
@@ -65,6 +67,8 @@ corner_radius_bottom_right = 32
 corner_radius_bottom_left = 32
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s1k3s"]
+content_margin_left = 32.0
+content_margin_right = 32.0
 bg_color = Color(0.437929, 1, 0.306231, 1)
 corner_radius_top_left = 32
 corner_radius_top_right = 32
@@ -121,6 +125,15 @@ font_size = 52
 content_margin_left = 24.0
 content_margin_right = 24.0
 bg_color = Color(0.270222, 0.270222, 0.270222, 0.603922)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w07ok"]
+content_margin_left = 32.0
+content_margin_right = 32.0
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
 corner_radius_top_left = 32
 corner_radius_top_right = 32
 corner_radius_bottom_right = 32
@@ -474,7 +487,7 @@ anchor_bottom = 0.5
 offset_left = -448.0
 offset_top = -112.0
 offset_right = 448.0
-offset_bottom = -24.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_eg32d")
@@ -494,8 +507,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -448.0
+offset_top = 16.0
 offset_right = 448.0
-offset_bottom = 88.0
+offset_bottom = 104.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_eg32d")
@@ -507,27 +521,44 @@ alignment = 1
 max_length = 16
 clear_button_enabled = true
 
-[node name="Join Server" type="Button" parent="CanvasLayer/Main/Multiplayer/Panel"]
-auto_translate_mode = 1
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Main/Multiplayer/Panel"]
+texture_filter = 1
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -200.0
-offset_top = -136.0
-offset_right = 200.0
-offset_bottom = -64.0
+anchor_bottom = 0.5
+offset_left = -384.0
+offset_top = 144.0
+offset_right = 384.0
+offset_bottom = 220.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="Join Server" type="Button" parent="CanvasLayer/Main/Multiplayer/Panel/HBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
 theme_override_fonts/font = ExtResource("2_eg32d")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/focus = SubResource("StyleBoxEmpty_4gv27")
 theme_override_styles/hover = SubResource("StyleBoxFlat_2tmqr")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_s1k3s")
-theme_override_styles/normal = SubResource("StyleBoxFlat_pqqku")
+theme_override_styles/normal = SubResource("StyleBoxFlat_w07ok")
 text = "Join Server"
+
+[node name="Join Default" type="Button" parent="CanvasLayer/Main/Multiplayer/Panel/HBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_eg32d")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4gv27")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2tmqr")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s1k3s")
+theme_override_styles/normal = SubResource("StyleBoxFlat_w07ok")
+text = "Join Default Server"
 
 [connection signal="pressed" from="CanvasLayer/Main/Buttons/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main/Buttons/How To Play" to="." method="_on_how_to_play_pressed"]
@@ -536,4 +567,5 @@ text = "Join Server"
 [connection signal="pressed" from="CanvasLayer/Main/Buttons/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main/Tutorial/Panel/Go Back" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main/Multiplayer/Panel/Go Back" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Main/Multiplayer/Panel/Join Server" to="." method="_on_join_server_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/Multiplayer/Panel/HBoxContainer/Join Server" to="." method="_on_join_server_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/Multiplayer/Panel/HBoxContainer/Join Default" to="." method="_on_join_default_pressed"]
