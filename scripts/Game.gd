@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var player_scene: PackedScene
+var player_object = preload("res://scenes/player.tscn")
 
 func _ready() -> void:
 	if not multiplayer.has_multiplayer_peer():
@@ -22,7 +22,7 @@ func update_players(players) -> void:
 func player_joined(id) -> void:
 	if not multiplayer.is_server():
 		return
-	var player = player_scene.instantiate()
+	var player = player_object.instantiate()
 	player.name = str(id)
 	call_deferred("add_child", player, true)
 	pass
