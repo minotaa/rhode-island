@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=97 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/UI.gd" id="1_ysy3v"]
@@ -267,6 +267,33 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8vs8a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7fj8i"]
+bg_color = Color(0.266575, 0.266575, 0.266575, 0.788235)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p6n7i"]
+bg_color = Color(0.787759, 0.787759, 0.787759, 0.788235)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stuko"]
+bg_color = Color(0.0509804, 0.0509804, 0.0509804, 0.788235)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_w5qyw"]
+font = ExtResource("17_g0huu")
+font_size = 84
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gbr1f"]
 size = Vector2(82, 34)
@@ -1607,6 +1634,75 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_jtexw")
 icon = ExtResource("8_otfdw")
 expand_icon = true
 
+[node name="Options" type="Panel" parent="Main/Inventory/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 5
+
+[node name="Button" type="Button" parent="Main/Inventory/TabContainer/Options"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -448.0
+offset_top = -52.0
+offset_right = 448.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 74
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8vs8a")
+theme_override_styles/hover = SubResource("StyleBoxFlat_7fj8i")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_p6n7i")
+theme_override_styles/normal = SubResource("StyleBoxFlat_stuko")
+text = "Save & Quit"
+
+[node name="Label" type="Label" parent="Main/Inventory/TabContainer/Options"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 24.0
+offset_right = 78.0
+offset_bottom = 91.0
+grow_horizontal = 2
+text = "Pause"
+label_settings = SubResource("LabelSettings_w5qyw")
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory/TabContainer/Options"]
+position = Vector2(1176, 57)
+scale = Vector2(0.85, 0.85)
+shape = SubResource("RectangleShape2D_21cbf")
+script = ExtResource("8_dm5ih")
+
+[node name="Close Button" type="Button" parent="Main/Inventory/TabContainer/Options/TouchScreenButton"]
+auto_translate_mode = 1
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -36.0
+offset_right = 36.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 12
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_s8ee3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dn5yn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dq7gx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jtexw")
+icon = ExtResource("8_otfdw")
+expand_icon = true
+
 [node name="BobberProgress" type="Control" parent="Main"]
 visible = false
 layout_mode = 1
@@ -2042,6 +2138,9 @@ script = ExtResource("18_q4fv6")
 [connection signal="pressed" from="Main/Inventory/TabContainer/Catalog/Info/Back" to="." method="_on_catalog_fish_back_pressed"]
 [connection signal="pressed" from="Main/Inventory/TabContainer/Catalog/TouchScreenButton" to="Main/Inventory/TabContainer/Catalog/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory/TabContainer/Catalog/TouchScreenButton" to="Main/Inventory/TabContainer/Catalog/TouchScreenButton" method="_on_released"]
+[connection signal="pressed" from="Main/Inventory/TabContainer/Options/Button" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="Main/Inventory/TabContainer/Options/TouchScreenButton" to="Main/Inventory/TabContainer/Options/TouchScreenButton" method="_on_pressed"]
+[connection signal="released" from="Main/Inventory/TabContainer/Options/TouchScreenButton" to="Main/Inventory/TabContainer/Options/TouchScreenButton" method="_on_released"]
 [connection signal="tab_selected" from="Vender/TabContainer" to="." method="_shop_tab_selected"]
 [connection signal="pressed" from="Vender/TabContainer/Buy/GridContainer/Fishing Rods" to="." method="_shop_fishing_rods_button_pressed"]
 [connection signal="pressed" from="Vender/TabContainer/Buy/GridContainer/Upgrades" to="." method="_shop_upgrades_button_pressed"]

@@ -46,7 +46,7 @@ func _on_join_server_pressed() -> void:
 		$"CanvasLayer/Main/Multiplayer/Panel/Go Back".visible = true
 		$"CanvasLayer/Main/Multiplayer/Panel/IP Address".visible = true
 		$"CanvasLayer/Main/Multiplayer/Panel/Username".visible = true
-		$"CanvasLayer/Main/Multiplayer/Panel/Join Server".visible = true
+		$CanvasLayer/Main/Multiplayer/Panel/HBoxContainer.visible = true
 	elif result == true:
 		$CanvasLayer/Main/Multiplayer/Panel/Status.text = "Successfully connected to the server,\nloading game..."
 		get_tree().change_scene_to_file("res://scenes/game.tscn")

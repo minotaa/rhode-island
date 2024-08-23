@@ -87,25 +87,25 @@ func join_server(address: String, username: String = "Player") -> bool:
 	player_name = username
 	if address == "localhost":
 		address = "127.0.0.1"
-	if not address.is_valid_ip_address():
-		print("Invalid IP Address")
-		return false
 	var split_address = address.split(":")
 	var valid_address: String
 	var port: int
 	if split_address.size() == 1:
 		valid_address = split_address[0]
+		if split_address[0] == "localhost":
+			valid_address = "127.0.0.1"
 		port = PORT
 	elif split_address.size() > 2:
 		print("Too big arguments or something...")
 		return false
 	else:
 		valid_address = split_address[0]
+		if split_address[0] == "localhost":
+			valid_address = "127.0.0.1"
 		port = split_address[1].to_int()
 	var peer = ENetMultiplayerPeer.new()
-	print(valid_address)
-	print(port)
 	var error = peer.create_client(valid_address, port)
+	print("Connecting to " + valid_address + ":" + str(port))
 	if error:
 		print(error)
 		print("Error occurred while connecting")

@@ -455,3 +455,10 @@ func _process(delta: float) -> void:
 	atlas.atlas = rod_textures
 	atlas.region = Rect2(Inventories.fishing_rods.equipped.atlas_region_x, Inventories.fishing_rods.equipped.atlas_region_y, Inventories.fishing_rods.equipped.atlas_region_w, Inventories.fishing_rods.equipped.atlas_region_h)
 	$"Main/Buttons/TouchScreenButton/Fish Button".icon = atlas
+
+
+func _on_save_button_pressed() -> void:
+	Game.save_game(Game.get_game_data(), "quitting")
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	if multiplayer != null and multiplayer.has_multiplayer_peer():
+		multiplayer.multiplayer_peer = null
