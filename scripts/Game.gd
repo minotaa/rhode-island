@@ -9,6 +9,15 @@ func _ready() -> void:
 	else:
 		Multiplayer.player_joined.connect(player_joined)
 		Multiplayer.player_quit.connect(player_quit)
+		Multiplayer.update_players.connect(update_players)
+
+func update_players(players) -> void:
+	if not multiplayer.is_server():
+		return
+	for children in get_children():
+		for player in players:
+			if str(player["id"]) == children.name:
+				children.username = player["username"]
 
 func player_joined(id) -> void:
 	if not multiplayer.is_server():
@@ -16,8 +25,7 @@ func player_joined(id) -> void:
 	var player = player_scene.instantiate()
 	player.name = str(id)
 	call_deferred("add_child", player, true)
-	player.stop_fucking_up.rpc()
 	pass
-	
+
 func player_quit(id) -> void:
 	pass

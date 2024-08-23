@@ -11,6 +11,7 @@ var directions = {
 	"down": Vector2.DOWN
 }
 
+var username = "Player"
 var last_direction = "down"
 var this_is_stupid_and_just_straight_up_bad_code = true
 var bobber_object = preload("res://scenes/bobber.tscn")
@@ -59,8 +60,9 @@ func play_animation(name: String, backwards: bool = false) -> void:
 func _ready() -> void:
 	if multiplayer.has_multiplayer_peer():
 		set_multiplayer_authority(name.to_int())
-	if not is_multiplayer_authority():
-		$UI.visible = false
+		$Username.visible = true
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
+		remove_child($UI)
 		return
 	else:
 		$Camera2D.make_current()
@@ -78,12 +80,6 @@ func _ready() -> void:
 	#print(Items.fish_list.size())
 
 const MOVE_DISTANCE = 10
-
-@rpc("authority", "call_local", "reliable")
-func stop_fucking_up() -> void:
-	if is_player_stuck():
-		reposition_player_to_safe_area()
-		$"UI/Main/Item Log".add_text("Whoops! Sorry about that!")
 
 func is_player_stuck() -> bool:
 	var directions = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
@@ -413,7 +409,7 @@ func add_fish(min_d, max_d, move_speed, move_time):
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
-		if not is_multiplayer_authority():
+		if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 			return
 		Game.save_game(Game.get_game_data(), "went to background")
 
@@ -430,8 +426,10 @@ func get_character() -> String:
 	return Items.get_clothing_from_id(Inventories.clothing_bag.equipped_skin_tone).st_reference
 
 func _process_input(delta) -> void:
-	if not is_multiplayer_authority():
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		return
+	if multiplayer.has_multiplayer_peer():
+		$Username.text = Multiplayer.player_name
 	#print("got it")
 	if reeling_back_fish == false and reeling == false:
 		velocity.x = Input.get_action_strength("right") - Input.get_action_strength("left")
@@ -566,7 +564,7 @@ var tween: Tween
 
 
 func _physics_process(delta) -> void:
-	if not is_multiplayer_authority():
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		return
 	Game.pos_x = position.x
 	Game.pos_y = position.y
@@ -675,5 +673,5 @@ func _physics_process(delta) -> void:
 		$Camera2D.zoom = lerp($Camera2D.zoom, Vector2(1.2, 1.2), 0.05)
 
 func _on_save_timer_timeout() -> void:
-	if is_multiplayer_authority():
+	if multiplayer.has_multiplayer_peer() and is_multiplayer_authority():
 		Game.save_game(Game.get_game_data(), "auto")

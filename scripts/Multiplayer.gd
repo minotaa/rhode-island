@@ -4,8 +4,10 @@ var PORT: int = 1213
 const DEFAULT_SERVER_IP: String = "127.0.0.1"
 var players = []
 var main: PackedScene = preload("res://scenes/game.tscn")
+var player_name: String
 
 signal player_joined(peer_id)
+signal update_players(players)
 signal player_quit(peer_id)
 
 func _ready():
@@ -36,7 +38,16 @@ func _player_quit(id) -> void:
 	print("[server] sending to players")
 	server_player_quit.rpc(id)
 	pass
-	
+
+@rpc("any_peer", "call_local", "reliable")
+func send_info(id: int, username: String) -> void:
+	if multiplayer.is_server():
+		players.append({
+			"id": id,
+			"username": username
+		})
+		update_players.emit(players)
+
 # Client only
 
 @rpc("authority", "call_local", "reliable")
@@ -69,6 +80,7 @@ func connection_failed() -> void:
 func join_server(address: String, username: String = "Player") -> bool:
 	if not username.is_valid_identifier():
 		username = "Player"
+	player_name = username
 	if address == "localhost":
 		address = "127.0.0.1"
 	if not address.is_valid_ip_address():

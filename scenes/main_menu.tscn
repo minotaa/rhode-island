@@ -502,8 +502,9 @@ theme_override_fonts/font = ExtResource("2_eg32d")
 theme_override_font_sizes/font_size = 42
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vm3jg")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwtdm")
-placeholder_text = "Username (defaults to Player)"
+placeholder_text = "Username (fallback is \"Player\")"
 alignment = 1
+max_length = 16
 clear_button_enabled = true
 
 [node name="Join Server" type="Button" parent="CanvasLayer/Main/Multiplayer/Panel"]

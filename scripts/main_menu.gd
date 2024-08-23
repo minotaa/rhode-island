@@ -3,8 +3,6 @@ extends Node2D
 func _ready() -> void:
 	$CanvasLayer/Main/Title/Version.text = "2024 (c) " + "v" + str(ProjectSettings.get_setting("application/config/version"))
 
-
-
 func _on_play_pressed() -> void:
 	multiplayer.multiplayer_peer = null
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
