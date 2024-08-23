@@ -26,6 +26,8 @@ RUN wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${G
 
 # Export the .pck
 COPY . /usr/src/game
+RUN rm -rf /usr/src/game/.godot
+RUN godot --headless --path /usr/src/game --import
 RUN godot --headless --path /usr/src/game --export-pack ${GODOT_EXPORT_PRESET} /usr/share/game.pck
 
 FROM alpine:3.14
