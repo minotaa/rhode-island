@@ -17,18 +17,18 @@ RUN wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${G
     && wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz \
     && mkdir ~/.cache \
     && mkdir -p ~/.config/godot \
-    && mkdir -p ~/.local/share/godot/templates/${GODOT_VERSION}.stable \
+    && mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable \
     && unzip Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip \
     && mv Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot \
     && unzip Godot_v${GODOT_VERSION}-stable_export_templates.tpz \
-    && mv templates/* ~/.local/share/godot/templates/${GODOT_VERSION}.stable \
+    && mv templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable \
     && rm -f Godot_v${GODOT_VERSION}-stable_export_templates.tpz Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
 
 # Export the .pck
 COPY . /usr/src/game
 RUN rm -rf /usr/src/game/.godot
 RUN godot --headless --path /usr/src/game --import
-RUN godot --headless --path /usr/src/game --export-pack ${GODOT_EXPORT_PRESET} /usr/share/game.pck
+RUN godot --headless --path /usr/src/game --export-release ${GODOT_EXPORT_PRESET} /usr/bin/game
 
 FROM alpine:3.14
 
@@ -54,10 +54,10 @@ RUN wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${G
 # Pterodactyl thing
 RUN adduser --disabled-password --home /home/container container
 
-COPY --from=build /usr/share/game.pck /usr/share/game.pck
+COPY --from=build /usr/bin/game /usr/bin/game
 
 USER container
 ENV  USER=container HOME=/home/container
 
 WORKDIR /home/container
-CMD ["godot", "--main-pack", "/usr/share/game.pck", "--headless"]
+CMD ["/usr/bin/game", "--headless"]
