@@ -4,7 +4,7 @@ var player_object = preload("res://scenes/player.tscn")
 
 func _ready() -> void:
 	if not multiplayer.has_multiplayer_peer():
-		var p = load("res://scenes/player.tscn").instantiate()
+		var p = player_object.instantiate()
 		add_child(p)
 	else:
 		Multiplayer.player_joined.connect(player_joined)
