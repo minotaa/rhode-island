@@ -45,6 +45,7 @@ enabled=PackedStringArray("res://addons/virtual_joystick/plugin.cfg")
 shop="Area2D for a shop"
 sell=""
 leaderboards=""
+player=""
 
 [input]
 
@@ -102,6 +103,7 @@ pointing/emulate_touch_from_mouse=true
 [layer_names]
 
 2d_physics/layer_1="entities"
+2d_physics/layer_2="tiles"
 2d_physics/layer_3="ephemeral"
 
 [physics]
