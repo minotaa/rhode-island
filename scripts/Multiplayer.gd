@@ -24,7 +24,7 @@ func _ready():
 		if error == OK:
 			print("Created server with IP " + DEFAULT_SERVER_IP + " with port " + str(PORT))
 		else:
-			print(error)
+			printerr(error)
 			return
 		multiplayer.multiplayer_peer = peer
 		multiplayer.peer_connected.connect(_player_joined)
@@ -101,8 +101,10 @@ func join_server(address: String, username: String = "Player") -> bool:
 		return false
 	else:
 		valid_address = split_address[0]
-		port = split_address[1]
+		port = split_address[1].to_int()
 	var peer = ENetMultiplayerPeer.new()
+	print(valid_address)
+	print(port)
 	var error = peer.create_client(valid_address, port)
 	if error:
 		print(error)
