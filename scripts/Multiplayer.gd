@@ -11,6 +11,10 @@ signal update_players(players)
 signal player_quit(peer_id)
 
 func _ready():
+	var arguments = OS.get_cmdline_args()
+	for arg in arguments:
+		if arg.split("=")[0] == "--port":
+			PORT = arg.split("=")[1].to_int()
 	if DisplayServer.get_name() == "headless":
 		print("Detected client is using a headless version of the game, loading the game...")
 		get_tree().change_scene_to_packed(main)
