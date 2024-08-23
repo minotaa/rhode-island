@@ -34,7 +34,7 @@ func _on_connect_to_multiplayer_pressed() -> void:
 func _on_join_server_pressed() -> void:
 	$"CanvasLayer/Main/Multiplayer/Panel/Go Back".visible = false
 	$"CanvasLayer/Main/Multiplayer/Panel/IP Address".visible = false
-	$"CanvasLayer/Main/Multiplayer/Panel/Join Server".visible = false
+	$CanvasLayer/Main/Multiplayer/Panel/HBoxContainer.visible = false
 	$"CanvasLayer/Main/Multiplayer/Panel/Username".visible = false
 	$CanvasLayer/Main/Multiplayer/Panel/Status.text = "Connecting to server..."
 	$CanvasLayer/Main/Multiplayer/Panel/Status.visible = true
