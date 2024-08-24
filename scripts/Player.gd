@@ -272,7 +272,7 @@ func fish() -> void:
 	reeling = false
 	reeling_back_fish = false
 	play_animation("fish_" + last_direction)
-func _fishing_timer() -> void:
+func _fishing_timer(location: String) -> void:
 	var odds = randi_range(250, 750)
 	var your_odds = 0
 	if Inventories.bait_bag.equipped != null:
@@ -285,7 +285,7 @@ func _fishing_timer() -> void:
 		print("Odds: " + str(odds) + " | Your Odds: " + str(your_odds))
 		if your_odds >= odds:
 			Input.vibrate_handheld(500)
-			var fish = Items.fish_roll(Inventories.fishing_rods.equipped.added_weight)
+			var fish = Items.fish_roll(Inventories.fishing_rods.equipped.added_weight, location)
 			bobber_fish = fish_object.instantiate()
 			bobber_fish.set_type(fish.id)
 			bobber_fish.set_sprite(fish.atlas_region_x, fish.atlas_region_y, fish.atlas_region_w, fish.atlas_region_h)
@@ -383,7 +383,7 @@ func _on_body_animation_finished() -> void:
 			var data = tile_map.get_cell_tile_data(tile_map.local_to_map(bobber_position))
 			if data and data.get_custom_data("fishable") == true:
 				print("Valid tile to fish on, starting timer")
-				_fishing_timer()
+				_fishing_timer(data.get_custom_data("location"))
 			else:
 				print("Invalid tile to fish on, stopping fishing")
 				fishing = false
@@ -587,7 +587,7 @@ func _physics_process(delta) -> void:
 			if area.is_in_group("sell"):
 				$Notifications.visible = true
 				$Notifications/Panel/Label.text = "Sell Bag"
-			if area.is_in_group("leaderboards"):
+			if area.is_in_group("leaderboards"): 
 				$Notifications.visible = true
 				$Notifications/Panel/Label.text = "Leaderboards"
 	
