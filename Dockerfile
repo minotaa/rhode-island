@@ -15,7 +15,6 @@ RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.31-r0/
 RUN apk add --allow-untrusted glibc-2.31-r0.apk
 
 RUN wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip \
-    && wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz \
     && mkdir ~/.cache \
     && mkdir -p ~/.config/godot \
     && unzip Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip \
