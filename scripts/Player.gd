@@ -518,26 +518,30 @@ func _process_input(delta) -> void:
 		this_is_stupid_and_just_straight_up_bad_code = true
 		$UI/Main/FishProgressBar.visible = false
 	
-	# The code that was previously here had a deadzone of 0.5, which felt way too high to me.
-	# This code's deadzone can be adjusted, by changing the number in the first condition.
-	# Keep in mind this is multiplicatively on top of the deadzone already defined when processing user input (Input.get_vector() call), so 0 is okay
-	var velocity_length = velocity.length_squared()
-	if velocity_length > 0:
-		velocity_length = min(1, 0.5 + velocity_length)
-		if abs(velocity.x) > abs(velocity.y):
-			if velocity.x > 0:
-				last_direction = "right"
-				play_animation("walk_right", false, velocity_length)
-			else:
-				last_direction = "left"
-				play_animation("walk_left", false, velocity_length)
-		else:
-			if velocity.y > 0:
-				last_direction = "down"
-				play_animation("walk_down", false, velocity_length)
-			else:
-				last_direction = "up"
-				play_animation("walk_up", false, velocity_length)
+	if round(velocity.x) == 1 and round(velocity.y) == 1:
+		last_direction = "right"
+		play_animation("walk_right")
+	elif round(velocity.x) == 1 and round(velocity.y) == -1:
+		last_direction = "right"
+		play_animation("walk_right")
+	elif round(velocity.x) == -1 and round(velocity.y) == -1:
+		last_direction = "left"
+		play_animation("walk_left")
+	elif round(velocity.x) == -1 and round(velocity.y) == 1:
+		last_direction = "left"	
+		play_animation("walk_left")
+	elif round(velocity.x) == -1:
+		last_direction = "left"
+		play_animation("walk_left")
+	elif round(velocity.x) == 1:
+		last_direction = "right"
+		play_animation("walk_right")
+	elif round(velocity.y) == -1:
+		last_direction = "up"
+		play_animation("walk_up")
+	elif round(velocity.y) == 1:
+		last_direction = "down"
+		play_animation("walk_down")
 
 	# Multiply velocity by speed
 	velocity *= SPEED
