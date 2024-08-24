@@ -30,6 +30,7 @@ func player_joined(id) -> void:
 func player_quit(id) -> void:
 	if not multiplayer.is_server():
 		return
+	print("[" + str(multiplayer.multiplayer_peer.get_unique_id()) + "] removing " + str(id) + " from the game")
 	for children in get_children():
 		if children.name == str(id):
-			children.queue_free()
+			children.call_deferred("queue_free")
