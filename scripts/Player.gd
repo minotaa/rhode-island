@@ -35,27 +35,27 @@ var maxVelocity = 6.0;
 var bounce = .6
 
 
-func play_animation(name: String, backwards: bool = false) -> void:
+func play_animation(name: String, backwards: bool = false, speed: float = 1) -> void:
 	if backwards == false:
-		$Body.play(get_character() + "_" + name)
+		$Body.play(get_character() + "_" + name, speed)
 		if Inventories.clothing_bag.equipped_acc != null:
-			$Accessory.play(str(Inventories.clothing_bag.equipped_acc) + "_" + name)
+			$Accessory.play(str(Inventories.clothing_bag.equipped_acc) + "_" + name, speed)
 		if Inventories.clothing_bag.equipped_clothes != null:
-			$Outfit.play(str(Inventories.clothing_bag.equipped_clothes) + "_" + name)
+			$Outfit.play(str(Inventories.clothing_bag.equipped_clothes) + "_" + name, speed)
 		if Inventories.clothing_bag.equipped_pants != null:
-			$Pants.play(str(Inventories.clothing_bag.equipped_pants) + "_" + name)
+			$Pants.play(str(Inventories.clothing_bag.equipped_pants) + "_" + name, speed)
 		if Inventories.clothing_bag.equipped_shoes != null:
-			$Shoes.play(str(Inventories.clothing_bag.equipped_shoes) + "_" + name)
+			$Shoes.play(str(Inventories.clothing_bag.equipped_shoes) + "_" + name, speed)
 	else:
-		$Body.play_backwards(get_character() + "_" + name)
+		$Body.play(get_character() + "_" + name, speed * -1, true)
 		if Inventories.clothing_bag.equipped_acc != null:
-			$Accessory.play_backwards(str(Inventories.clothing_bag.equipped_acc) + "_" + name)
+			$Accessory.play(str(Inventories.clothing_bag.equipped_acc) + "_" + name, speed * -1, true)
 		if Inventories.clothing_bag.equipped_clothes != null:
-			$Outfit.play_backwards(str(Inventories.clothing_bag.equipped_clothes) + "_" + name)
+			$Outfit.play(str(Inventories.clothing_bag.equipped_clothes) + "_" + name, speed * -1, true)
 		if Inventories.clothing_bag.equipped_pants != null:
-			$Pants.play_backwards(str(Inventories.clothing_bag.equipped_pants) + "_" + name)
+			$Pants.play(str(Inventories.clothing_bag.equipped_pants) + "_" + name, speed * -1, true)
 		if Inventories.clothing_bag.equipped_shoes != null:
-			$Shoes.play_backwards(str(Inventories.clothing_bag.equipped_shoes) + "_" + name)
+			$Shoes.play(str(Inventories.clothing_bag.equipped_shoes) + "_" + name, speed * -1, true)
 
 func _ready() -> void:
 	if multiplayer.has_multiplayer_peer():
@@ -432,7 +432,7 @@ func _process_input(delta) -> void:
 		$Username.text = Multiplayer.player_name
 	#print("got it")
 	if reeling_back_fish == false and reeling == false:
-		velocity = Input.get_vector("left", "right", "up", "down", 0.05)
+		velocity = Input.get_vector("left", "right", "up", "down", 0.1)
 
 	if $UI/Vender.visible == true:
 		velocity = Vector2(0.0, 0.0)
@@ -518,30 +518,26 @@ func _process_input(delta) -> void:
 		this_is_stupid_and_just_straight_up_bad_code = true
 		$UI/Main/FishProgressBar.visible = false
 	
-	if round(velocity.x) == 1 and round(velocity.y) == 1:
-		last_direction = "right"
-		play_animation("walk_right")
-	elif round(velocity.x) == 1 and round(velocity.y) == -1:
-		last_direction = "right"
-		play_animation("walk_right")
-	elif round(velocity.x) == -1 and round(velocity.y) == -1:
-		last_direction = "left"
-		play_animation("walk_left")
-	elif round(velocity.x) == -1 and round(velocity.y) == 1:
-		last_direction = "left"	
-		play_animation("walk_left")
-	elif round(velocity.x) == -1:
-		last_direction = "left"
-		play_animation("walk_left")
-	elif round(velocity.x) == 1:
-		last_direction = "right"
-		play_animation("walk_right")
-	elif round(velocity.y) == -1:
-		last_direction = "up"
-		play_animation("walk_up")
-	elif round(velocity.y) == 1:
-		last_direction = "down"
-		play_animation("walk_down")
+	# The code that was previously here had a deadzone of 0.5, which felt way too high to me.
+	# This code's deadzone can be adjusted, by changing the number in the first condition.
+	# Keep in mind this is multiplicatively on top of the deadzone already defined when processing user input (Input.get_vector() call), so 0 is okay
+	var velocity_length = velocity.length_squared()
+	if velocity_length > 0:
+		velocity_length = min(1, 0.5 + velocity_length)
+		if abs(velocity.x) > abs(velocity.y):
+			if velocity.x > 0:
+				last_direction = "right"
+				play_animation("walk_right", false, velocity_length)
+			else:
+				last_direction = "left"
+				play_animation("walk_left", false, velocity_length)
+		else:
+			if velocity.y > 0:
+				last_direction = "down"
+				play_animation("walk_down", false, velocity_length)
+			else:
+				last_direction = "up"
+				play_animation("walk_up", false, velocity_length)
 
 	# Multiply velocity by speed
 	velocity *= SPEED
