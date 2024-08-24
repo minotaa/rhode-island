@@ -432,9 +432,7 @@ func _process_input(delta) -> void:
 		$Username.text = Multiplayer.player_name
 	#print("got it")
 	if reeling_back_fish == false and reeling == false:
-		velocity.x = Input.get_action_strength("right") - Input.get_action_strength("left")
-		velocity.y = Input.get_action_strength("down") - Input.get_action_strength("up")  
-	velocity.normalized()
+		velocity = Input.get_vector("left", "right", "up", "down", 0.05)
 
 	if $UI/Vender.visible == true:
 		velocity = Vector2(0.0, 0.0)
