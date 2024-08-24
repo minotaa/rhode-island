@@ -6,13 +6,17 @@ var bait_list = []
 var upgrade_list = []
 var clothing_list = []
 
-func fish_roll(weight: int) -> Fish:
+func fish_roll(weight: int, location: String) -> Fish:
 	var totalWeight = 0
-	for item in fish_list:
+	var list = []
+	for fish in fish_list:
+		if fish.reel_location == location:
+			list.append(list)
+	for item in list:
 		totalWeight += item.reel_weight
 	var randomValue = randi() % totalWeight
 	var currentWeight = 0 + weight
-	var shuffled_list = fish_list
+	var shuffled_list = list
 	shuffled_list.shuffle()
 	for item in shuffled_list:
 		currentWeight += item.reel_weight
