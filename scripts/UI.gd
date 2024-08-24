@@ -461,4 +461,5 @@ func _on_save_button_pressed() -> void:
 	Game.save_game(Game.get_game_data(), "quitting")
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	if multiplayer != null and multiplayer.has_multiplayer_peer():
+		multiplayer.multiplayer_peer.
 		multiplayer.multiplayer_peer = null
