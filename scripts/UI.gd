@@ -330,7 +330,7 @@ func update_catalog() -> void:
 	$Main/Inventory/TabContainer/Catalog/Gallery/Title.text = "Your Catalog (" + str(Inventories.fishing_bag.collected.keys().size()) + "/" + str(Items.fish_list.size()) + ")"
 	for fish in Inventories.fishing_bag.collected.keys():
 		var catalog_item_object = catalog_item.instantiate()
-		var actual = Items.get_fish_from_id(fish as int)
+		var actual = Items.get_fish_from_id(fish.to_int())
 		catalog_item_object.set_sprite(actual.atlas_region_x, actual.atlas_region_y, actual.atlas_region_w, actual.atlas_region_h)
 		catalog_item_object.set_fish_name(actual.name)
 		catalog_item_object.type = actual

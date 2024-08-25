@@ -8,6 +8,8 @@ var pos_x: float
 var pos_y: float
 var equipped_bait: Bait = Inventories.bait_bag.equipped
 
+var did_the_game_load_yet_also_FUCK_YOU_APRIL: bool = false
+
 func calculate_blessing() -> int:
 	var blessing = 0
 	for item in Inventories.upgrade_bag.list:
@@ -38,6 +40,8 @@ func get_bait_id() -> Variant:
 		return null
 
 func load_game():
+	if did_the_game_load_yet_also_FUCK_YOU_APRIL == true:
+		return
 	if not FileAccess.file_exists("user://game.rtlbe"):
 		return
 	var save_file = FileAccess.open("user://game.rtlbe", FileAccess.READ)
@@ -100,6 +104,7 @@ func load_game():
 			if data["selected_bait"] != null:
 				Inventories.bait_bag.equipped = Items.get_bait_from_id(data["selected_bait"])
 	print("Loaded the game.")
+	did_the_game_load_yet_also_FUCK_YOU_APRIL = true
 	#print(Inventories.clothing_bag.list)
 
 func get_game_data() -> Dictionary:
