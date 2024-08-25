@@ -1,4 +1,4 @@
-[gd_scene load_steps=97 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=98 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/UI.gd" id="1_ysy3v"]
@@ -370,6 +370,10 @@ corner_radius_bottom_left = 36
 [sub_resource type="AtlasTexture" id="AtlasTexture_s5hmm"]
 atlas = ExtResource("19_bqi5g")
 region = Rect2(16, 2.08165e-12, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhy3u"]
+atlas = ExtResource("4_d5cbg")
+region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_yo2it"]
 font = ExtResource("17_g0huu")
@@ -1923,6 +1927,25 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
+[node name="Islands" type="Button" parent="Vender/TabContainer/Buy/GridContainer"]
+auto_translate_mode = 1
+visible = false
+layout_mode = 2
+focus_mode = 1
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 90
+theme_override_styles/focus = SubResource("StyleBoxFlat_kgqoc")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1me61")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2cbea")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4a8ix")
+theme_override_styles/normal = SubResource("StyleBoxFlat_kgqoc")
+text = "Islands"
+icon = SubResource("AtlasTexture_jhy3u")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
 [node name="Catalog" type="Control" parent="Vender/TabContainer/Buy"]
 visible = false
 layout_mode = 1
@@ -2148,6 +2171,7 @@ script = ExtResource("18_q4fv6")
 [connection signal="pressed" from="Vender/TabContainer/Buy/GridContainer/Upgrades" to="." method="_shop_upgrades_button_pressed"]
 [connection signal="pressed" from="Vender/TabContainer/Buy/GridContainer/Clothes" to="." method="_shop_clothes_button_pressed"]
 [connection signal="pressed" from="Vender/TabContainer/Buy/GridContainer/Bait" to="." method="_shop_bait_button_pressed"]
+[connection signal="pressed" from="Vender/TabContainer/Buy/GridContainer/Islands" to="." method="_on_shop_islands_pressed"]
 [connection signal="pressed" from="Vender/TabContainer/Buy/Catalog/Back" to="." method="_shop_back_button"]
 [connection signal="pressed" from="Vender/TabContainer/Buy/X" to="." method="_shop_x_button"]
 [connection signal="pressed" from="Vender/TabContainer/Sell/Panel/Sell" to="Vender/TabContainer/Sell/Panel/Sell" method="_on_pressed"]

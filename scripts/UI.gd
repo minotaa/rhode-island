@@ -198,6 +198,28 @@ func _shop_back_button() -> void:
 	$Vender/TabContainer/Buy/GridContainer.visible = true
 	pass
 
+func _on_shop_islands_pressed() -> void:
+	$Vender/TabContainer/Buy/Catalog/Empty.visible = false
+	for children in $Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children():
+		children.queue_free()
+	$Vender/TabContainer/Buy/GridContainer.visible = false
+	$Vender/TabContainer/Buy/Catalog.visible = true
+	for ticket in Items.ticket_list:
+		if ticket.visible_in_shop == true:
+			var already_has_it = false
+			if ticket.one_time_buy == true:
+				for item in Inventories.tickets.list:
+					if item.type.id == ticket.id:
+						already_has_it = true
+			if already_has_it == false:
+				var shop_object = shop_item_object.instantiate()
+				shop_object.set_clothing(ticket)
+				$Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.add_child(shop_object)
+	await get_tree().create_timer(0.1).timeout
+	if $Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children().size() == 0:
+		$Vender/TabContainer/Buy/Catalog/Empty.visible = true
+
+
 func _shop_clothes_button_pressed() -> void:
 	$Vender/TabContainer/Buy/Catalog/Empty.visible = false
 	for children in $Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children():
