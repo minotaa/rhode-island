@@ -12,7 +12,7 @@ func fish_roll(weight: int, location: String) -> Fish:
 	var list = []
 	for fish in fish_list:
 		if fish.reel_location == location:
-			list.append(list)
+			list.append(fish)
 	for item in list:
 		totalWeight += item.reel_weight
 	var randomValue = randi() % totalWeight
