@@ -7,11 +7,26 @@ var upgrade_list = []
 var clothing_list = []
 var ticket_list = []
 
-func fish_roll(weight: int, location: String) -> Fish:
+func difficulty_to_level(difficulty: String) -> int:
+	match difficulty:
+		"EASY":
+			return 0
+		"MEDIUM":
+			return 1
+		"HARD":
+			return 2
+		"IMPOSSIBLE":
+			return 3
+		"SUPREME":
+			return 4
+		_:
+			return -1
+
+func fish_roll(weight: int, location: String, level: int = 0) -> Fish:
 	var totalWeight = 0
 	var list = []
 	for fish in fish_list:
-		if fish.reel_location == location:
+		if fish.reel_location == location and difficulty_to_level(fish.reel_difficulty) <= level:
 			list.append(fish)
 	for item in list:
 		totalWeight += item.reel_weight
@@ -1363,6 +1378,7 @@ func add_rods() -> void:
 	bamboo_rod.baitable = true
 	bamboo_rod.deerraticness = 20
 	bamboo_rod.blessing = 25
+	bamboo_rod.level = 1
 	bamboo_rod.atlas_region_x = 16.0
 	bamboo_rod.atlas_region_y = 96.0
 	rods_list.append(bamboo_rod)
@@ -1376,6 +1392,7 @@ func add_rods() -> void:
 	pink_rod.baitable = true
 	pink_rod.deerraticness = 85
 	pink_rod.blessing = 125
+	pink_rod.level = 2
 	pink_rod.atlas_region_x = 16.0
 	pink_rod.atlas_region_y = 80.0
 	rods_list.append(pink_rod)
@@ -1384,6 +1401,7 @@ func add_rods() -> void:
 	luxury_rod.name = "Luxury Fishing Rod"
 	luxury_rod.description = "An elegant fishing rod crafted from premium materials for a refined fishing experience."
 	luxury_rod.id = 3
+	luxury_rod.level = 3
 	luxury_rod.cost = 50000
 	luxury_rod.added_weight = 500
 	luxury_rod.baitable = true
@@ -1397,6 +1415,7 @@ func add_rods() -> void:
 	honed_rod.name = "Superior Fishing Rod"
 	honed_rod.description = "A finely-tuned fishing rod with precision craftsmanship for enhanced performance and accuracy."
 	honed_rod.id = 4
+	honed_rod.level = 4
 	honed_rod.cost = 225000
 	honed_rod.added_weight = 1000
 	honed_rod.baitable = true
