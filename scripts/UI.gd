@@ -466,13 +466,14 @@ func _process(delta: float) -> void:
 	if Inventories.bait_bag.equipped != null:
 		#print(Inventories.bait_bag.equipped)
 		for bait in Inventories.bait_bag.list:
-			if bait.type.id == Inventories.bait_bag.equipped.id and Game.equipped_bait != Inventories.bait_bag.equipped:
+			if bait.type.id == Inventories.bait_bag.equipped.id and (Game.equipped_bait != Inventories.bait_bag.equipped or $Main/Bait/Panel/HBoxContainer/Label.text != "x" + str(bait.amount)):
 				$Main/Bait/Panel/HBoxContainer/Label.text = "x" + str(bait.amount)
 				var atlas = AtlasTexture.new()
 				atlas.atlas = bait_textures
 				atlas.region = Rect2(bait.type.atlas_region_x, bait.type.atlas_region_y, bait.type.atlas_region_w, bait.type.atlas_region_h)
 				$Main/Bait/Panel/HBoxContainer/TextureRect.texture = atlas
 				Game.equipped_bait = Inventories.bait_bag.equipped
+			
 	var atlas = AtlasTexture.new()
 	atlas.atlas = rod_textures
 	atlas.region = Rect2(Inventories.fishing_rods.equipped.atlas_region_x, Inventories.fishing_rods.equipped.atlas_region_y, Inventories.fishing_rods.equipped.atlas_region_w, Inventories.fishing_rods.equipped.atlas_region_h)
