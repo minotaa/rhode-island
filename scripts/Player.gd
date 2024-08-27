@@ -498,6 +498,9 @@ func _process_input(delta) -> void:
 	if Input.is_action_pressed("fish") and reeling_back_fish == false and reeling == false and velocity.length_squared() == 0:
 		if fishing == false:
 			if !$UI/Main/FishProgressBar.visible:
+				if bobber_fish != null:
+					bobber_fish.queue_free()
+					bobber_fish = null
 				$UI/Main/FishProgressBar.visible = true
 				this_is_stupid_and_just_straight_up_bad_code = true
 				$UI/Main/FishProgressBar.value = 0
