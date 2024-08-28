@@ -5,19 +5,45 @@ var rods_list = []
 var bait_list = []
 var upgrade_list = []
 var clothing_list = []
+var ticket_list = []
 
-func fish_roll(weight: int) -> Fish:
+func difficulty_to_level(difficulty: String) -> int:
+	match difficulty:
+		"EASY":
+			return 0
+		"MEDIUM":
+			return 1
+		"HARD":
+			return 2
+		"IMPOSSIBLE":
+			return 3
+		"SUPREME":
+			return 4
+		_:
+			return -1
+
+func fish_roll(weight: int, location: String, level: int = 0) -> Fish:
 	var totalWeight = 0
-	for item in fish_list:
+	var list = []
+	for fish in fish_list:
+		if fish.reel_location == location and difficulty_to_level(fish.reel_difficulty) <= level:
+			list.append(fish)
+	for item in list:
 		totalWeight += item.reel_weight
 	var randomValue = randi() % totalWeight
 	var currentWeight = 0 + weight
-	var shuffled_list = fish_list
+	var shuffled_list = list
 	shuffled_list.shuffle()
 	for item in shuffled_list:
 		currentWeight += item.reel_weight
 		if randomValue < currentWeight:
 			return item
+	return null
+
+func get_ticket_from_id(id: int) -> Ticket:
+	for ticket in ticket_list:
+		if ticket.id == id:
+			return ticket
 	return null
 
 func get_clothing_from_id(id: int) -> Clothing:
@@ -1352,6 +1378,7 @@ func add_rods() -> void:
 	bamboo_rod.baitable = true
 	bamboo_rod.deerraticness = 20
 	bamboo_rod.blessing = 25
+	bamboo_rod.level = 1
 	bamboo_rod.atlas_region_x = 16.0
 	bamboo_rod.atlas_region_y = 96.0
 	rods_list.append(bamboo_rod)
@@ -1365,6 +1392,7 @@ func add_rods() -> void:
 	pink_rod.baitable = true
 	pink_rod.deerraticness = 85
 	pink_rod.blessing = 125
+	pink_rod.level = 2
 	pink_rod.atlas_region_x = 16.0
 	pink_rod.atlas_region_y = 80.0
 	rods_list.append(pink_rod)
@@ -1373,7 +1401,8 @@ func add_rods() -> void:
 	luxury_rod.name = "Luxury Fishing Rod"
 	luxury_rod.description = "An elegant fishing rod crafted from premium materials for a refined fishing experience."
 	luxury_rod.id = 3
-	luxury_rod.cost = 12500
+	luxury_rod.level = 3
+	luxury_rod.cost = 50000
 	luxury_rod.added_weight = 500
 	luxury_rod.baitable = true
 	luxury_rod.deerraticness = 125
@@ -1386,7 +1415,8 @@ func add_rods() -> void:
 	honed_rod.name = "Superior Fishing Rod"
 	honed_rod.description = "A finely-tuned fishing rod with precision craftsmanship for enhanced performance and accuracy."
 	honed_rod.id = 4
-	honed_rod.cost = 50000
+	honed_rod.level = 4
+	honed_rod.cost = 225000
 	honed_rod.added_weight = 1000
 	honed_rod.baitable = true
 	honed_rod.deerraticness = 750
@@ -1464,11 +1494,20 @@ func add_upgrades() -> void:
 	bag_upgrade_two.texture = load("res://assets/other icons/Backpack.png")
 	upgrade_list.append(bag_upgrade_two)
 	
+	var bag_upgrade_three = Upgrade.new()
+	bag_upgrade_three.id = 4
+	bag_upgrade_three.name = "Bag Upgrade III"
+	bag_upgrade_three.description = "Upgrades your fishing bag size from 50 -> 75."
+	bag_upgrade_three.cost = 225000
+	bag_upgrade_three.one_time_buy = true
+	bag_upgrade_three.texture = load("res://assets/other icons/Backpack.png")
+	upgrade_list.append(bag_upgrade_three)	
+	
 	var blessing_upgrade_one = Upgrade.new()
 	blessing_upgrade_one.id = 2
 	blessing_upgrade_one.name = "Blessing I"
 	blessing_upgrade_one.description = "Upgrades your base blessing stat from 0 -> 25"
-	blessing_upgrade_one.cost = 5000
+	blessing_upgrade_one.cost = 25000
 	blessing_upgrade_one.one_time_buy = true
 	blessing_upgrade_one.texture = load("res://assets/other icons/blessing.png")
 	upgrade_list.append(blessing_upgrade_one)
@@ -1477,10 +1516,19 @@ func add_upgrades() -> void:
 	blessing_upgrade_two.id = 3
 	blessing_upgrade_two.name = "Blessing II"
 	blessing_upgrade_two.description = "Upgrades your base blessing stat from 25 -> 50"
-	blessing_upgrade_two.cost = 25000
+	blessing_upgrade_two.cost = 125000
 	blessing_upgrade_two.one_time_buy = true
 	blessing_upgrade_two.texture = load("res://assets/other icons/blessing.png")
 	upgrade_list.append(blessing_upgrade_two)
+	
+	var blessing_upgrade_three = Upgrade.new()
+	blessing_upgrade_three.id = 5
+	blessing_upgrade_three.name = "Blessing III"
+	blessing_upgrade_three.description = "Upgrades your base blessing stat from 50 -> 125"
+	blessing_upgrade_three.cost = 500000
+	blessing_upgrade_three.one_time_buy = true
+	blessing_upgrade_three.texture = load("res://assets/other icons/blessing.png")
+	upgrade_list.append(blessing_upgrade_three)
 
 var skin_tone_1_texture = preload("res://assets/character sprites/Skin Tone 1.png")
 var skin_tone_2_texture = preload("res://assets/character sprites/Skin Tone 2.png")

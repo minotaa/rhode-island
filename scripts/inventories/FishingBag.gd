@@ -8,7 +8,10 @@ func get_max_capacity() -> int:
 			base = 25
 		if item.type.id == 1:
 			base = 50
+		if item.type.id == 4:
+			base = 75
 	return base
+
 var collected = {}
 
 func sell_items() -> void:
@@ -39,10 +42,10 @@ func is_full() -> bool:
 	return size() >= get_max_capacity()
 
 func add_item(item: ItemStack) -> void:
-	if collected.has(item.type.id):
-		collected[item.type.id] += item.amount
+	if collected.has(str(item.type.id)):
+		collected[str(item.type.id)] += item.amount
 	else:
-		collected[item.type.id] = item.amount
+		collected[str(item.type.id)] = item.amount
 	for i in list: # Checks for existing items.
 		if i.type.id == item.type.id:
 			var prev = list[list.find(i)]

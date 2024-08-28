@@ -272,7 +272,7 @@ func fish() -> void:
 	reeling = false
 	reeling_back_fish = false
 	play_animation("fish_" + last_direction)
-func _fishing_timer() -> void:
+func _fishing_timer(location: String) -> void:
 	var odds = randi_range(250, 750)
 	var your_odds = 0
 	if Inventories.bait_bag.equipped != null:
@@ -285,7 +285,7 @@ func _fishing_timer() -> void:
 		print("Odds: " + str(odds) + " | Your Odds: " + str(your_odds))
 		if your_odds >= odds:
 			Input.vibrate_handheld(500)
-			var fish = Items.fish_roll(Inventories.fishing_rods.equipped.added_weight)
+			var fish = Items.fish_roll(Inventories.fishing_rods.equipped.added_weight, location, Inventories.fishing_rods.equipped.level)
 			bobber_fish = fish_object.instantiate()
 			bobber_fish.set_type(fish.id)
 			bobber_fish.set_sprite(fish.atlas_region_x, fish.atlas_region_y, fish.atlas_region_w, fish.atlas_region_h)
@@ -383,7 +383,7 @@ func _on_body_animation_finished() -> void:
 			var data = tile_map.get_cell_tile_data(tile_map.local_to_map(bobber_position))
 			if data and data.get_custom_data("fishable") == true:
 				print("Valid tile to fish on, starting timer")
-				_fishing_timer()
+				_fishing_timer(data.get_custom_data("location"))
 			else:
 				print("Invalid tile to fish on, stopping fishing")
 				fishing = false
@@ -495,9 +495,12 @@ func _process_input(delta) -> void:
 		#	bobber_fish.queue_free()
 
 	# Charge up the fishing bar by holding down the FISH button.
-	if Input.is_action_pressed("fish") and reeling_back_fish == false and reeling == false:
+	if Input.is_action_pressed("fish") and reeling_back_fish == false and reeling == false and velocity.length_squared() == 0:
 		if fishing == false:
 			if !$UI/Main/FishProgressBar.visible:
+				if bobber_fish != null:
+					bobber_fish.queue_free()
+					bobber_fish = null
 				$UI/Main/FishProgressBar.visible = true
 				this_is_stupid_and_just_straight_up_bad_code = true
 				$UI/Main/FishProgressBar.value = 0
@@ -523,6 +526,9 @@ func _process_input(delta) -> void:
 	# Keep in mind this is multiplicatively on top of the deadzone already defined when processing user input (Input.get_vector() call), so 0 is okay
 	var velocity_length = velocity.length_squared()
 	if velocity_length > 0:
+		if bobber_fish != null:
+			bobber_fish.queue_free()
+			bobber_fish = null
 		velocity_length = min(1, 0.5 + velocity_length)
 		if abs(velocity.x) > abs(velocity.y):
 			if velocity.x > 0:
@@ -587,7 +593,7 @@ func _physics_process(delta) -> void:
 			if area.is_in_group("sell"):
 				$Notifications.visible = true
 				$Notifications/Panel/Label.text = "Sell Bag"
-			if area.is_in_group("leaderboards"):
+			if area.is_in_group("leaderboards"): 
 				$Notifications.visible = true
 				$Notifications/Panel/Label.text = "Leaderboards"
 	
@@ -595,13 +601,6 @@ func _physics_process(delta) -> void:
 	# Update UI
 	$UI/Main/Coins/PanelContainer/HBoxContainer/Label.text = "$" + buck_fiddy(Game.balance)
 	$"UI/Main/Inventory Button/TouchScreenButton/Button".text = str(Inventories.fishing_bag.size()) + "/" + str(Inventories.fishing_bag.get_max_capacity())
-	
-	if bobber != null and fishing == false:
-		bobber.queue_free()
-		bobber = null
-		if bobber_fish != null:
-			bobber_fish.queue_free()
-			bobber_fish = null
 		
 	if reeling and bobber != null:
 		if round(bobber.global_position) != round(get_rod_tip()):
@@ -636,10 +635,11 @@ func _physics_process(delta) -> void:
 				$"UI/Main/Item Log".add_text("x" + str(item.amount) + " " + str(item.type.name))
 				Inventories.fishing_bag.add_item(item)
 				print("Added item to inventory.")
+			play_animation("pickup_" + last_direction)
 			Game.save_game(Game.get_game_data(), "action")
-			bobber_fish.queue_free()
-			bobber_fish = null
-			play_idle_animation()
+			#bobber_fish.queue_free()
+			#bobber_fish = null
+			bobber_fish.position = Vector2(global_position.x, global_position.y - 28.5)
 			if Inventories.bait_bag.equipped != null:
 				var index = 0
 				for bait in Inventories.bait_bag.list:
@@ -652,6 +652,14 @@ func _physics_process(delta) -> void:
 							Inventories.bait_bag.equipped = null
 							return
 					index += 1
+					
+	if bobber != null and fishing == false:
+		bobber.queue_free()
+		bobber = null
+		#if bobber_fish != null:
+			#bobber_fish.queue_free()
+			#bobber_fish = null
+
 
 	# While the bobber still exists, draw a line to it and the tip of the player's rod
 	if bobber != null: 

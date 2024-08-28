@@ -198,6 +198,28 @@ func _shop_back_button() -> void:
 	$Vender/TabContainer/Buy/GridContainer.visible = true
 	pass
 
+func _on_shop_islands_pressed() -> void:
+	$Vender/TabContainer/Buy/Catalog/Empty.visible = false
+	for children in $Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children():
+		children.queue_free()
+	$Vender/TabContainer/Buy/GridContainer.visible = false
+	$Vender/TabContainer/Buy/Catalog.visible = true
+	for ticket in Items.ticket_list:
+		if ticket.visible_in_shop == true:
+			var already_has_it = false
+			if ticket.one_time_buy == true:
+				for item in Inventories.tickets.list:
+					if item.type.id == ticket.id:
+						already_has_it = true
+			if already_has_it == false:
+				var shop_object = shop_item_object.instantiate()
+				shop_object.set_clothing(ticket)
+				$Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.add_child(shop_object)
+	await get_tree().create_timer(0.1).timeout
+	if $Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children().size() == 0:
+		$Vender/TabContainer/Buy/Catalog/Empty.visible = true
+
+
 func _shop_clothes_button_pressed() -> void:
 	$Vender/TabContainer/Buy/Catalog/Empty.visible = false
 	for children in $Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children():
@@ -308,7 +330,7 @@ func update_catalog() -> void:
 	$Main/Inventory/TabContainer/Catalog/Gallery/Title.text = "Your Catalog (" + str(Inventories.fishing_bag.collected.keys().size()) + "/" + str(Items.fish_list.size()) + ")"
 	for fish in Inventories.fishing_bag.collected.keys():
 		var catalog_item_object = catalog_item.instantiate()
-		var actual = Items.get_fish_from_id(fish as int)
+		var actual = Items.get_fish_from_id(fish.to_int())
 		catalog_item_object.set_sprite(actual.atlas_region_x, actual.atlas_region_y, actual.atlas_region_w, actual.atlas_region_h)
 		catalog_item_object.set_fish_name(actual.name)
 		catalog_item_object.type = actual
@@ -444,13 +466,14 @@ func _process(delta: float) -> void:
 	if Inventories.bait_bag.equipped != null:
 		#print(Inventories.bait_bag.equipped)
 		for bait in Inventories.bait_bag.list:
-			if bait.type.id == Inventories.bait_bag.equipped.id and Game.equipped_bait != Inventories.bait_bag.equipped:
+			if bait.type.id == Inventories.bait_bag.equipped.id and (Game.equipped_bait != Inventories.bait_bag.equipped or $Main/Bait/Panel/HBoxContainer/Label.text != "x" + str(bait.amount)):
 				$Main/Bait/Panel/HBoxContainer/Label.text = "x" + str(bait.amount)
 				var atlas = AtlasTexture.new()
 				atlas.atlas = bait_textures
 				atlas.region = Rect2(bait.type.atlas_region_x, bait.type.atlas_region_y, bait.type.atlas_region_w, bait.type.atlas_region_h)
 				$Main/Bait/Panel/HBoxContainer/TextureRect.texture = atlas
 				Game.equipped_bait = Inventories.bait_bag.equipped
+			
 	var atlas = AtlasTexture.new()
 	atlas.atlas = rod_textures
 	atlas.region = Rect2(Inventories.fishing_rods.equipped.atlas_region_x, Inventories.fishing_rods.equipped.atlas_region_y, Inventories.fishing_rods.equipped.atlas_region_w, Inventories.fishing_rods.equipped.atlas_region_h)
@@ -461,4 +484,5 @@ func _on_save_button_pressed() -> void:
 	Game.save_game(Game.get_game_data(), "quitting")
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	if multiplayer != null and multiplayer.has_multiplayer_peer():
+		multiplayer.multiplayer_peer.disconnect_peer(multiplayer.multiplayer_peer.get_unique_id())
 		multiplayer.multiplayer_peer = null

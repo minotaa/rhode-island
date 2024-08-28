@@ -5,6 +5,7 @@ var baitable: bool = false
 var deerraticness: int = 0
 var added_weight: int = 0
 var blessing: int = 0
+var level: int = 0
 
 var atlas_region_x: float = 0
 var atlas_region_y: float = 0

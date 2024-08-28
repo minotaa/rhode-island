@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbt2oq27sd8f0"
-path="res://.godot/imported/buildings_all.png-19d055fe71e6277787350283de91d28a.ctex"
+uid="uid://bbpnibqloquwu"
+path="res://.godot/imported/ticket.png-bb04862c8616408b5ef922a7385cb84f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/buildings_all.png"
-dest_files=["res://.godot/imported/buildings_all.png-19d055fe71e6277787350283de91d28a.ctex"]
+source_file="res://assets/things/ticket.png"
+dest_files=["res://.godot/imported/ticket.png-bb04862c8616408b5ef922a7385cb84f.ctex"]
 
 [params]
 
