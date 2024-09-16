@@ -1,4 +1,3 @@
-# test 5 commit
 # 🎣 Beachside Tactics
 Beachside Tactics (*or Rhode Island internally*) is a project I made during the course of 2024. It is meant to be a small fishing game with nothing particularly major or huge about it. 
 
