@@ -100,7 +100,7 @@ func reposition_player_to_safe_area():
 	if safe_position:
 		position = safe_position
 	else:
-		position = Vector2(1624, 688)
+		position = Game.safe_areas[Game.location]
 	print("Player moved to safe position: ", position)
 
 func find_nearest_safe_position() -> Vector2:
@@ -111,7 +111,7 @@ func find_nearest_safe_position() -> Vector2:
 			var check_position = position + direction * radius
 			if !is_move_blocked(direction):
 				return check_position
-	return Vector2(1624, 688)
+	return Game.safe_areas[Game.location]
 
 func gcd(a: int, b: int) -> int:
 	return a if b == 0.0 else gcd(b, a % b)
@@ -338,9 +338,22 @@ func use() -> void:
 					$UI/Main.visible = false
 					$UI/Vender.visible = true
 					$UI/Vender/TabContainer.current_tab = 0
+			if area.is_in_group("bus"):
+				if $UI/Travel.visible == true:
+					$UI/Main.visible = true 
+					$UI/Travel.visible = false
+				else:
+					$UI/Main.visible = false
+					$UI/Travel.visible = true
+				for ticket in Inventories.tickets.list:
+					print(ticket.type)
+					if ticket.type.location == "forest":
+						$UI/Travel/Forest.disabled = false
 			if area.is_in_group("leaderboards"):
 				if GameCenter.game_center != null:
 					GameCenter.game_center.show_game_center({ "view": "leaderboards" })
+				else:
+					$"UI/Main/Item Log".add_text("Cannot access GameCenter right now.")
 			if area.is_in_group("sell"):
 				if $UI/Vender.visible == true:
 					$UI/Main.visible = true 
@@ -434,7 +447,7 @@ func _process_input(delta) -> void:
 	if reeling_back_fish == false and reeling == false:
 		velocity = Input.get_vector("left", "right", "up", "down", 0.1)
 
-	if $UI/Vender.visible == true:
+	if $UI/Vender.visible == true or $UI/Travel.visible == true:
 		velocity = Vector2(0.0, 0.0)
 	# Add this.
 	if Input.is_action_just_pressed("open_inventory"):
@@ -442,6 +455,9 @@ func _process_input(delta) -> void:
 	
 	if Input.is_action_just_pressed("use"):
 		use()
+	
+	#if Input.is_action_just_pressed("secret"):
+		#position = Vector2(75392.0, 97920.0)
 
 	if (Input.is_action_pressed("fish")):
 		if hookVelocity > -maxVelocity:
@@ -495,6 +511,11 @@ func _process_input(delta) -> void:
 		#	bobber_fish.queue_free()
 
 	# Charge up the fishing bar by holding down the FISH button.
+	
+	if $UI/Main/FishProgressBar.visible and velocity.length() > 0:
+		fish()
+		$UI/Main/FishProgressBar.visible = false
+	
 	if Input.is_action_pressed("fish") and reeling_back_fish == false and reeling == false and velocity.length_squared() == 0:
 		if fishing == false:
 			if !$UI/Main/FishProgressBar.visible:
@@ -596,6 +617,9 @@ func _physics_process(delta) -> void:
 			if area.is_in_group("leaderboards"): 
 				$Notifications.visible = true
 				$Notifications/Panel/Label.text = "Leaderboards"
+			if area.is_in_group("bus"): 
+				$Notifications.visible = true
+				$Notifications/Panel/Label.text = "Travel"
 	
 	
 	# Update UI

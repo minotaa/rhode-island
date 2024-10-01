@@ -26,6 +26,10 @@ func fish_roll(weight: int, location: String, level: int = 0) -> Fish:
 	var totalWeight = 0
 	var list = []
 	for fish in fish_list:
+		if location == "forest":
+			level -= 4
+		if level < 0:
+			level = 0
 		if fish.reel_location == location and difficulty_to_level(fish.reel_difficulty) <= level:
 			list.append(fish)
 	for item in list:
@@ -1780,10 +1784,22 @@ func add_clothes() -> void:
 
 	clothing_list.append(shoes)
 
+func add_tickets() -> void:
+	var forest_ticket = Ticket.new()
+	forest_ticket.name = "Forest Ticket"
+	forest_ticket.id = 0
+	forest_ticket.location = "forest"
+	forest_ticket.texture = load("res://assets/things/ticket.png")
+	forest_ticket.one_time_buy = true
+	forest_ticket.cost = 100000
+	forest_ticket.description = "Allows you to travel to the Forest island!"
+	ticket_list.append(forest_ticket)
+
 func _init():
 	add_fish()
 	add_rods()
 	add_bait()
 	add_upgrades()
 	add_clothes()
+	add_tickets()
 	#print(clothing_list)

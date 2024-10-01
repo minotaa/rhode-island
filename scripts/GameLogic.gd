@@ -7,8 +7,15 @@ var highest_balance = balance
 var pos_x: float
 var pos_y: float
 var equipped_bait: Bait = Inventories.bait_bag.equipped
+var location = "beach"
+var player: Node2D
 
 var did_the_game_load_yet_also_FUCK_YOU_APRIL: bool = false
+
+var safe_areas = {
+	"forest": Vector2(76167, 97916),
+	"beach": Vector2(1706, 1298)
+}
 
 func calculate_blessing() -> int:
 	var blessing = 0
@@ -23,6 +30,12 @@ func calculate_blessing() -> int:
 	if Inventories.bait_bag.equipped != null:
 		blessing += Inventories.bait_bag.equipped.bonus_blessing
 	return blessing
+
+func teleport(x: float, y: float) -> void:
+	if Game.player != null:
+		Game.player.position.x = x
+		Game.player.position.y = y
+		print("Teleported player to (" + str(x) + ", " + str(y) + ")")
 
 func calculate_drop_multiplier(blessing: int) -> int:
 	var guaranteed_multiplier: int = blessing / 100
@@ -66,6 +79,8 @@ func load_game():
 			pos_x = data["pos_x"]
 		if data.has("pos_y"):
 			pos_y = data["pos_y"]
+		if data.has("location"):
+			location = data["location"]
 		if data.has("fishing_rod"):
 			#print(data["fishing_rod"])
 			Inventories.fishing_rods.equipped = Items.get_rod_from_id(data["fishing_rod"])
@@ -85,6 +100,8 @@ func load_game():
 			Inventories.items_bought = data["items_bought"]
 		if data.has("items_sold"):
 			Inventories.items_sold = data["items_sold"]
+		if data.has("tickets"):
+			Inventories.tickets.set_list_from_save(data["tickets"])
 		if data.has("equipped_clothes"):
 			if data["equipped_clothes"] != null:
 				Inventories.clothing_bag.equipped_clothes = data["equipped_clothes"]
@@ -153,7 +170,9 @@ func get_game_data() -> Dictionary:
 		"equipped_skin_tone": Inventories.clothing_bag.equipped_skin_tone,
 		"equipped_shoes": Inventories.clothing_bag.equipped_shoes,
 		"equipped_pants": Inventories.clothing_bag.equipped_pants,
-		"equipped_acc": Inventories.clothing_bag.equipped_acc
+		"equipped_acc": Inventories.clothing_bag.equipped_acc,
+		"location": location,
+		"tickets": Inventories.tickets.to_list()
 	}
 	
 func save_game(_data: Dictionary, reason: String):

@@ -6,6 +6,7 @@ func _ready() -> void:
 	if not multiplayer.has_multiplayer_peer():
 		var p = player_object.instantiate()
 		add_child(p)
+		Game.player = p
 	else:
 		Multiplayer.player_joined.connect(player_joined)
 		Multiplayer.player_quit.connect(player_quit)

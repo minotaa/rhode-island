@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=99 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/UI.gd" id="1_ysy3v"]
@@ -24,6 +24,8 @@
 [ext_resource type="PackedScene" uid="uid://cbacbq6j3kvfp" path="res://scenes/shop_item.tscn" id="18_lxinn"]
 [ext_resource type="Script" path="res://scripts/buttons/x_button.gd" id="18_q4fv6"]
 [ext_resource type="Texture2D" uid="uid://c3lvepchhqyq8" path="res://assets/tiles/bait.png" id="19_bqi5g"]
+[ext_resource type="Texture2D" uid="uid://d2lr14j0sq6h0" path="res://assets/other icons/beach_display.png" id="25_du4dm"]
+[ext_resource type="Texture2D" uid="uid://ftf0jk0byx4n" path="res://assets/other icons/forest_display.png" id="26_0odon"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jtexw"]
 bg_color = Color(0.101961, 0.101961, 0.101961, 0.658824)
@@ -164,6 +166,13 @@ bg_color = Color(0.143069, 0.128853, 0.114626, 0.745098)
 content_margin_left = 16.0
 content_margin_right = 16.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfkk3"]
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 0.658824)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_djtna"]
 content_margin_left = 16.0
 content_margin_right = 16.0
@@ -268,33 +277,6 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8vs8a"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7fj8i"]
-bg_color = Color(0.266575, 0.266575, 0.266575, 0.788235)
-corner_radius_top_left = 32
-corner_radius_top_right = 32
-corner_radius_bottom_right = 32
-corner_radius_bottom_left = 32
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p6n7i"]
-bg_color = Color(0.787759, 0.787759, 0.787759, 0.788235)
-corner_radius_top_left = 32
-corner_radius_top_right = 32
-corner_radius_bottom_right = 32
-corner_radius_bottom_left = 32
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stuko"]
-bg_color = Color(0.0509804, 0.0509804, 0.0509804, 0.788235)
-corner_radius_top_left = 32
-corner_radius_top_right = 32
-corner_radius_bottom_right = 32
-corner_radius_bottom_left = 32
-
-[sub_resource type="LabelSettings" id="LabelSettings_w5qyw"]
-font = ExtResource("17_g0huu")
-font_size = 84
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gbr1f"]
 size = Vector2(82, 34)
 
@@ -311,13 +293,6 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfkk3"]
-bg_color = Color(0.0980392, 0.0980392, 0.0980392, 0.658824)
-corner_radius_top_left = 48
-corner_radius_top_right = 48
-corner_radius_bottom_right = 48
-corner_radius_bottom_left = 48
 
 [sub_resource type="LabelSettings" id="LabelSettings_8axal"]
 font = ExtResource("17_g0huu")
@@ -426,6 +401,35 @@ shadow_offset = Vector2(1, 1)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sxdeh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cebw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vnulv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jh3ga"]
+content_margin_top = 24.0
+content_margin_bottom = 12.0
+bg_color = Color(0.421731, 0.421731, 0.421731, 0.658824)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jhdnn"]
+content_margin_top = 24.0
+content_margin_bottom = 12.0
+bg_color = Color(0.756087, 0.756087, 0.756087, 0.658824)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m7koe"]
+content_margin_top = 24.0
+content_margin_bottom = 12.0
+bg_color = Color(0.111197, 0.111197, 0.111197, 0.658824)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_ysy3v")
@@ -744,14 +748,14 @@ theme_override_fonts/font = ExtResource("17_g0huu")
 theme_override_font_sizes/font_size = 54
 theme_override_styles/tab_focus = SubResource("StyleBoxFlat_7078t")
 theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_a1s4r")
+theme_override_styles/panel = SubResource("StyleBoxFlat_nfkk3")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_djtna")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_gfyfq")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_rkivi")
 tab_alignment = 1
-current_tab = 1
+current_tab = 0
 
-[node name="Appearance" type="Panel" parent="Main/Inventory/TabContainer"]
-visible = false
+[node name="Appearance" type="Control" parent="Main/Inventory/TabContainer"]
 texture_filter = 1
 layout_mode = 2
 metadata/_tab_index = 0
@@ -1172,7 +1176,8 @@ label_settings = SubResource("LabelSettings_0ffgm")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Your Bag" type="Panel" parent="Main/Inventory/TabContainer"]
+[node name="Your Bag" type="Control" parent="Main/Inventory/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -1247,7 +1252,7 @@ label_settings = SubResource("LabelSettings_c5ifu")
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Fishing Rod" type="Panel" parent="Main/Inventory/TabContainer"]
+[node name="Fishing Rod" type="Control" parent="Main/Inventory/TabContainer"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
@@ -1373,7 +1378,7 @@ layout_mode = 2
 [node name="Rod4" parent="Main/Inventory/TabContainer/Fishing Rod/ScrollContainer/GridContainer" instance=ExtResource("13_x66uw")]
 layout_mode = 2
 
-[node name="Bait" type="Panel" parent="Main/Inventory/TabContainer"]
+[node name="Bait" type="Control" parent="Main/Inventory/TabContainer"]
 visible = false
 texture_filter = 1
 layout_mode = 2
@@ -1492,7 +1497,7 @@ theme_override_constants/h_separation = 195
 theme_override_constants/v_separation = 170
 columns = 3
 
-[node name="Catalog" type="Panel" parent="Main/Inventory/TabContainer"]
+[node name="Catalog" type="Control" parent="Main/Inventory/TabContainer"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 4
@@ -1617,75 +1622,6 @@ shape = SubResource("RectangleShape2D_21cbf")
 script = ExtResource("8_dm5ih")
 
 [node name="Close Button" type="Button" parent="Main/Inventory/TabContainer/Catalog/TouchScreenButton"]
-auto_translate_mode = 1
-texture_filter = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -36.0
-offset_top = -36.0
-offset_right = 36.0
-offset_bottom = 36.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/h_separation = 12
-theme_override_fonts/font = ExtResource("17_g0huu")
-theme_override_font_sizes/font_size = 64
-theme_override_styles/focus = SubResource("StyleBoxEmpty_s8ee3")
-theme_override_styles/hover = SubResource("StyleBoxFlat_dn5yn")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_dq7gx")
-theme_override_styles/normal = SubResource("StyleBoxFlat_jtexw")
-icon = ExtResource("8_otfdw")
-expand_icon = true
-
-[node name="Options" type="Panel" parent="Main/Inventory/TabContainer"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 5
-
-[node name="Button" type="Button" parent="Main/Inventory/TabContainer/Options"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -448.0
-offset_top = -52.0
-offset_right = 448.0
-offset_bottom = 52.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("17_g0huu")
-theme_override_font_sizes/font_size = 74
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8vs8a")
-theme_override_styles/hover = SubResource("StyleBoxFlat_7fj8i")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_p6n7i")
-theme_override_styles/normal = SubResource("StyleBoxFlat_stuko")
-text = "Save & Quit"
-
-[node name="Label" type="Label" parent="Main/Inventory/TabContainer/Options"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -80.0
-offset_top = 24.0
-offset_right = 78.0
-offset_bottom = 91.0
-grow_horizontal = 2
-text = "Pause"
-label_settings = SubResource("LabelSettings_w5qyw")
-
-[node name="TouchScreenButton" type="TouchScreenButton" parent="Main/Inventory/TabContainer/Options"]
-position = Vector2(1176, 57)
-scale = Vector2(0.85, 0.85)
-shape = SubResource("RectangleShape2D_21cbf")
-script = ExtResource("8_dm5ih")
-
-[node name="Close Button" type="Button" parent="Main/Inventory/TabContainer/Options/TouchScreenButton"]
 auto_translate_mode = 1
 texture_filter = 1
 anchors_preset = 8
@@ -1845,7 +1781,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 112.0
-offset_top = 104.0
+offset_top = 124.0
 offset_right = -48.0
 offset_bottom = -32.0
 grow_horizontal = 2
@@ -1929,7 +1865,6 @@ expand_icon = true
 
 [node name="Islands" type="Button" parent="Vender/TabContainer/Buy/GridContainer"]
 auto_translate_mode = 1
-visible = false
 layout_mode = 2
 focus_mode = 1
 mouse_filter = 1
@@ -2135,6 +2070,128 @@ text = "X
 "
 script = ExtResource("18_q4fv6")
 
+[node name="Travel" type="Control" parent="."]
+visible = false
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Travel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -608.0
+offset_top = -324.0
+offset_right = 608.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nfkk3")
+
+[node name="Name" type="Label" parent="Travel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -178.0
+offset_top = 138.0
+offset_right = 178.0
+offset_bottom = 199.0
+grow_horizontal = 2
+text = "Travel"
+label_settings = SubResource("LabelSettings_f04n0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Beach" type="Button" parent="Travel"]
+custom_minimum_size = Vector2(456, 216)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -104.0
+offset_right = -44.0
+offset_bottom = 156.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vnulv")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jh3ga")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jh3ga")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhdnn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_m7koe")
+text = "Beach"
+icon = ExtResource("25_du4dm")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="Forest" type="Button" parent="Travel"]
+custom_minimum_size = Vector2(456, 216)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 40.0
+offset_top = -103.0
+offset_right = 496.0
+offset_bottom = 157.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vnulv")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jh3ga")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jh3ga")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhdnn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_m7koe")
+disabled = true
+text = "Forest"
+icon = ExtResource("26_0odon")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="Close" type="Button" parent="Travel"]
+auto_translate_mode = 1
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -136.0
+offset_top = 64.0
+offset_right = -64.0
+offset_bottom = 136.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("17_g0huu")
+theme_override_font_sizes/font_size = 84
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5esi8")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_it2rl")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_nnw54")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_sxdeh")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5cebw")
+text = "X
+"
+script = ExtResource("18_q4fv6")
+
 [connection signal="pressed" from="Main/Buttons/TouchScreenButton" to="Main/Buttons/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Buttons/TouchScreenButton" to="Main/Buttons/TouchScreenButton" method="_on_released"]
 [connection signal="pressed" from="Main/Buttons/TouchScreenButton2" to="Main/Buttons/TouchScreenButton2" method="_on_pressed"]
@@ -2163,9 +2220,6 @@ script = ExtResource("18_q4fv6")
 [connection signal="pressed" from="Main/Inventory/TabContainer/Catalog/Info/Back" to="." method="_on_catalog_fish_back_pressed"]
 [connection signal="pressed" from="Main/Inventory/TabContainer/Catalog/TouchScreenButton" to="Main/Inventory/TabContainer/Catalog/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Inventory/TabContainer/Catalog/TouchScreenButton" to="Main/Inventory/TabContainer/Catalog/TouchScreenButton" method="_on_released"]
-[connection signal="pressed" from="Main/Inventory/TabContainer/Options/Button" to="." method="_on_save_button_pressed"]
-[connection signal="pressed" from="Main/Inventory/TabContainer/Options/TouchScreenButton" to="Main/Inventory/TabContainer/Options/TouchScreenButton" method="_on_pressed"]
-[connection signal="released" from="Main/Inventory/TabContainer/Options/TouchScreenButton" to="Main/Inventory/TabContainer/Options/TouchScreenButton" method="_on_released"]
 [connection signal="tab_selected" from="Vender/TabContainer" to="." method="_shop_tab_selected"]
 [connection signal="pressed" from="Vender/TabContainer/Buy/GridContainer/Fishing Rods" to="." method="_shop_fishing_rods_button_pressed"]
 [connection signal="pressed" from="Vender/TabContainer/Buy/GridContainer/Upgrades" to="." method="_shop_upgrades_button_pressed"]
@@ -2178,3 +2232,8 @@ script = ExtResource("18_q4fv6")
 [connection signal="button_down" from="Vender/TabContainer/Sell/Panel/Button" to="Vender/TabContainer/Sell/Panel/Button" method="_on_button_down"]
 [connection signal="button_up" from="Vender/TabContainer/Sell/Panel/Button" to="Vender/TabContainer/Sell/Panel/Button" method="_on_button_up"]
 [connection signal="pressed" from="Vender/TabContainer/Sell/Panel/Button" to="Vender/TabContainer/Sell/Panel/Button" method="_on_pressed"]
+[connection signal="pressed" from="Travel/Beach" to="." method="_on_beach_pressed"]
+[connection signal="pressed" from="Travel/Forest" to="." method="_on_forest_pressed"]
+[connection signal="button_down" from="Travel/Close" to="Travel/Close" method="_on_button_down"]
+[connection signal="button_up" from="Travel/Close" to="Travel/Close" method="_on_button_up"]
+[connection signal="pressed" from="Travel/Close" to="Travel/Close" method="_on_pressed"]

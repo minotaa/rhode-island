@@ -18,6 +18,8 @@ var rod_button = preload("res://scenes/rod.tscn")
 func _shop_tab_selected(tab: int):
 	_update_sell()
 
+
+
 func _appearance_skin_tone_left() -> void:
 	var skin_tones = []
 	for clothing in Inventories.clothing_bag.list:
@@ -213,7 +215,7 @@ func _on_shop_islands_pressed() -> void:
 						already_has_it = true
 			if already_has_it == false:
 				var shop_object = shop_item_object.instantiate()
-				shop_object.set_clothing(ticket)
+				shop_object.set_ticket(ticket)
 				$Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.add_child(shop_object)
 	await get_tree().create_timer(0.1).timeout
 	if $Vender/TabContainer/Buy/Catalog/ScrollContainer/GridContainer.get_children().size() == 0:
@@ -486,3 +488,13 @@ func _on_save_button_pressed() -> void:
 	if multiplayer != null and multiplayer.has_multiplayer_peer():
 		multiplayer.multiplayer_peer.disconnect_peer(multiplayer.multiplayer_peer.get_unique_id())
 		multiplayer.multiplayer_peer = null
+
+
+func _on_forest_pressed() -> void:
+	Game.teleport(Game.safe_areas["forest"].x, Game.safe_areas["forest"].y)
+	$"Main/Item Log".add_text("Traveled to the Forest!")
+
+
+func _on_beach_pressed() -> void:
+	Game.teleport(Game.safe_areas["beach"].x, Game.safe_areas["beach"].y)
+	$"Main/Item Log".add_text("Traveled to the Beach!")

@@ -231,9 +231,9 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 40.0
-offset_top = -328.0
+offset_top = -248.0
 offset_right = 440.0
-offset_bottom = -208.0
+offset_bottom = -128.0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("2_eg32d")
 theme_override_font_sizes/font_size = 72
@@ -264,6 +264,7 @@ text = "How To Play"
 
 [node name="Connect to Multiplayer" type="Button" parent="CanvasLayer/Main/Buttons"]
 auto_translate_mode = 1
+visible = false
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0

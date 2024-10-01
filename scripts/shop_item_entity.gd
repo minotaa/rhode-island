@@ -34,6 +34,13 @@ func _buy_pressed() -> void:
 		Inventories.clothing_bag.add_item(item)
 		if type.one_time_buy == true:
 			queue_free()
+	if type is Ticket:
+		var item = ItemStack.new()
+		item.type = type
+		item.amount = 1
+		Inventories.tickets.add_item(item)
+		if type.one_time_buy == true:
+			queue_free()
 	Inventories.items_bought += 1
 
 func set_upgrade(upgrade: Upgrade):
@@ -65,6 +72,15 @@ func set_rod(rod: FishingRod):
 	$Panel/Name.text = rod.name
 	$Panel/Button.text = "Buy $" + str(rod.cost)
 	$Panel/ScrollContainer/Description.text = rod.description
+
+func set_ticket(ticket: Ticket):
+	price = ticket.cost
+	type = ticket
+	if ticket.texture != null:
+		$Panel/TextureRect.texture = ticket.texture
+	$Panel/Name.text = ticket.name
+	$Panel/Button.text = "Buy $" + str(ticket.cost)
+	$Panel/ScrollContainer/Description.text = ticket.description
 
 func set_clothing(clothing: Clothing):
 	price = clothing.cost
