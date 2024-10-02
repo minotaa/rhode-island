@@ -620,6 +620,9 @@ func _physics_process(delta) -> void:
 			if area.is_in_group("bus"): 
 				$Notifications.visible = true
 				$Notifications/Panel/Label.text = "Travel"
+			if area.is_in_group("drink"): 
+				$Notifications.visible = true
+				$Notifications/Panel/Label.text = "Drink"
 	
 	
 	# Update UI

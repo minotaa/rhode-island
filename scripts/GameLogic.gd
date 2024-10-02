@@ -26,6 +26,8 @@ func calculate_blessing() -> int:
 			blessing += 25
 		if item.type.id == 5:
 			blessing += 75
+		if item.type.id == 7:
+			blessing += 125
 	blessing += Inventories.fishing_rods.equipped.blessing
 	if Inventories.bait_bag.equipped != null:
 		blessing += Inventories.bait_bag.equipped.bonus_blessing

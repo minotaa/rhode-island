@@ -48,6 +48,7 @@ region = Rect2(16, 32, 16, 16)
 
 [node name="Rod" type="Control"]
 auto_translate_mode = 1
+custom_minimum_size = Vector2(158, 160)
 layout_mode = 3
 anchor_right = 0.123
 anchor_bottom = 0.222

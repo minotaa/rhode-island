@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://crn3iyiryo5cr"]
+[gd_scene load_steps=31 format=4 uid="uid://crn3iyiryo5cr"]
 
 [ext_resource type="Script" path="res://scripts/game_node.gd" id="1_0annu"]
 [ext_resource type="Texture2D" uid="uid://cnb4smo8mrprw" path="res://assets/tiles/tiles_all.png" id="1_0giq3"]
@@ -19922,8 +19922,8 @@ pattern_0 = SubResource("TileMapPattern_tgn06")
 pattern_1 = SubResource("TileMapPattern_sncx0")
 pattern_2 = SubResource("TileMapPattern_w8g3n")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g3fjv"]
-size = Vector2(428, 336)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fh7uo"]
+size = Vector2(360, 264)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uh3u7"]
 size = Vector2(148, 90.0625)
@@ -19933,6 +19933,12 @@ size = Vector2(117, 66.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hp83o"]
 size = Vector2(232, 212)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g3fjv"]
+size = Vector2(428, 336)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6n6tt"]
+size = Vector2(520, 584)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_0annu")
@@ -19969,14 +19975,14 @@ spawn_path = NodePath("..")
 [node name="Shop" type="Area2D" parent="." groups=["shop"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shop"]
-position = Vector2(1044, 957.5)
-shape = SubResource("RectangleShape2D_g3fjv")
+position = Vector2(1052, 956)
+shape = SubResource("RectangleShape2D_fh7uo")
 
 [node name="Leaderboards" type="Area2D" parent="." groups=["leaderboards"]]
 position = Vector2(-56, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Leaderboards"]
-position = Vector2(956, 172.125)
+position = Vector2(936, 176)
 shape = SubResource("RectangleShape2D_uh3u7")
 
 [node name="Sell" type="Area2D" parent="." groups=["sell"]]
@@ -19989,7 +19995,7 @@ shape = SubResource("RectangleShape2D_hxmmc")
 position = Vector2(1584, 1104)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bus"]
-position = Vector2(144, 100)
+position = Vector2(112, 104)
 shape = SubResource("RectangleShape2D_hp83o")
 
 [node name="Shop2" type="Area2D" parent="." groups=["shop"]]
@@ -20011,3 +20017,9 @@ position = Vector2(-56, 16)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Leaderboards2"]
 position = Vector2(74440, 97731)
 shape = SubResource("RectangleShape2D_uh3u7")
+
+[node name="Drink" type="Area2D" parent="." groups=["drink"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Drink"]
+position = Vector2(2340, 876)
+shape = SubResource("RectangleShape2D_6n6tt")

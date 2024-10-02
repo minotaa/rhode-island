@@ -10,6 +10,8 @@ func get_max_capacity() -> int:
 			base = 50
 		if item.type.id == 4:
 			base = 75
+		if item.type.id == 6:
+			base = 125
 	return base
 
 var collected = {}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=3 uid="uid://cmqbp2xl2jup3"]
+[gd_scene load_steps=100 format=3 uid="uid://cmqbp2xl2jup3"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_k3vkl"]
 [ext_resource type="Script" path="res://scripts/UI.gd" id="1_ysy3v"]
@@ -232,7 +232,7 @@ font_size = 84
 
 [sub_resource type="LabelSettings" id="LabelSettings_m4ne3"]
 font = ExtResource("17_g0huu")
-font_size = 72
+font_size = 64
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_swf0p"]
 atlas = ExtResource("4_d5cbg")
@@ -430,6 +430,10 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_8pa33"]
+font = ExtResource("17_g0huu")
+font_size = 42
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_ysy3v")
@@ -753,9 +757,10 @@ theme_override_styles/tab_selected = SubResource("StyleBoxFlat_djtna")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_gfyfq")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_rkivi")
 tab_alignment = 1
-current_tab = 0
+current_tab = 2
 
 [node name="Appearance" type="Control" parent="Main/Inventory/TabContainer"]
+visible = false
 texture_filter = 1
 layout_mode = 2
 metadata/_tab_index = 0
@@ -1253,7 +1258,6 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="Fishing Rod" type="Control" parent="Main/Inventory/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -1264,22 +1268,24 @@ anchor_left = 0.967532
 anchor_top = 0.0619765
 anchor_right = 0.967532
 anchor_bottom = 0.0619765
-offset_left = -360.0
-offset_top = 96.0
-offset_right = 8.00001
-offset_bottom = 160.0
+offset_left = -432.999
+offset_top = 296.0
+offset_right = 23.0006
+offset_bottom = 408.0
 grow_horizontal = 0
 text = "Fishing Rod"
 label_settings = SubResource("LabelSettings_m4ne3")
 horizontal_alignment = 2
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="Main/Inventory/TabContainer/Fishing Rod"]
 texture_filter = 1
 layout_mode = 0
-offset_left = 960.0
-offset_top = 197.0
-offset_right = 1208.0
-offset_bottom = 445.0
+offset_left = 1000.0
+offset_top = 125.0
+offset_right = 1200.0
+offset_bottom = 325.0
 texture = SubResource("AtlasTexture_swf0p")
 
 [node name="DescriptionContainer" type="ScrollContainer" parent="Main/Inventory/TabContainer/Fishing Rod"]
@@ -1289,10 +1295,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -464.0
-offset_top = -144.0
-offset_right = -24.0
-offset_bottom = -24.0
+offset_left = -472.0
+offset_top = -136.0
+offset_right = -16.0
+offset_bottom = -16.0
 grow_horizontal = 0
 grow_vertical = 0
 
@@ -1355,16 +1361,16 @@ expand_icon = true
 layout_mode = 0
 offset_left = 40.0
 offset_top = 45.0
-offset_right = 744.0
+offset_right = 760.0
 offset_bottom = 557.0
 horizontal_scroll_mode = 0
 
 [node name="GridContainer" type="GridContainer" parent="Main/Inventory/TabContainer/Fishing Rod/ScrollContainer"]
 custom_minimum_size = Vector2(160, 160)
 layout_mode = 2
-theme_override_constants/h_separation = 195
-theme_override_constants/v_separation = 170
-columns = 3
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 28
+columns = 4
 
 [node name="Rod" parent="Main/Inventory/TabContainer/Fishing Rod/ScrollContainer/GridContainer" instance=ExtResource("13_x66uw")]
 layout_mode = 2
@@ -2191,6 +2197,61 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_5cebw")
 text = "X
 "
 script = ExtResource("18_q4fv6")
+
+[node name="Drink" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Drink"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -608.0
+offset_top = -324.0
+offset_right = 608.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nfkk3")
+
+[node name="Name" type="Label" parent="Drink"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -178.0
+offset_top = 74.0
+offset_right = 178.0
+offset_bottom = 135.0
+grow_horizontal = 2
+text = "Drink"
+label_settings = SubResource("LabelSettings_f04n0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Description" type="Label" parent="Drink"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 112.0
+offset_right = 320.0
+offset_bottom = 273.0
+grow_horizontal = 2
+text = "You can only drink one drink, and then you have to wait for the drink's effects to wear off."
+label_settings = SubResource("LabelSettings_8pa33")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [connection signal="pressed" from="Main/Buttons/TouchScreenButton" to="Main/Buttons/TouchScreenButton" method="_on_pressed"]
 [connection signal="released" from="Main/Buttons/TouchScreenButton" to="Main/Buttons/TouchScreenButton" method="_on_released"]

@@ -1362,6 +1362,203 @@ func add_fish() -> void:
 	axolotl.atlas_region_x = 144.0
 	axolotl.atlas_region_y = 144.0
 	fish_list.append(axolotl)
+	
+	var moonfish = Fish.new()
+	moonfish.name = "Moonfish (Opah)"
+	moonfish.description = "A striking, deep-bodied fish with vibrant, silver-red scales. Known for its unique ability to generate heat, the moonfish is prized by commercial fisheries."
+	moonfish.id = 100
+	moonfish.cost = 12000.0
+	moonfish.sell_price = 10500.0  # Significantly higher due to SUPREME status
+	moonfish.reel_difficulty = "SUPREME"
+	moonfish.reel_location = "forest"
+	moonfish.reel_weight = 5  # Very rare
+	moonfish.atlas_region_x = 0.0
+	moonfish.atlas_region_y = 160.0
+	fish_list.append(moonfish)
+
+	var blue_fish = Fish.new()
+	blue_fish.name = "Bluefish"
+	blue_fish.description = "A fierce predator known for its sharp teeth and aggressive feeding habits. Bluefish are often found in warm coastal waters and are a favorite among sport fishers."
+	blue_fish.id = 101
+	blue_fish.cost = 350.0
+	blue_fish.sell_price = 300.0
+	blue_fish.reel_difficulty = "MEDIUM"
+	blue_fish.reel_location = "forest"
+	blue_fish.reel_weight = 15
+	blue_fish.atlas_region_x = 16.0
+	blue_fish.atlas_region_y = 160.0
+	fish_list.append(blue_fish)
+
+	var butter_fish = Fish.new()
+	butter_fish.name = "Butterfish"
+	butter_fish.description = "Known for its smooth, buttery texture, the butterfish is a delight to eat. Found in coastal waters, it's a favorite among chefs."
+	butter_fish.id = 102
+	butter_fish.cost = 300.0
+	butter_fish.sell_price = 200.0
+	butter_fish.reel_difficulty = "EASY"
+	butter_fish.reel_location = "forest"
+	butter_fish.reel_weight = 10
+	butter_fish.atlas_region_x = 32.0
+	butter_fish.atlas_region_y = 160.0
+	fish_list.append(butter_fish)
+
+	var king_fish = Fish.new()
+	king_fish.name = "Kingfish"
+	king_fish.description = "A prized catch known for its speed and flavor, the kingfish is sought after by sport fishers and chefs alike."
+	king_fish.id = 103
+	king_fish.cost = 2500.0  # Adjusted cost
+	king_fish.sell_price = 1500.0  # Adjusted sell price
+	king_fish.reel_difficulty = "IMPOSSIBLE"
+	king_fish.reel_location = "forest"
+	king_fish.reel_weight = 10
+	king_fish.atlas_region_x = 64.0
+	king_fish.atlas_region_y = 160.0
+	fish_list.append(king_fish)
+
+	var tile_fish = Fish.new()
+	tile_fish.name = "Tilefish"
+	tile_fish.description = "A vibrant fish with a unique tile-like pattern, prized for its delicate flavor."
+	tile_fish.id = 104
+	tile_fish.cost = 1500.0
+	tile_fish.sell_price = 800.0
+	tile_fish.reel_difficulty = "HARD"
+	tile_fish.reel_location = "forest"
+	tile_fish.reel_weight = 7
+	tile_fish.atlas_region_x = 32.0
+	tile_fish.atlas_region_y = 160.0
+	fish_list.append(tile_fish)
+
+	var john_dory = Fish.new()
+	john_dory.name = "John Dory"
+	john_dory.description = "Recognizable for its flat, disc-like shape and striking golden spot, this fish is a culinary delight."
+	john_dory.id = 105
+	john_dory.cost = 1800.0
+	john_dory.sell_price = 1200.0
+	john_dory.reel_difficulty = "MEDIUM"
+	john_dory.reel_location = "forest"
+	john_dory.reel_weight = 6
+	john_dory.atlas_region_x = 96.0
+	john_dory.atlas_region_y = 160.0
+	fish_list.append(john_dory)
+
+	var sanddab = Fish.new()
+	sanddab.name = "Sanddab"
+	sanddab.description = "A small, flat fish that blends into sandy bottoms, known for its sweet, mild flavor."
+	sanddab.id = 106
+	sanddab.cost = 1200.0
+	sanddab.sell_price = 600.0
+	sanddab.reel_difficulty = "EASY"
+	sanddab.reel_location = "forest"
+	sanddab.reel_weight = 4
+	sanddab.atlas_region_x = 128.0
+	sanddab.atlas_region_y = 160.0
+	fish_list.append(sanddab)
+	
+	var weakfish = Fish.new()
+	weakfish.name = "Weakfish"
+	weakfish.description = "This fish has a delicate texture and is often found in estuaries and coastal waters."
+	weakfish.id = 107
+	weakfish.cost = 1400.0
+	weakfish.sell_price = 800.0
+	weakfish.reel_difficulty = "MEDIUM"
+	weakfish.reel_location = "forest"
+	weakfish.reel_weight = 5
+	weakfish.atlas_region_x = 160.0
+	weakfish.atlas_region_y = 160.0
+	fish_list.append(weakfish)
+
+	var lingcod = Fish.new()
+	lingcod.name = "Lingcod"
+	lingcod.description = "A fierce predator known for its firm white flesh, highly regarded among anglers."
+	lingcod.id = 108
+	lingcod.cost = 2000.0
+	lingcod.sell_price = 1500.0
+	lingcod.reel_difficulty = "HARD"
+	lingcod.reel_location = "forest"
+	lingcod.reel_weight = 8
+	lingcod.atlas_region_x = 192.0
+	lingcod.atlas_region_y = 160.0
+	fish_list.append(lingcod)
+
+	var rudderfish = Fish.new()
+	rudderfish.name = "Rudderfish"
+	rudderfish.description = "A unique fish with a flat, rudder-like shape that swims in schools."
+	rudderfish.id = 109
+	rudderfish.cost = 1000.0
+	rudderfish.sell_price = 500.0
+	rudderfish.reel_difficulty = "EASY"
+	rudderfish.reel_location = "forest"
+	rudderfish.reel_weight = 3
+	rudderfish.atlas_region_x = 224.0
+	rudderfish.atlas_region_y = 160.0
+	fish_list.append(rudderfish)
+
+	var sheepshead = Fish.new()
+	sheepshead.name = "Sheepshead"
+	sheepshead.description = "Recognized by its distinct black stripes, this fish has a sweet, flaky texture."
+	sheepshead.id = 110
+	sheepshead.cost = 2200.0
+	sheepshead.sell_price = 1700.0
+	sheepshead.reel_difficulty = "HARD"
+	sheepshead.reel_location = "forest"
+	sheepshead.reel_weight = 7
+	sheepshead.atlas_region_x = 256.0
+	sheepshead.atlas_region_y = 160.0
+	fish_list.append(sheepshead)
+
+	var tautog = Fish.new()
+	tautog.name = "Tautog"
+	tautog.description = "A stout fish with a robust flavor, often found near rocky structures."
+	tautog.id = 111
+	tautog.cost = 2500.0
+	tautog.sell_price = 2000.0
+	tautog.reel_difficulty = "HARD"
+	tautog.reel_location = "forest"
+	tautog.reel_weight = 8
+	tautog.atlas_region_x = 288.0
+	tautog.atlas_region_y = 160.0
+	fish_list.append(tautog)
+
+	var triggerfish = Fish.new()
+	triggerfish.name = "Triggerfish"
+	triggerfish.description = "Known for their bright colors and unique teeth, these fish are curious and fun to catch."
+	triggerfish.id = 112
+	triggerfish.cost = 1200.0
+	triggerfish.sell_price = 900.0
+	triggerfish.reel_difficulty = "MEDIUM"
+	triggerfish.reel_location = "forest"
+	triggerfish.reel_weight = 5
+	triggerfish.atlas_region_x = 320.0
+	triggerfish.atlas_region_y = 160.0
+	fish_list.append(triggerfish)
+
+	var skate = Fish.new()
+	skate.name = "Skate"
+	skate.description = "A flat fish with wing-like pectoral fins, skate is a unique and tasty catch."
+	skate.id = 113
+	skate.cost = 1100.0
+	skate.sell_price = 750.0
+	skate.reel_difficulty = "EASY"
+	skate.reel_location = "forest"
+	skate.reel_weight = 4
+	skate.atlas_region_x = 352.0
+	skate.atlas_region_y = 160.0
+	fish_list.append(skate)
+
+	var snapper = Fish.new()
+	snapper.name = "Snapper"
+	snapper.description = "A popular catch known for its flaky texture and vibrant color, great for grilling."
+	snapper.id = 114
+	snapper.cost = 1600.0
+	snapper.sell_price = 1000.0
+	snapper.reel_difficulty = "HARD"
+	snapper.reel_location = "forest"
+	snapper.reel_weight = 6
+	snapper.atlas_region_x = 384.0
+	snapper.atlas_region_y = 160.0
+	fish_list.append(snapper)
+
+
 
 func add_rods() -> void:
 	var ol_reliable = FishingRod.new()
@@ -1429,6 +1626,48 @@ func add_rods() -> void:
 	honed_rod.atlas_region_y = 48.0
 	rods_list.append(honed_rod)
 	
+	var fiberglass_rod = FishingRod.new()
+	fiberglass_rod.name = "Fiberglass Fishing Rod"
+	fiberglass_rod.description = "A durable fiberglass fishing rod that's lightweight and built to handle a wide range of catches, perfect for both beginners and seasoned anglers."
+	fiberglass_rod.id = 5
+	fiberglass_rod.level = 7
+	fiberglass_rod.cost = 500000
+	fiberglass_rod.added_weight = 2000
+	fiberglass_rod.baitable = true
+	fiberglass_rod.deerraticness = 100
+	fiberglass_rod.blessing = 1250
+	fiberglass_rod.atlas_region_x = 16.0
+	fiberglass_rod.atlas_region_y = 112.0
+	rods_list.append(fiberglass_rod)
+	
+	var graphite_rod = FishingRod.new()
+	graphite_rod.name = "Graphite Fishing Rod"
+	graphite_rod.description = "A lightweight graphite fishing rod known for its sensitivity and strength, ideal for precise casts and reeling in bigger catches."
+	graphite_rod.id = 6
+	graphite_rod.level = 8
+	graphite_rod.cost = 750000
+	graphite_rod.added_weight = 3000
+	graphite_rod.baitable = true
+	graphite_rod.deerraticness = 250
+	graphite_rod.blessing = 2000
+	graphite_rod.atlas_region_x = 16.0
+	graphite_rod.atlas_region_y = 128.0
+	rods_list.append(graphite_rod)
+
+	var carbon_fiber_rod = FishingRod.new()
+	carbon_fiber_rod.name = "Carbon Fiber Fishing Rod"
+	carbon_fiber_rod.description = "A high-performance carbon fiber fishing rod offering exceptional strength, flexibility, and ultra-lightweight handling for serious anglers."
+	carbon_fiber_rod.id = 7
+	carbon_fiber_rod.level = 10
+	carbon_fiber_rod.cost = 1000000
+	carbon_fiber_rod.added_weight = 4000
+	carbon_fiber_rod.baitable = true
+	carbon_fiber_rod.deerraticness = 750
+	carbon_fiber_rod.blessing = 3250
+	carbon_fiber_rod.atlas_region_x = 16.0
+	carbon_fiber_rod.atlas_region_y = 144.0
+	rods_list.append(carbon_fiber_rod)
+
 func add_bait() -> void:
 	var worm = Bait.new()
 	worm.id = 0
@@ -1506,6 +1745,15 @@ func add_upgrades() -> void:
 	bag_upgrade_three.one_time_buy = true
 	bag_upgrade_three.texture = load("res://assets/other icons/Backpack.png")
 	upgrade_list.append(bag_upgrade_three)	
+
+	var bag_upgrade_four = Upgrade.new()
+	bag_upgrade_four.id = 6
+	bag_upgrade_four.name = "Bag Upgrade IV"
+	bag_upgrade_four.description = "Upgrades your fishing bag size from 75 -> 125."
+	bag_upgrade_four.cost = 500000
+	bag_upgrade_four.one_time_buy = true
+	bag_upgrade_four.texture = load("res://assets/other icons/Backpack.png")
+	upgrade_list.append(bag_upgrade_four)	
 	
 	var blessing_upgrade_one = Upgrade.new()
 	blessing_upgrade_one.id = 2
@@ -1533,6 +1781,15 @@ func add_upgrades() -> void:
 	blessing_upgrade_three.one_time_buy = true
 	blessing_upgrade_three.texture = load("res://assets/other icons/blessing.png")
 	upgrade_list.append(blessing_upgrade_three)
+	
+	var blessing_upgrade_four = Upgrade.new()
+	blessing_upgrade_four.id = 7
+	blessing_upgrade_four.name = "Blessing IV"
+	blessing_upgrade_four.description = "Upgrades your base blessing stat from 125 -> 250"
+	blessing_upgrade_four.cost = 750000
+	blessing_upgrade_four.one_time_buy = true
+	blessing_upgrade_four.texture = load("res://assets/other icons/blessing.png")
+	upgrade_list.append(blessing_upgrade_four)
 
 var skin_tone_1_texture = preload("res://assets/character sprites/Skin Tone 1.png")
 var skin_tone_2_texture = preload("res://assets/character sprites/Skin Tone 2.png")
